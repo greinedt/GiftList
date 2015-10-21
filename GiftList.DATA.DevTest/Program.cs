@@ -23,10 +23,13 @@ namespace GiftList.DATA.DevTest
             Person p = new Person()
             {
                 userName = "a",
-                emailAddress = "a"
+                emailAddress = "a",
+                firstName = "a",
+                lastName = "a",
+                passwordHash = "a"
             };
             int id = repo.Insert(p);
-            p.lastName = "a";
+            p.lastName = "b";
             repo.Update(id, p);
             repo.Delete(id);
         }

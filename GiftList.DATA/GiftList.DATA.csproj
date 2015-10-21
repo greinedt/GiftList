@@ -71,6 +71,7 @@
     <Compile Include="Repositories\ListRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="Repositories\PurchaseRepository.cs" />
+    <Compile Include="Repositories\RepositoryUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,7 +17,7 @@ namespace GiftList.DATA.Repositories
             _conn = new SqlConnection(ConnString);
 
             var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM person WHERE [ID] = @Id;";
+            sqlComm.CommandText = @"DELETE FROM person WHERE [personId] = @Id;";
             sqlComm.Parameters.Add("@Id", SqlDbType.Int);
             sqlComm.Parameters["@Id"].Value = id;
 
@@ -222,6 +222,7 @@ namespace GiftList.DATA.Repositories
 
         public int Insert(Person person)
         {
+            CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Insert);
             try
             {
                 var contactExists = GetPersonByEmail(person.emailAddress);
@@ -315,6 +316,8 @@ namespace GiftList.DATA.Repositories
 
         public void Update(int id, Person person)
         {
+            CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Update);
+
             var contactToUpdate = GetPersonById(id);
             if (contactToUpdate == null)
             {
@@ -331,7 +334,7 @@ namespace GiftList.DATA.Repositories
                                                       [firstName]=@firstName, 
                                                       [lastName]=@lastName, 
                                                       [passwordHash]=@passwordHash, 
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimeStamp]=getdate()
                                                       WHERE personId=@Id";
 
                 cmd.Parameters.Add("@Id", SqlDbType.Int);
@@ -346,7 +349,7 @@ namespace GiftList.DATA.Repositories
                 cmd.Parameters.Add("@firstName", SqlDbType.VarChar);
                 cmd.Parameters["@firstName"].Value = person.firstName;
 
-                cmd.Parameters.Add("@lastName", SqlDbType.Int);
+                cmd.Parameters.Add("@lastName", SqlDbType.VarChar);
                 cmd.Parameters["@lastName"].Value = person.lastName;
 
                 cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar);
@@ -364,6 +367,22 @@ namespace GiftList.DATA.Repositories
             finally
             {
                 _conn?.Close();
+            }
+        }
+
+        private void CheckPersonForRequiredValues(Person p, RepositoryUtils.RepositoryAction action)
+        {
+            List<string> missingFields = new List<string>();
+            
+            if (String.IsNullOrWhiteSpace(p.userName)) missingFields.Add("User Name");
+            if (String.IsNullOrWhiteSpace(p.emailAddress)) missingFields.Add("Email Address");
+            if (String.IsNullOrWhiteSpace(p.firstName)) missingFields.Add("First Name");
+            if (String.IsNullOrWhiteSpace(p.lastName)) missingFields.Add("Last Name");
+            if (String.IsNullOrWhiteSpace(p.passwordHash)) missingFields.Add("Password");
+            
+            if (missingFields.Count > 0)
+            {
+                throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
         }
     }

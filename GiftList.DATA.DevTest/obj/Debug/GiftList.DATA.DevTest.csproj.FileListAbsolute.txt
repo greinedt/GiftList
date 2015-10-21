@@ -6,3 +6,11 @@ C:\MyProjects\GiftList.DATA\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.pdb
 C:\MyProjects\GiftList.DATA\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.csprojResolveAssemblyReference.cache
 C:\MyProjects\GiftList.DATA\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.exe
 C:\MyProjects\GiftList.DATA\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.pdb
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.DevTest.exe.config
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.exe
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.pdb
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.DevTest.exe
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.DevTest.pdb
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.dll
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\bin\Debug\GiftList.DATA.pdb
+C:\MyProjects\GiftList.DATA\GiftList\GiftList.DATA.DevTest\obj\Debug\GiftList.DATA.DevTest.csprojResolveAssemblyReference.cache
