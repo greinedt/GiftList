@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using GiftList.DATA.Entities;
-using GiftList.DATA.Repositories.Interfaces;
+using TheGiftList.DATA.Entities;
+using TheGiftList.DATA.Repositories.Interfaces;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     public class GroupMemberRepository : IGroupMemberRepository
     {

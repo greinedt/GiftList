@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GiftList.DATA.Repositories;
-using GiftList.DATA.Entities;
+using TheGiftList.DATA.Repositories;
+using TheGiftList.DATA.Entities;
 
-namespace GiftList.DATA.DevTest
+namespace TheGiftList.DATA.DevTest
 {
     class Program
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     class RepositoryUtils
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GiftList.DATA.Entities;
+using TheGiftList.DATA.Entities;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     public interface IPurchaseRepository
     {

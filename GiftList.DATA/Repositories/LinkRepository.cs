@@ -2,49 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GiftList.DATA.Entities;
-using GiftList.DATA.Repositories.Interfaces;
+using TheGiftList.DATA.Entities;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
-    public class LinkRepository : IListRepository
+    public class LinkRepository : ILinkRepository
     {
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<List> GetAllLists(string query, int page, int pageSize)
+        public IList<Link> GetAllLinks(string query, int page, int pageSize)
         {
             throw new NotImplementedException();
         }
 
-        public List GetList(int person, string listName)
+        public Link GetLink(int itemId, string linkName)
         {
             throw new NotImplementedException();
         }
 
-        public List GetListById(int id)
+        public Link GetLinkById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public long GetNumberOfLists(string query)
+        public long GetNumberOfLinks(string query)
         {
             throw new NotImplementedException();
         }
 
-        public long Insert(List list)
+        public long Insert(Link Link)
         {
             throw new NotImplementedException();
         }
 
-        public bool ListExists(int person, string listName)
+        public bool LinkExists(int itemId, string linkName)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(int id, List list)
+        public void Update(int id, Link link)
         {
             throw new NotImplementedException();
         }

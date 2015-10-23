@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GiftList.DATA.Entities;
+using TheGiftList.DATA.Entities;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     public interface IItemRepository
     {
@@ -9,7 +9,7 @@ namespace GiftList.DATA.Repositories
         long GetNumberOfItems(string query);
         bool ItemExists(int group, int member);
         Item GetItemById(int id);
-        Item GetItem(int list, string itemName);
+        Item GetItem(int giftList, string itemName);
         long Insert(Item item);
         void Update(int id, Item item);
         void Delete(int id);

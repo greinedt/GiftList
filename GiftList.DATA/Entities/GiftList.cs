@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GiftList.DATA.Entities
+namespace TheGiftList.DATA.Entities
 {
-    public class List
+    public class GiftList
     {
-        public int listId { get; set; }
+        public int giftListId { get; set; }
         public int personFK { get; set; }
         public string listName { get; set; }
         public bool isPrivate { get; set; }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
-using GiftList.DATA.Entities;
+using TheGiftList.DATA.Entities;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     public class PurchaseRepository : IPurchaseRepository
     {

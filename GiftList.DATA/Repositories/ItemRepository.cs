@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GiftList.DATA.Entities;
-using GiftList.DATA.Repositories.Interfaces;
+using TheGiftList.DATA.Entities;
+using TheGiftList.DATA.Repositories.Interfaces;
 
-namespace GiftList.DATA.Repositories
+namespace TheGiftList.DATA.Repositories
 {
     public class ItemRepository : IItemRepository
     {
