@@ -20,7 +20,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT linkId, itemFK, linkName, url, isImage, updateTimestamp, updatePersonKey FROM DBO.LINK WHERE itemFK = @itemFK;";
+                string sql = "SELECT linkId, itemFK, linkName, url, isImage, updateTimestamp, updatePersonFK FROM DBO.LINK WHERE itemFK = @itemFK;";
                 var cmd = new SqlCommand(sql, _conn);
 
                 var paramQuery = new SqlParameter
@@ -41,7 +41,7 @@ namespace TheGiftList.DATA.Repositories
                         url = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonKey = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     linklist.Add(link);
                 }
@@ -61,7 +61,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonKey FROM DBO.LINK WHERE itemFK = @itemFK and linkName = @linkName;";
+                string sql = "SELECT linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonFK FROM DBO.LINK WHERE itemFK = @itemFK and linkName = @linkName;";
                 var cmd = new SqlCommand(sql, _conn);
 
                 var paramItem = new SqlParameter
@@ -89,7 +89,7 @@ namespace TheGiftList.DATA.Repositories
                         url = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : rdr.GetBoolean(rdr.GetOrdinal("isImage")),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonKey = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     linklist.Add(link);
                 }
@@ -109,7 +109,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonKey FROM DBO.LINK WHERE linkId = @id";
+                string sql = "SELECT linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonFK FROM DBO.LINK WHERE linkId = @id";
                 var cmd = new SqlCommand(sql, _conn);
 
                 var paramId = new SqlParameter
@@ -130,7 +130,7 @@ namespace TheGiftList.DATA.Repositories
                         url = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : rdr.GetBoolean(rdr.GetOrdinal("isImage")),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonKey = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     linklist.Add(link);
                 }
@@ -182,8 +182,8 @@ namespace TheGiftList.DATA.Repositories
                 var cmd = _conn.CreateCommand();
 
                 cmd.CommandText =
-                    @"INSERT INTO[dbo].[link] (linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonKey) 
-                    VALUES(@itemFK, @url, @linkName, @isImage, getdate(), @updatePersonKey );SELECT CAST(scope_identity() AS int)";
+                    @"INSERT INTO[dbo].[link] (linkId, itemFK, url, linkName, isImage, updateTimestamp, updatePersonFK) 
+                    VALUES(@itemFK, @url, @linkName, @isImage, getdate(), @updatePersonFK );SELECT CAST(scope_identity() AS int)";
 
 
                 cmd.Parameters.Add("@itemFK", SqlDbType.Int);
@@ -198,8 +198,8 @@ namespace TheGiftList.DATA.Repositories
                 cmd.Parameters.Add("@isImage", SqlDbType.Char);
                 cmd.Parameters["@isImage"].Value = link.isImage ? 'Y' : 'N';
 
-                cmd.Parameters.Add("@updatePersonKey", SqlDbType.Int);
-                cmd.Parameters["@updatePersonKey"].Value = link.updatePersonKey;
+                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
+                cmd.Parameters["@updatePersonFK"].Value = link.updatePersonFK;
 
                 _conn.Open();
 
@@ -263,7 +263,7 @@ namespace TheGiftList.DATA.Repositories
                                                       [url]=@url, 
                                                       [isImage]=@isImage, 
                                                       [updateTimeStamp]=getdate(),
-                                                      [updatePersonKey]=@updatePersonKey
+                                                      [updatePersonFK]=@updatePersonFK
                                                       WHERE linkId=@linkId";
 
                 cmd.Parameters.Add("@linkId", SqlDbType.Int);
@@ -281,8 +281,8 @@ namespace TheGiftList.DATA.Repositories
                 cmd.Parameters.Add("@isImage", SqlDbType.Char);
                 cmd.Parameters["@isImage"].Value = link.isImage ? 'Y' : 'N';
 
-                cmd.Parameters.Add("@updatePersonKey", SqlDbType.Int);
-                cmd.Parameters["@updatePersonKey"].Value = link.updatePersonKey;
+                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
+                cmd.Parameters["@updatePersonFK"].Value = link.updatePersonFK;
 
                 _conn.Open();
 

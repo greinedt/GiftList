@@ -13,6 +13,6 @@ namespace TheGiftList.DATA.Entities
         public string url { get; set; }
         public bool isImage { get; set; }
         public DateTime updateTimestamp { get; set; }
-        public int updatePersonKey { get; set; }
+        public int updatePersonFK { get; set; }
     }
 }
