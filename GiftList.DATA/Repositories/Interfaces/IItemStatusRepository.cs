@@ -5,11 +5,11 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemStatusRepository
     {
-        IList<ItemStatus> GetAllItemStatuss(string query, int page, int pageSize);
-        long GetNumberOfItemStatuss(string query);
+        IList<ItemStatus> GetAllItemStatuss();
+        long GetNumberOfItemStatus();
         bool ItemStatusExists(string status);
         ItemStatus GetItemStatusById(int id);
-        ItemStatus GetItemStatus(string status);
+        ItemStatus GetItemStatusByStatusName(string status);
         long Insert(ItemStatus itemStatus);
         void Update(int id, ItemStatus itemStatus);
         void Delete(int id);

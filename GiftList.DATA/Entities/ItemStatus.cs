@@ -10,6 +10,6 @@ namespace TheGiftList.DATA.Entities
         public int itemStatusId { get; set; }
         public string status { get; set; }
         public DateTime updateTimestamp { get; set; }
-        public int updatePersonKey { get; set; }
+        public int updatePersonFK { get; set; }
     }
 }
