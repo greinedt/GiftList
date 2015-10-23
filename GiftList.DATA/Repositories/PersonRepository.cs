@@ -12,27 +12,6 @@ namespace GiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
         
-        public void Delete(int id)
-        {
-            _conn = new SqlConnection(ConnString);
-
-            var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM person WHERE [personId] = @Id;";
-            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
-            sqlComm.Parameters["@Id"].Value = id;
-
-            _conn.Open();
-
-            var rowsAffected = sqlComm.ExecuteNonQuery();
-
-            _conn.Close();
-
-            if (rowsAffected < 1)
-            {
-                throw new Exception("Entity has not been deleted!");
-            }
-        }
-
         public IList<Person> GetAllPersonsLike(string partialUserName)
         {
             List<Person> personList = new List<Person>();
@@ -260,7 +239,7 @@ namespace GiftList.DATA.Repositories
                 {
                     return int.Parse(cmd.ExecuteScalar().ToString());
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw new Exception($"Entity {person.firstName} {person.lastName} not inserted in database!");
                 }
@@ -370,16 +349,37 @@ namespace GiftList.DATA.Repositories
             }
         }
 
+        public void Delete(int id)
+        {
+            _conn = new SqlConnection(ConnString);
+
+            var sqlComm = _conn.CreateCommand();
+            sqlComm.CommandText = @"DELETE FROM person WHERE [personId] = @Id;";
+            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
+            sqlComm.Parameters["@Id"].Value = id;
+
+            _conn.Open();
+
+            var rowsAffected = sqlComm.ExecuteNonQuery();
+
+            _conn.Close();
+
+            if (rowsAffected < 1)
+            {
+                throw new Exception("Entity has not been deleted!");
+            }
+        }
+
         private void CheckPersonForRequiredValues(Person p, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
-            
+
             if (String.IsNullOrWhiteSpace(p.userName)) missingFields.Add("User Name");
             if (String.IsNullOrWhiteSpace(p.emailAddress)) missingFields.Add("Email Address");
             if (String.IsNullOrWhiteSpace(p.firstName)) missingFields.Add("First Name");
             if (String.IsNullOrWhiteSpace(p.lastName)) missingFields.Add("Last Name");
             if (String.IsNullOrWhiteSpace(p.passwordHash)) missingFields.Add("Password");
-            
+
             if (missingFields.Count > 0)
             {
                 throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));

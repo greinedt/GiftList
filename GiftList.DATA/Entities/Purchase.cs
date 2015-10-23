@@ -10,8 +10,8 @@ namespace GiftList.DATA.Entities
         public int purchaseId { get; set; }
         public int itemFK { get; set; }
         public int purchaserFK { get; set; }
-        public DateTime purchaseDate { get; set; }
+        public DateTime? purchaseDate { get; set; }
         public DateTime updateTimestamp { get; set; }
-        public int updatePersinFK { get; set; }
+        public int updatePersonFK { get; set; }
     }
 }

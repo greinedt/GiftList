@@ -5,8 +5,9 @@ namespace GiftList.DATA.Repositories
 {
     public interface IPurchaseRepository
     {
-        IList<Purchase> GetAllPurchases(string query, int page, int pageSize);
-        long GetNumberOfPurchases(string query);
+        IList<Purchase> GetAllPurchases();
+        IList<Purchase> GetAllPurchases(int purchaser);
+        long GetNumberOfPurchases(int purchaser);
         bool PurchaseExists(int item, int purchaser);
         Purchase GetPurchaseById(int id);
         Purchase GetPurchase(int item, int purchaser);
