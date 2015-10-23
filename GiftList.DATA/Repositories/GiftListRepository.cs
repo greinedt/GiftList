@@ -9,8 +9,6 @@ namespace TheGiftList.DATA.Repositories
 {
     public class ListRepository : IGiftListRepository
     {
-        private SqlConnection _conn;
-        private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
         public IList<GiftList> GetAllGiftLists()
         {
