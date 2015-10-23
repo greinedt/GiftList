@@ -5,9 +5,9 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemRepository
     {
-        IList<Item> GetAllItems(string query, int page, int pageSize);
-        long GetNumberOfItems(string query);
-        bool ItemExists(int group, int member);
+        IList<Item> GetAllItems(int giftList);
+        long GetNumberOfItems(int giftList);
+        bool ItemExists(int giftList, string itemName);
         Item GetItemById(int id);
         Item GetItem(int giftList, string itemName);
         long Insert(Item item);
