@@ -12,7 +12,7 @@ namespace TheGiftList.DATA.Entities
         public int commentorFK { get; set; }
         public string commentText { get; set; }
         public bool isHiddenFromOwner { get; set; }
-        public DateTime updateTimestamp { get; set; }
+        public DateTime updateTimeStamp { get; set; }
         public int updatePersonFK { get; set; }
     }
 }

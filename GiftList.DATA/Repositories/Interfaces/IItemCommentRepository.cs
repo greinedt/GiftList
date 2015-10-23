@@ -5,12 +5,10 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemCommentRepository
     {
-        IList<ItemComment> GetAllItemComments(string query, int page, int pageSize);
-        long GetNumberOfItemComments(string query);
-        bool ItemCommentExists(int group, int member);
+        IList<ItemComment> GetAllItemComments(int item);
+        long GetNumberOfItemComments(int item);
         ItemComment GetItemCommentById(int id);
         ItemComment GetItemCommentByItem(int itemId);
-        ItemComment GetItemCommentByItem(Item item);
         long Insert(ItemComment itemComment);
         void Update(int id, ItemComment itemComment);
         void Delete(int id);

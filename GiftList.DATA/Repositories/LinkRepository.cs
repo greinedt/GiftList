@@ -39,7 +39,7 @@ namespace TheGiftList.DATA.Repositories
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
                         linkName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
                         url = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
-                        isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : rdr.GetBoolean(rdr.GetOrdinal("isImage")),
+                        isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonKey = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
                     };
