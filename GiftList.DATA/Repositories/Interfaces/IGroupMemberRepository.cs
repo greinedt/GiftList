@@ -5,8 +5,8 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IGroupMemberRepository 
     {
-        IList<GroupMember> GetAllGroupMembers(string query, int page, int pageSize);
-        long GetNumberOfGroupMembers(string query);
+        IList<GroupMember> GetAllGroupMembers(int group);
+        long GetNumberOfGroupMembers(int group);
         bool GroupMemberExists(int group, int member);
         GroupMember GetGroupMemberById(int id);
         GroupMember GetGroupMember(int group, int member);
