@@ -12,6 +12,6 @@ namespace TheGiftList.DATA.Entities
         public string listName { get; set; }
         public bool isPrivate { get; set; }
         public DateTime updateTimestamp { get; set; }
-        public int updatePersonKey { get; set; }
+        public int updatePersonFK { get; set; }
     }
 }

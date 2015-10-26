@@ -5,7 +5,6 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IGiftListRepository
     {
-        IList<Entities.GiftList> GetAllGiftLists();
         IList<Entities.GiftList> GetAllGiftLists(int person);
         long GetNumberOGiftfLists(int person);
         bool GiftListExists(int person, string giftListName);
