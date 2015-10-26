@@ -39,7 +39,7 @@ namespace TheGiftList.DATA.Repositories.Interfaces
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
                         groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        desription = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
@@ -87,7 +87,7 @@ namespace TheGiftList.DATA.Repositories.Interfaces
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
                         groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        desription = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
@@ -128,7 +128,7 @@ namespace TheGiftList.DATA.Repositories.Interfaces
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
                         groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        desription = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
                         isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
                         updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
@@ -230,7 +230,7 @@ namespace TheGiftList.DATA.Repositories.Interfaces
 
                 try
                 {
-                    return int.Parse(cmd.ExecuteScalar().ToString());s
+                    return int.Parse(cmd.ExecuteScalar().ToString()); ;
                 }
                 catch (Exception)
                 {
@@ -248,7 +248,7 @@ namespace TheGiftList.DATA.Repositories.Interfaces
         {
             CheckGroupForRequiredValues(group, RepositoryUtils.RepositoryAction.Update);
 
-            var linkToUpdate = GetGroupById(group.linkId);
+            var linkToUpdate = GetGroupById(group.groupId);
             if (linkToUpdate == null)
             {
                 throw new Exception("Group does not exist in database");

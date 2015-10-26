@@ -193,7 +193,7 @@ namespace TheGiftList.DATA.Repositories
             CheckGiftListForRequiredValues(giftList, RepositoryUtils.RepositoryAction.Insert);
             try
             {
-                var linkExists = GetList(giftList.personFK, giftList.listName)
+                var linkExists = GetList(giftList.personFK, giftList.listName);
                 if (linkExists != null)
                 {
                     throw new Exception($"Gift List {giftList.personFK} {giftList.listName} already exists in database!");
