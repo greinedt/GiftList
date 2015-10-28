@@ -40,11 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuisinessLogic\GeneralBL.cs" />
     <Compile Include="BuisinessLogic\GiftListBL.cs" />
+    <Compile Include="BuisinessLogic\GiftListGroupBL.cs" />
     <Compile Include="BuisinessLogic\GroupBL.cs" />
+    <Compile Include="BuisinessLogic\GroupMemberBL.cs" />
     <Compile Include="BuisinessLogic\ItemBL.cs" />
+    <Compile Include="BuisinessLogic\ItemCommentBL.cs" />
+    <Compile Include="BuisinessLogic\ItemStatusBL.cs" />
+    <Compile Include="BuisinessLogic\LinkBL.cs" />
     <Compile Include="BuisinessLogic\PersonBL.cs" />
+    <Compile Include="BuisinessLogic\PurchaseBL.cs" />
     <Compile Include="BusinessEntities\GiftList.cs" />
     <Compile Include="BusinessEntities\GiftListGroup.cs" />
     <Compile Include="BusinessEntities\Group.cs" />
