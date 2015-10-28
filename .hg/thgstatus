@@ -1,5 +1,6 @@
+m
 mGiftList.DATA
-mGiftList.DATA/Entities
-mGiftList.DATA/Repositories
-mGiftList.DATA/Repositories/Interfaces
+rGiftList.DATA/Entities
+rGiftList.DATA/Repositories
+rGiftList.DATA/Repositories/Interfaces
 mGiftList.DATA/obj/Debug

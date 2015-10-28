@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftList.DATA", "GiftList.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftList.DATA.DevTest", "GiftList.DATA.DevTest\GiftList.DATA.DevTest.csproj", "{6BED4726-92B9-4294-84F9-5027E44E3903}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftList.BAL", "GiftList.BAL\GiftList.BAL.csproj", "{B4B601F1-9C03-4E92-B171-9C93601BE047}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6BED4726-92B9-4294-84F9-5027E44E3903}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BED4726-92B9-4294-84F9-5027E44E3903}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BED4726-92B9-4294-84F9-5027E44E3903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B601F1-9C03-4E92-B171-9C93601BE047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B601F1-9C03-4E92-B171-9C93601BE047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B601F1-9C03-4E92-B171-9C93601BE047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B601F1-9C03-4E92-B171-9C93601BE047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
