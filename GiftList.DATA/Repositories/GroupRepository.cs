@@ -13,6 +13,40 @@ namespace TheGiftList.DATA.Repositories.Interfaces
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
+        public IList<Group> GetAllGroups()
+        {
+            List<Group> groupList = new List<Group>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group];";
+                var cmd = new SqlCommand(sql, _conn);
+                
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var group = new Group()
+                    {
+                        groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                        creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                        groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                    };
+                    groupList.Add(group);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return groupList;
+        }
+
         public IList<Group> GetAllGroups(int creator)
         {
             List<Group> groupList = new List<Group>();
@@ -335,6 +369,21 @@ namespace TheGiftList.DATA.Repositories.Interfaces
             {
                 throw new Exception(String.Format("Cannot {0} Link: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
+        }
+        
+        public void Insert(List<Group> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<Group> batch)
+        {
+            batch.ForEach(x => Update(x.groupId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
     }
 }

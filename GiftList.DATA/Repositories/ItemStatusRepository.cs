@@ -281,5 +281,20 @@ namespace TheGiftList.DATA.Repositories
                 throw new Exception(String.Format("Cannot {0} ItemStatus: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
         }
+
+        public void Insert(List<ItemStatus> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<ItemStatus> batch)
+        {
+            batch.ForEach(x => Update(x.itemStatusId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
+        }
     }
 }

@@ -12,6 +12,40 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
+        public IList<Item> GetAllItems()
+        {
+            List<Item> itemList = new List<Item>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT itemId, itemStatusFK, giftListFK, itemName, description, updateTimestamp, updatePersonFK FROM dbo.item;";
+                var cmd = new SqlCommand(sql, _conn);
+                
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var item = new Item()
+                    {
+                        itemId = rdr.IsDBNull(rdr.GetOrdinal("itemId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemId")),
+                        itemStatusFK = rdr.IsDBNull(rdr.GetOrdinal("itemStatusFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusFK")),
+                        giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
+                        itemName = rdr.IsDBNull(rdr.GetOrdinal("itemName")) ? null : rdr.GetString(rdr.GetOrdinal("itemName")),
+                        description = rdr.IsDBNull(rdr.GetOrdinal("description")) ? null : rdr.GetString(rdr.GetOrdinal("description")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                    };
+                    itemList.Add(item);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return itemList;
+        }
+
         public IList<Item> GetAllItems(int giftList)
         {
             List<Item> itemList = new List<Item>();
@@ -334,6 +368,21 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
+        }
+
+        public void Insert(List<Item> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<Item> batch)
+        {
+            batch.ForEach(x => Update(x.itemId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
     }
 }

@@ -367,5 +367,20 @@ namespace TheGiftList.DATA.Repositories
                 throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
         }
+
+        public void Insert(List<Purchase> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<Purchase> batch)
+        {
+            batch.ForEach(x => Update(x.purchaseId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
+        }
     }
 }

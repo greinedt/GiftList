@@ -14,5 +14,8 @@ namespace TheGiftList.DATA.Repositories
         long Insert(Purchase purchase);
         void Update(int id, Purchase purchase);
         void Delete(int id);
+        void Insert(List<Purchase> batch);
+        void Update(List<Purchase> batch);
+        void Delete(List<int> batch);
     }
 }

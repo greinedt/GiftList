@@ -12,6 +12,40 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
+        public IList<Link> GetAllLinks()
+        {
+            List<Link> linklist = new List<Link>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT linkId, itemFK, linkName, url, isImage, updateTimestamp, updatePersonFK FROM DBO.LINK;";
+                var cmd = new SqlCommand(sql, _conn);
+                
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var link = new Link()
+                    {
+                        linkId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                        linkName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                        url = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                        isImage = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                    };
+                    linklist.Add(link);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return linklist;
+        }
+
         public IList<Link> GetAllLinks(int item)
         {
             List<Link> linklist = new List<Link>();
@@ -334,6 +368,21 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception(String.Format("Cannot {0} Link: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
+        }
+
+        public void Insert(List<Link> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<Link> batch)
+        {
+            batch.ForEach(x => Update(x.linkId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
     }
 }

@@ -13,5 +13,8 @@ namespace TheGiftList.DATA.Repositories
         long Insert(ItemStatus itemStatus);
         void Update(int id, ItemStatus itemStatus);
         void Delete(int id);
+        void Insert(List<ItemStatus> batch);
+        void Update(List<ItemStatus> batch);
+        void Delete(List<int> batch);
     }
 }

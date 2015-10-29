@@ -5,6 +5,7 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemRepository
     {
+        IList<Item> GetAllItems();
         IList<Item> GetAllItems(int giftList);
         long GetNumberOfItems(int giftList);
         bool ItemExists(int giftList, string itemName);
@@ -13,5 +14,8 @@ namespace TheGiftList.DATA.Repositories
         long Insert(Item item);
         void Update(int id, Item item);
         void Delete(int id);
+        void Insert(List<Item> batch);
+        void Update(List<Item> batch);
+        void Delete(List<int> batch);
     }
 }

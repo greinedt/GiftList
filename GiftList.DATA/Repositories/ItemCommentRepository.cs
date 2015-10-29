@@ -12,6 +12,40 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
+        public IList<ItemComment> GetAllItemComments()
+        {
+            List<ItemComment> itemCommentList = new List<ItemComment>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT itemCommentId, itemFK, commentorFK, commentText, isHiddenFromOwner, updateTimestamp, updatePersonFK FROM dbo.itemComment;";
+                var cmd = new SqlCommand(sql, _conn);
+
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var itemComment = new ItemComment()
+                    {
+                        itemCommentId = rdr.IsDBNull(rdr.GetOrdinal("itemCommentId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemCommentId")),
+                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                        commentorFK = rdr.IsDBNull(rdr.GetOrdinal("commentorFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("commentorFK")),
+                        commentText = rdr.IsDBNull(rdr.GetOrdinal("commentText")) ? null : rdr.GetString(rdr.GetOrdinal("commentText")),
+                        isHiddenFromOwner = rdr.IsDBNull(rdr.GetOrdinal("isHiddenFromOwner")) ? true : (rdr.GetString(rdr.GetOrdinal("isHiddenFromOwner")) == "Y"),
+                        updateTimeStamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                    };
+                    itemCommentList.Add(itemComment);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return itemCommentList;
+        }
+
         public IList<ItemComment> GetAllItemComments(int item)
         {
             List<ItemComment> itemCommentList = new List<ItemComment>();
@@ -297,6 +331,21 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
+        }
+        
+        public void Insert(List<ItemComment> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<ItemComment> batch)
+        {
+            batch.ForEach(x => Update(x.itemCommentId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
     }
 }

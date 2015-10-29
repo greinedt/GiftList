@@ -5,6 +5,7 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface ILinkRepository
     {
+        IList<Link> GetAllLinks();
         IList<Link> GetAllLinks(int item);
         long GetNumberOfLinks(int item);
         bool LinkExists(int item, string linkName);
@@ -13,5 +14,8 @@ namespace TheGiftList.DATA.Repositories
         long Insert(Link link);
         void Update(int id, Link link);
         void Delete(int id);
+        void Insert(List<Link> batch);
+        void Update(List<Link> batch);
+        void Delete(List<int> batch);
     }
 }

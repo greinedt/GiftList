@@ -12,6 +12,39 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
+
+        public IList<GiftListGroup> GetAllGiftListGroups()
+        {
+            List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT giftListGroupId, giftListFK, groupFK, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST;";
+                var cmd = new SqlCommand(sql, _conn);
+
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var giftListGroup = new GiftListGroup()
+                    {
+                        giftListGroupId = rdr.IsDBNull(rdr.GetOrdinal("giftListGroupId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListGroupId")),
+                        giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
+                        groupFK = rdr.IsDBNull(rdr.GetOrdinal("groupFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("groupFK")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                    };
+                    giftListGrouplist.Add(giftListGroup);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return giftListGrouplist;
+        }
+
         public IList<GiftListGroup> GetAllGiftListGroups(int group)
         {
             List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
@@ -231,6 +264,11 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
+        public void Insert(List<GiftListGroup> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
         public void Update(int id, GiftListGroup giftListGroup)
         {
             CheckGiftListGroupForRequiredValues(giftListGroup, RepositoryUtils.RepositoryAction.Update);
@@ -279,6 +317,11 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
+        public void Update(List<GiftListGroup> batch)
+        {
+            batch.ForEach(x => Update(x.giftListGroupId, x));
+        }
+
         public void Delete(int id)
         {
             _conn = new SqlConnection(ConnString);
@@ -298,6 +341,11 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception("Entity has not been deleted!");
             }
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
 
         private void CheckGiftListGroupForRequiredValues(GiftListGroup glg, RepositoryUtils.RepositoryAction action)

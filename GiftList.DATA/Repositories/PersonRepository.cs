@@ -11,7 +11,40 @@ namespace TheGiftList.DATA.Repositories
     {
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
-        
+
+        public IList<Person> GetAllPersonsLike()
+        {
+            List<Person> personList = new List<Person>();
+            try
+            {
+                _conn = new SqlConnection(ConnString);
+                _conn.Open();
+
+                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash FROM DBO.PERSON;";
+                var cmd = new SqlCommand(sql, _conn);
+
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var person = new Person()
+                    {
+                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash"))
+                    };
+                    personList.Add(person);
+                }
+            }
+            finally
+            {
+                _conn?.Close();
+            }
+            return personList;
+        }
+
         public IList<Person> GetAllPersonsLike(string partialUserName)
         {
             List<Person> personList = new List<Person>();
@@ -384,6 +417,21 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception(String.Format("Cannot {0} Person: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
+        }
+
+        public void Insert(List<Person> batch)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+
+        public void Update(List<Person> batch)
+        {
+            batch.ForEach(x => Update(x.personId, x));
+        }
+
+        public void Delete(List<int> batch)
+        {
+            batch.ForEach(x => Delete(x));
         }
     }
 }
