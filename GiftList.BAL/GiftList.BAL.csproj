@@ -50,7 +50,7 @@
     <Compile Include="BuisinessLogic\LinkBL.cs" />
     <Compile Include="BuisinessLogic\PersonBL.cs" />
     <Compile Include="BuisinessLogic\PurchaseBL.cs" />
-    <Compile Include="BuisinessLogic\Utils\PasswordHash.cs" />
+    <Compile Include="BuisinessLogic\Utils\PasswordHashUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations\GiftList.cs" />
     <Compile Include="Translations\GiftListGroup.cs" />

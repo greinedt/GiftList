@@ -83,7 +83,7 @@ namespace TheGiftList.BAL.BuisinessLogic
         public static bool Authenticate(string username, string password)
         {
             PersonBL person = GetPersonByUserName(username);
-            return TheGiftList.BAL.BuisinessLogic.PasswordHash.ValidatePassword(password, person.PasswordHash);
+            return PasswordHashUtil.ValidatePassword(password, person.PasswordHash);
         }
 
         #endregion BLMethods
