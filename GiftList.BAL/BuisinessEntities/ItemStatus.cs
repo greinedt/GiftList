@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TheGiftList.BAL.Entities
+namespace TheGiftList.DATA.Entities
 {
-    public class GiftListGroup
+    public class ItemStatus
     {
-        public int giftListGroupId { get; set; }
-        public int giftListFK { get; set; }
-        public int groupFK { get; set; }
+        public int itemStatusId { get; set; }
+        public string status { get; set; }
         public DateTime updateTimestamp { get; set; }
         public int updatePersonFK { get; set; }
     }

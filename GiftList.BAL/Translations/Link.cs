@@ -9,17 +9,17 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.Link Link(TheGiftList.DATA.Entities.Link data)
         {
-            Entities.Link bal = new Entities.Link();
+            Entities.Link ent = new Entities.Link();
 
-            bal.linkId = data.linkId;
-            bal.itemFK = data.itemFK;
-            bal.linkName = data.linkName;
-            bal.url = data.url;
-            bal.isImage = data.isImage;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.linkId = data.linkId;
+            ent.itemFK = data.itemFK;
+            ent.linkName = data.linkName;
+            ent.url = data.url;
+            ent.isImage = data.isImage;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

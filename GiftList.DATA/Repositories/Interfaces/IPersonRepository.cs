@@ -5,7 +5,7 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IPersonRepository
     {
-        IList<Person> GetAllPersonsLike();
+        IList<Person> GetAllPersons();
         IList<Person> GetAllPersonsLike(string partialUserName);
         int GetNumberOfPersons(string partialUserName);
         bool PersonExistsByEmail(string email);

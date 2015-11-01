@@ -9,16 +9,16 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.Purchase Purchase(TheGiftList.DATA.Entities.Purchase data)
         {
-            Entities.Purchase bal = new Entities.Purchase();
+            Entities.Purchase ent = new Entities.Purchase();
 
-            bal.purchaseId = data.purchaseId;
-            bal.itemFK = data.itemFK;
-            bal.purchaserFK = data.purchaserFK;
-            bal.purchaseDate = data.purchaseDate;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.purchaseId = data.purchaseId;
+            ent.itemFK = data.itemFK;
+            ent.purchaserFK = data.purchaserFK;
+            ent.purchaseDate = data.purchaseDate;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

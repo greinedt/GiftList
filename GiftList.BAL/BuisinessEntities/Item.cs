@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TheGiftList.BAL.Entities
+namespace TheGiftList.DATA.Entities
 {
     public class Item
     {

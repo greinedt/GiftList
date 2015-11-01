@@ -9,17 +9,17 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.ItemComment ItemComment(TheGiftList.DATA.Entities.ItemComment data)
         {
-            Entities.ItemComment bal = new Entities.ItemComment();
+            Entities.ItemComment ent = new Entities.ItemComment();
 
-            bal.itemCommentId = data.itemCommentId;
-            bal.itemFK = data.itemFK;
-            bal.commentorFK = data.commentorFK;
-            bal.commentText = data.commentText;
-            bal.isHiddenFromOwner = data.isHiddenFromOwner;
-            bal.updateTimeStamp = data.updateTimeStamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.itemCommentId = data.itemCommentId;
+            ent.itemFK = data.itemFK;
+            ent.commentorFK = data.commentorFK;
+            ent.commentText = data.commentText;
+            ent.isHiddenFromOwner = data.isHiddenFromOwner;
+            ent.updateTimeStamp = data.updateTimeStamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

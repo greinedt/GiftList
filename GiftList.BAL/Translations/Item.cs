@@ -9,17 +9,17 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.Item Item(TheGiftList.DATA.Entities.Item data)
         {
-            Entities.Item bal = new Entities.Item();
+            Entities.Item ent = new Entities.Item();
 
-            bal.itemId = data.itemId;
-            bal.itemStatusFK = data.itemStatusFK;
-            bal.giftListFK = data.giftListFK;
-            bal.itemName = data.itemName;
-            bal.description = data.description;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.itemId = data.itemId;
+            ent.itemStatusFK = data.itemStatusFK;
+            ent.giftListFK = data.giftListFK;
+            ent.itemName = data.itemName;
+            ent.description = data.description;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

@@ -50,16 +50,7 @@
     <Compile Include="BuisinessLogic\LinkBL.cs" />
     <Compile Include="BuisinessLogic\PersonBL.cs" />
     <Compile Include="BuisinessLogic\PurchaseBL.cs" />
-    <Compile Include="BusinessEntities\GiftList.cs" />
-    <Compile Include="BusinessEntities\GiftListGroup.cs" />
-    <Compile Include="BusinessEntities\Group.cs" />
-    <Compile Include="BusinessEntities\GroupMember.cs" />
-    <Compile Include="BusinessEntities\Item.cs" />
-    <Compile Include="BusinessEntities\ItemComment.cs" />
-    <Compile Include="BusinessEntities\ItemStatus.cs" />
-    <Compile Include="BusinessEntities\Link.cs" />
-    <Compile Include="BusinessEntities\Person.cs" />
-    <Compile Include="BusinessEntities\Purchase.cs" />
+    <Compile Include="BuisinessLogic\Utils\PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations\GiftList.cs" />
     <Compile Include="Translations\GiftListGroup.cs" />

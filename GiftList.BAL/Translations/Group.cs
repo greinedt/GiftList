@@ -9,16 +9,16 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.Group Group(TheGiftList.DATA.Entities.Group data)
         {
-            Entities.Group bal = new Entities.Group();
+            Entities.Group ent = new Entities.Group();
 
-            bal.groupId = data.groupId;
-            bal.creatorFK = data.creatorFK;
-            bal.description = data.description;
-            bal.isPrivate = data.isPrivate;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.groupId = data.groupId;
+            ent.creatorFK = data.creatorFK;
+            ent.description = data.description;
+            ent.isPrivate = data.isPrivate;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

@@ -8,16 +8,16 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.GiftList GiftList(TheGiftList.DATA.Entities.GiftList data)
         {
-            Entities.GiftList bal = new Entities.GiftList();
+            Entities.GiftList ent = new Entities.GiftList();
 
-            bal.giftListId = data.giftListId;
-            bal.personFK = data.personFK;
-            bal.listName = data.listName;
-            bal.isPrivate = data.isPrivate;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.giftListId = data.giftListId;
+            ent.personFK = data.personFK;
+            ent.listName = data.listName;
+            ent.isPrivate = data.isPrivate;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

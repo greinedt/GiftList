@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GiftList.BAL.BuisinessLogic
+namespace TheGiftList.BAL.BuisinessLogic
 {
     class GroupBL
     {

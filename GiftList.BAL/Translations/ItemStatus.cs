@@ -9,14 +9,14 @@ namespace TheGiftList.BAL
     {
         public static TheGiftList.BAL.Entities.ItemStatus ItemStatus(TheGiftList.DATA.Entities.ItemStatus data)
         {
-            Entities.ItemStatus bal = new Entities.ItemStatus();
+            Entities.ItemStatus ent = new Entities.ItemStatus();
 
-            bal.itemStatusId = data.itemStatusId;
-            bal.status = data.status;
-            bal.updateTimestamp = data.updateTimestamp;
-            bal.updatePersonFK = data.updatePersonFK;
+            ent.itemStatusId = data.itemStatusId;
+            ent.status = data.status;
+            ent.updateTimestamp = data.updateTimestamp;
+            ent.updatePersonFK = data.updatePersonFK;
 
-            return bal;
+            return ent;
         }
     }
 }

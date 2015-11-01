@@ -12,7 +12,7 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Person> GetAllPersonsLike()
+        public IList<Person> GetAllPersons()
         {
             List<Person> personList = new List<Person>();
             try
