@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using TheGiftList.DATA.Repositories;
-using TheGiftList.DATA.Entities;
-using TheGiftList.BAL;
 
 namespace TheGiftList.BAL.BuisinessLogic
 {
@@ -78,6 +74,12 @@ namespace TheGiftList.BAL.BuisinessLogic
         {
             PersonRepository repo = new PersonRepository();
             return Translate.Person(repo.GetPersonByUserName(username));
+        }
+
+        public static PersonBL GetById(int id)
+        {
+            PersonRepository repo = new PersonRepository();
+            return Translate.Person(repo.GetPersonById(id));
         }
 
         public static bool Authenticate(string username, string password)
