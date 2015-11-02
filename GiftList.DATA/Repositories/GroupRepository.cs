@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using TheGiftList.DATA.Entities;
 
-namespace TheGiftList.DATA.Repositories.Interfaces
+namespace TheGiftList.DATA.Repositories
 {
     public class GroupRepository : IGroupRepository
     {

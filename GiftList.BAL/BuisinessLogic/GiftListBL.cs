@@ -39,8 +39,9 @@ namespace TheGiftList.BAL.BuisinessLogic
         public PersonBL Person
         {
             get { return _person; }
-            set {
-                _personFK = value.PersonId;
+            set
+            {
+                _personFK = value != null ? value.PersonId : -1;
                 _person = value;
             }
         }
@@ -86,7 +87,7 @@ namespace TheGiftList.BAL.BuisinessLogic
         {
             get { return _updatePerson; }
             set {
-                _updatePersonFK = value.PersonId;
+                _updatePersonFK = value != null ? value.PersonId : -1;
                 _updatePerson = value;
             }
         }

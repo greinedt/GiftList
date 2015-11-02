@@ -1,24 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TheGiftList.DATA.Entities;
+using TheGiftList.BAL.BuisinessLogic;
+
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static TheGiftList.BAL.Entities.Group Group(TheGiftList.DATA.Entities.Group data)
+        public static GroupBL Group(Group data)
         {
-            Entities.Group ent = new Entities.Group();
+            GroupBL bl = new GroupBL();
 
-            ent.groupId = data.groupId;
-            ent.creatorFK = data.creatorFK;
-            ent.description = data.description;
-            ent.isPrivate = data.isPrivate;
-            ent.updateTimestamp = data.updateTimestamp;
-            ent.updatePersonFK = data.updatePersonFK;
+            bl.GroupId = data.groupId;
+            bl.CreatorFK = data.creatorFK;
+            bl.Description = data.description;
+            bl.IsPrivate = data.isPrivate;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
-            return ent;
+            return bl;
+        }
+
+        public static List<GroupBL> Group(List<Group> dataList)
+        {
+            List<GroupBL> blList = new List<GroupBL>();
+            foreach (Group data in dataList)
+            {
+                blList.Add(Translate.Group(data));
+            }
+            return blList;
         }
     }
 }
