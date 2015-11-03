@@ -11,13 +11,13 @@ namespace TheGiftList.BAL
         {
             ItemBL bl = new ItemBL();
 
-            //ent.itemId = data.itemId;
-            //ent.itemStatusFK = data.itemStatusFK;
-            //ent.giftListFK = data.giftListFK;
-            //ent.itemName = data.itemName;
-            //ent.description = data.description;
-            //ent.updateTimestamp = data.updateTimestamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.ItemId = data.itemId;
+            bl.ItemStatusFK = data.itemStatusFK;
+            bl.GiftListFK = data.giftListFK;
+            bl.ItemName = data.itemName;
+            bl.Description = data.description;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }
