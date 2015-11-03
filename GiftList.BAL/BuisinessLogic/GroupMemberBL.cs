@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheGiftList.BAL.BuisinessLogic
 {
-    class GroupMemberBL
+    public class GroupMemberBL
     {
     }
 }

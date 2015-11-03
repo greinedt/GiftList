@@ -1,25 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TheGiftList.DATA.Entities;
+using TheGiftList.BAL.BuisinessLogic;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static TheGiftList.BAL.Entities.ItemComment ItemComment(TheGiftList.DATA.Entities.ItemComment data)
+        public static ItemCommentBL ItemComment(ItemComment data)
         {
-            Entities.ItemComment ent = new Entities.ItemComment();
+            ItemCommentBL bl = new ItemCommentBL();
 
-            ent.itemCommentId = data.itemCommentId;
-            ent.itemFK = data.itemFK;
-            ent.commentorFK = data.commentorFK;
-            ent.commentText = data.commentText;
-            ent.isHiddenFromOwner = data.isHiddenFromOwner;
-            ent.updateTimeStamp = data.updateTimeStamp;
-            ent.updatePersonFK = data.updatePersonFK;
+            //ent.itemCommentId = data.itemCommentId;
+            //ent.itemFK = data.itemFK;
+            //ent.commentorFK = data.commentorFK;
+            //ent.commentText = data.commentText;
+            //ent.isHiddenFromOwner = data.isHiddenFromOwner;
+            //ent.updateTimeStamp = data.updateTimeStamp;
+            //ent.updatePersonFK = data.updatePersonFK;
 
-            return ent;
+            return bl;
+        }
+
+        public static List<ItemCommentBL> ItemComment(List<ItemComment> dataList)
+        {
+            List<ItemCommentBL> blList = new List<ItemCommentBL>();
+            foreach (ItemComment data in dataList)
+            {
+                blList.Add(Translate.ItemComment(data));
+            }
+            return blList;
         }
     }
 }

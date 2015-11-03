@@ -22,7 +22,7 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<GiftListGroupBL> Group(List<GiftListGroup> dataList)
+        public static List<GiftListGroupBL> GiftListGroup(List<GiftListGroup> dataList)
         {
             List<GiftListGroupBL> blList = new List<GiftListGroupBL>();
             foreach (GiftListGroup data in dataList)

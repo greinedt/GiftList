@@ -28,7 +28,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _person = PersonBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _person = null;
                 }
@@ -75,7 +75,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 _updatePersonFK = value;
                 try {
                     _updatePerson = PersonBL.GetById(value);
-                } catch(Exception e)
+                } catch(Exception)
                 {
                     _updatePerson = null;
                 }

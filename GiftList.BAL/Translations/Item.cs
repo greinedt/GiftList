@@ -1,25 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TheGiftList.DATA.Entities;
+using TheGiftList.BAL.BuisinessLogic;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static TheGiftList.BAL.Entities.Item Item(TheGiftList.DATA.Entities.Item data)
+        public static ItemBL Item(Item data)
         {
-            Entities.Item ent = new Entities.Item();
+            ItemBL bl = new ItemBL();
 
-            ent.itemId = data.itemId;
-            ent.itemStatusFK = data.itemStatusFK;
-            ent.giftListFK = data.giftListFK;
-            ent.itemName = data.itemName;
-            ent.description = data.description;
-            ent.updateTimestamp = data.updateTimestamp;
-            ent.updatePersonFK = data.updatePersonFK;
+            //ent.itemId = data.itemId;
+            //ent.itemStatusFK = data.itemStatusFK;
+            //ent.giftListFK = data.giftListFK;
+            //ent.itemName = data.itemName;
+            //ent.description = data.description;
+            //ent.updateTimestamp = data.updateTimestamp;
+            //ent.updatePersonFK = data.updatePersonFK;
 
-            return ent;
+            return bl;
+        }
+
+        public static List<ItemBL> Item(List<Item> dataList)
+        {
+            List<ItemBL> blList = new List<ItemBL>();
+            foreach (Item data in dataList)
+            {
+                blList.Add(Translate.Item(data));
+            }
+            return blList;
         }
     }
 }

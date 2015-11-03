@@ -56,4 +56,5 @@ namespace TheGiftList.BAL.BuisinessLogic
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
         }
+    }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
 using TheGiftList.BAL.BuisinessLogic;
 
-
 namespace TheGiftList.BAL
 {
     public static partial class Translate
@@ -22,7 +21,7 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<GiftListBL> Person(List<GiftList> dataList)
+        public static List<GiftListBL> GiftList(List<GiftList> dataList)
         {
             List<GiftListBL> blList = new List<GiftListBL>();
             foreach (GiftList data in dataList)

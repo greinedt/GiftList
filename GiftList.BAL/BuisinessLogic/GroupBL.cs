@@ -28,7 +28,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _creator = PersonBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _creator = null;
                 }
@@ -78,7 +78,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _updatePerson = PersonBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _updatePerson = null;
                 }

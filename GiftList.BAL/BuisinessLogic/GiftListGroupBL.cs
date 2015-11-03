@@ -28,7 +28,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _giftList = GiftListBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _giftList = null;
                 }
@@ -57,7 +57,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _group = GroupBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _group = null;
                 }
@@ -93,7 +93,7 @@ namespace TheGiftList.BAL.BuisinessLogic
                 {
                     _updatePerson = PersonBL.GetById(value);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     _updatePerson = null;
                 }
@@ -119,7 +119,7 @@ namespace TheGiftList.BAL.BuisinessLogic
         public static GiftListGroupBL GetById(int id)
         {
             GiftListGroupRepository repo = new GiftListGroupRepository();
-            return Translate.GiftList(repo.GetGiftListGroupById(id));
+            return Translate.GiftListGroup(repo.GetGiftListGroupById(id));
         }
 
         #endregion BLMethods
