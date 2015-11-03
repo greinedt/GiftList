@@ -11,12 +11,12 @@ namespace TheGiftList.BAL
         {
             GroupMemberBL bl = new GroupMemberBL();
 
-            //ent.groupMemberId = data.groupMemberId;
-            //ent.groupFK = data.groupFK;
-            //ent.memberFK = data.memberFK;
-            //ent.isAdmin = data.isAdmin;
-            //ent.updateTimestamp = data.updateTimestamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.GroupMemberId = data.groupMemberId;
+            bl.GroupFK = data.groupFK;
+            bl.MemberFK = data.memberFK;
+            bl.IsAdmin = data.isAdmin;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }
