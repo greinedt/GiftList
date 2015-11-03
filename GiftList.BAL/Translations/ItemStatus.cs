@@ -11,10 +11,10 @@ namespace TheGiftList.BAL
         {
             ItemStatusBL bl = new ItemStatusBL();
 
-            //ent.itemStatusId = data.itemStatusId;
-            //ent.status = data.status;
-            //ent.updateTimestamp = data.updateTimestamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.ItemStatusId = data.itemStatusId;
+            bl.Status = data.status;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }
