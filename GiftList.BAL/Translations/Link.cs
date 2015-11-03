@@ -11,13 +11,13 @@ namespace TheGiftList.BAL
         {
             LinkBL bl = new LinkBL();
 
-            //ent.linkId = data.linkId;
-            //ent.itemFK = data.itemFK;
-            //ent.linkName = data.linkName;
-            //ent.url = data.url;
-            //ent.isImage = data.isImage;
-            //ent.updateTimestamp = data.updateTimestamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.LinkId = data.linkId;
+            bl.ItemFK = data.itemFK;
+            bl.LinkName = data.linkName;
+            bl.Url = data.url;
+            bl.IsImage = data.isImage;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }
