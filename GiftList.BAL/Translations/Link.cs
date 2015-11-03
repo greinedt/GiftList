@@ -31,5 +31,30 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static Link Link(LinkBL bl)
+        {
+            Link data = new Link();
+
+            data.linkId = bl.LinkId;
+            data.itemFK = bl.ItemFK;
+            data.linkName = bl.LinkName;
+            data.url = bl.Url;
+            data.isImage = bl.IsImage;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<Link> Link(List<LinkBL> blList)
+        {
+            List<Link> dataList = new List<Link>();
+            foreach (LinkBL bl in blList)
+            {
+                dataList.Add(Translate.Link(bl));
+            }
+            return dataList;
+        }
     }
 }

@@ -30,5 +30,29 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static GiftList GiftList(GiftListBL bl)
+        {
+            GiftList data = new GiftList();
+
+            data.giftListId = bl.GiftListId;
+            data.personFK = bl.PersonFK;
+            data.listName = bl.ListName;
+            data.isPrivate = bl.IsPrivate;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<GiftList> GiftList(List<GiftListBL> blList)
+        {
+            List<GiftList> dataList = new List<GiftList>();
+            foreach (GiftListBL bl in blList)
+            {
+                dataList.Add(Translate.GiftList(bl));
+            }
+            return dataList;
+        }
     }
 }

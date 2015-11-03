@@ -30,5 +30,29 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static GroupMember GroupMember(GroupMemberBL bl)
+        {
+            GroupMember data = new GroupMember();
+
+            data.groupMemberId = bl.GroupMemberId;
+            data.groupFK = bl.GroupFK;
+            data.memberFK = bl.MemberFK;
+            data.isAdmin = bl.IsAdmin;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<GroupMember> GroupMember(List<GroupMemberBL> blList)
+        {
+            List<GroupMember> dataList = new List<GroupMember>();
+            foreach (GroupMemberBL bl in blList)
+            {
+                dataList.Add(Translate.GroupMember(bl));
+            }
+            return dataList;
+        }
     }
 }

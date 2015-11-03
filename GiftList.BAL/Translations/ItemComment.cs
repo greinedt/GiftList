@@ -31,5 +31,30 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static ItemComment ItemComment(ItemCommentBL bl)
+        {
+            ItemComment data = new ItemComment();
+
+            data.itemCommentId = bl.ItemCommentId;
+            data.itemFK = bl.ItemFK;
+            data.commentorFK = bl.CommentorFK;
+            data.commentText = bl.CommentText;
+            data.isHiddenFromOwner = bl.IsHiddenFromOwner;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<ItemComment> ItemComment(List<ItemCommentBL> blList)
+        {
+            List<ItemComment> dataList = new List<ItemComment>();
+            foreach (ItemCommentBL bl in blList)
+            {
+                dataList.Add(Translate.ItemComment(bl));
+            }
+            return dataList;
+        }
     }
 }

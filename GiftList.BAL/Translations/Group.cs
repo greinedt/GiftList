@@ -31,5 +31,29 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static Group Group(GroupBL bl)
+        {
+            Group data = new Group();
+
+            data.groupId = bl.GroupId;
+            data.creatorFK = bl.CreatorFK;
+            data.description = bl.Description;
+            data.isPrivate = bl.IsPrivate;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<Group> Group(List<GroupBL> blList)
+        {
+            List<Group> dataList = new List<Group>();
+            foreach (GroupBL bl in blList)
+            {
+                dataList.Add(Translate.Group(bl));
+            }
+            return dataList;
+        }
     }
 }

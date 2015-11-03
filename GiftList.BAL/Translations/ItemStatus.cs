@@ -28,5 +28,27 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static ItemStatus ItemStatus(ItemStatusBL bl)
+        {
+            ItemStatus data = new ItemStatus();
+
+            data.itemStatusId = bl.ItemStatusId;
+            data.status = bl.Status;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<ItemStatus> GiftList(List<ItemStatusBL> blList)
+        {
+            List<ItemStatus> dataList = new List<ItemStatus>();
+            foreach (ItemStatusBL bl in blList)
+            {
+                dataList.Add(Translate.ItemStatus(bl));
+            }
+            return dataList;
+        }
     }
 }

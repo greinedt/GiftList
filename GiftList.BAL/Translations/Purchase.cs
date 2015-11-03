@@ -30,5 +30,29 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static Purchase Purchase(PurchaseBL bl)
+        {
+            Purchase data = new Purchase();
+
+            data.purchaseId = bl.PurchaseId;
+            data.itemFK = bl.ItemFK;
+            data.purchaserFK = bl.PurchaserFK;
+            data.purchaseDate = bl.PurchaseDate;
+            data.updateTimestamp = bl.UpdateTimestamp;
+            data.updatePersonFK = bl.UpdatePersonFK;
+
+            return data;
+        }
+
+        public static List<Purchase> Purchase(List<PurchaseBL> blList)
+        {
+            List<Purchase> dataList = new List<Purchase>();
+            foreach (PurchaseBL bl in blList)
+            {
+                dataList.Add(Translate.Purchase(bl));
+            }
+            return dataList;
+        }
     }
 }

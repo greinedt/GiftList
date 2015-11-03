@@ -34,5 +34,30 @@ namespace TheGiftList.BAL
             }
             return blList;
         }
+
+        public static Person Person(PersonBL bl)
+        {
+            Person data = new Person();
+
+            data.personId = bl.PersonId;
+            data.userName = bl.UserName;
+            data.emailAddress = bl.EmailAddress;
+            data.firstName = bl.FirstName;
+            data.lastName = bl.LastName;
+            data.passwordHash = bl.PasswordHash;
+            data.updateTimestamp = bl.UpdateTimestamp;
+
+            return data;
+        }
+
+        public static List<Person> Person(List<PersonBL> blList)
+        {
+            List<Person> dataList = new List<Person>();
+            foreach (PersonBL bl in blList)
+            {
+                dataList.Add(Translate.Person(bl));
+            }
+            return dataList;
+        }
     }
 }
