@@ -103,10 +103,10 @@ namespace TheGiftList.BAL.BuisinessLogic
 
         #region BLMethods  
 
-        public GroupBL GetByID(int id)
+        public static GroupBL GetById(int id)
         {
             GroupRepository repo = new GroupRepository();
-            return Translate.GiftList(repo.GetGroupById(id));
+            return Translate.Group(repo.GetGroupById(id));
         }
 
         #endregion BLMethods

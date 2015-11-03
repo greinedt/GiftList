@@ -7,7 +7,7 @@ using TheGiftList.DATA.Entities;
 
 namespace TheGiftList.DATA.Repositories
 {
-    public class ListGroupRepository : IGiftListGroupRepository
+    public class GiftListGroupRepository : IGiftListGroupRepository
     {
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";

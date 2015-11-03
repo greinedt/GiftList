@@ -97,7 +97,7 @@ namespace TheGiftList.BAL.BuisinessLogic
 
         #region BLMethods  
         
-        public GiftListBL GetByID(int id)
+        public static GiftListBL GetById(int id)
         {
             GiftListRepository repo = new GiftListRepository();
             return Translate.GiftList(repo.GetListById(id));

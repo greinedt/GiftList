@@ -1,23 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
 using TheGiftList.BAL.BuisinessLogic;
+
 
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static TheGiftList.BAL.Entities.GiftListGroup GiftListGroup(TheGiftList.DATA.Entities.GiftListGroup data)
+        public static GiftListGroupBL GiftListGroup(GiftListGroup data)
         {
-            Entities.GiftListGroup ent = new Entities.GiftListGroup();
+            GiftListGroupBL bl = new GiftListGroupBL();
 
-            ent.giftListGroupId = data.giftListGroupId;
-            ent.giftListFK = data.giftListFK;
-            ent.groupFK = data.groupFK;
-            ent.updateTimestamp = data.updateTimestamp;
-            ent.updatePersonFK = data.updatePersonFK;
+            bl.GiftListGroupId = data.giftListGroupId;
+            bl.GiftListFK = data.giftListFK;
+            bl.GroupFK = data.groupFK;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
-            return ent;
+            return bl;
+        }
+
+        public static List<GiftListGroupBL> Group(List<GiftListGroup> dataList)
+        {
+            List<GiftListGroupBL> blList = new List<GiftListGroupBL>();
+            foreach (GiftListGroup data in dataList)
+            {
+                blList.Add(Translate.GiftListGroup(data));
+            }
+            return blList;
         }
     }
 }
