@@ -11,12 +11,12 @@ namespace TheGiftList.BAL
         {
             PurchaseBL bl = new PurchaseBL();
 
-            //ent.purchaseId = data.purchaseId;
-            //ent.itemFK = data.itemFK;
-            //ent.purchaserFK = data.purchaserFK;
-            //ent.purchaseDate = data.purchaseDate;
-            //ent.updateTimestamp = data.updateTimestamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.PurchaseId = data.purchaseId;
+            bl.ItemFK = data.itemFK;
+            bl.PurchaserFK = data.purchaserFK;
+            bl.PurchaseDate = data.purchaseDate;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }
