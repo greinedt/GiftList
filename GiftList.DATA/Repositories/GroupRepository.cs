@@ -297,7 +297,7 @@ namespace TheGiftList.DATA.Repositories
                                                       [groupName]=@groupName, 
                                                       [description]=@description, 
                                                       [isPrivate]=@isPrivate, 
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimestamp]=getdate(),
                                                       [updatePersonFK]=@updatePersonFK
                                                       WHERE groupId=@groupId";
 

@@ -33,7 +33,7 @@ namespace TheGiftList.DATA.Repositories
                         commentorFK = rdr.IsDBNull(rdr.GetOrdinal("commentorFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("commentorFK")),
                         commentText = rdr.IsDBNull(rdr.GetOrdinal("commentText")) ? null : rdr.GetString(rdr.GetOrdinal("commentText")),
                         isHiddenFromOwner = rdr.IsDBNull(rdr.GetOrdinal("isHiddenFromOwner")) ? true : (rdr.GetString(rdr.GetOrdinal("isHiddenFromOwner")) == "Y"),
-                        updateTimeStamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     itemCommentList.Add(itemComment);
@@ -74,7 +74,7 @@ namespace TheGiftList.DATA.Repositories
                         commentorFK = rdr.IsDBNull(rdr.GetOrdinal("commentorFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("commentorFK")),
                         commentText = rdr.IsDBNull(rdr.GetOrdinal("commentText")) ? null : rdr.GetString(rdr.GetOrdinal("commentText")),
                         isHiddenFromOwner = rdr.IsDBNull(rdr.GetOrdinal("isHiddenFromOwner")) ? true : (rdr.GetString(rdr.GetOrdinal("isHiddenFromOwner")) == "Y"),
-                        updateTimeStamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     itemCommentList.Add(itemComment);
@@ -115,7 +115,7 @@ namespace TheGiftList.DATA.Repositories
                         commentorFK = rdr.IsDBNull(rdr.GetOrdinal("commentorFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("commentorFK")),
                         commentText = rdr.IsDBNull(rdr.GetOrdinal("commentText")) ? null : rdr.GetString(rdr.GetOrdinal("commentText")),
                         isHiddenFromOwner = rdr.IsDBNull(rdr.GetOrdinal("isHiddenFromOwner")) ? true : (rdr.GetString(rdr.GetOrdinal("isHiddenFromOwner")) == "Y"),
-                        updateTimeStamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     itemCommentList.Add(itemComment);
@@ -156,7 +156,7 @@ namespace TheGiftList.DATA.Repositories
                         commentorFK = rdr.IsDBNull(rdr.GetOrdinal("commentorFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("commentorFK")),
                         commentText = rdr.IsDBNull(rdr.GetOrdinal("commentText")) ? null : rdr.GetString(rdr.GetOrdinal("commentText")),
                         isHiddenFromOwner = rdr.IsDBNull(rdr.GetOrdinal("isHiddenFromOwner")) ? true : (rdr.GetString(rdr.GetOrdinal("isHiddenFromOwner")) == "Y"),
-                        updateTimeStamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
                         updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                     };
                     itemCommentList.Add(itemComment);

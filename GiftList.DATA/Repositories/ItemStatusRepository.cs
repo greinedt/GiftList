@@ -41,7 +41,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT itemStatusUd, status, updateTimeStamp, updatePersonFK FROM DBO.itemStatus;";
+                string sql = "SELECT itemStatusUd, status, updateTimestamp, updatePersonFK FROM DBO.itemStatus;";
                 var cmd = new SqlCommand(sql, _conn);
                 
                 var rdr = cmd.ExecuteReader();
@@ -72,7 +72,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT itemStatusUd, status, updateTimeStamp, updatePersonFK FROM DBO.itemStatus WHERE status = @status;";
+                string sql = "SELECT itemStatusUd, status, updateTimestamp, updatePersonFK FROM DBO.itemStatus WHERE status = @status;";
                 var cmd = new SqlCommand(sql, _conn);
 
                 var paramQuery = new SqlParameter
@@ -110,7 +110,7 @@ namespace TheGiftList.DATA.Repositories
                 _conn = new SqlConnection(ConnString);
                 _conn.Open();
 
-                string sql = "SELECT itemStatusUd, status, updateTimeStamp, updatePersonFK FROM DBO.itemStatus WHERE itemStatusId = @id;";
+                string sql = "SELECT itemStatusUd, status, updateTimestamp, updatePersonFK FROM DBO.itemStatus WHERE itemStatusId = @id;";
                 var cmd = new SqlCommand(sql, _conn);
 
                 var paramQuery = new SqlParameter
@@ -238,7 +238,7 @@ namespace TheGiftList.DATA.Repositories
 
                 var cmd = _conn.CreateCommand();
                 cmd.CommandText = @"UPDATE person SET [status]=@status, 
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimestamp]=getdate(),
                                                       [updatePersonFK]=@updatePersonFK
                                                       WHERE personId=@Id";
 

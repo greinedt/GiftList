@@ -11,13 +11,13 @@ namespace TheGiftList.BAL
         {
             ItemCommentBL bl = new ItemCommentBL();
 
-            //ent.itemCommentId = data.itemCommentId;
-            //ent.itemFK = data.itemFK;
-            //ent.commentorFK = data.commentorFK;
-            //ent.commentText = data.commentText;
-            //ent.isHiddenFromOwner = data.isHiddenFromOwner;
-            //ent.updateTimeStamp = data.updateTimeStamp;
-            //ent.updatePersonFK = data.updatePersonFK;
+            bl.ItemCommentId = data.itemCommentId;
+            bl.ItemFK = data.itemFK;
+            bl.CommentorFK = data.commentorFK;
+            bl.CommentText = data.commentText;
+            bl.IsHiddenFromOwner = data.isHiddenFromOwner;
+            bl.UpdateTimestamp = data.updateTimestamp;
+            bl.UpdatePersonFK = data.updatePersonFK;
 
             return bl;
         }

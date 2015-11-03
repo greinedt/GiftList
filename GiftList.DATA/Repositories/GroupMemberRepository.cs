@@ -297,7 +297,7 @@ namespace TheGiftList.DATA.Repositories
                 cmd.CommandText = @"UPDATE person SET [groupFK]=@groupFK, 
                                                       [memberFK]=@memberFK, 
                                                       [isAdmin]=@isAdmin, 
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimestamp]=getdate(),
                                                       [updatePersonFK]=@updatePersonFK
                                                       WHERE groupMemberId=@groupMemberId";
 

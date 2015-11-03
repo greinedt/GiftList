@@ -17,13 +17,13 @@ namespace TheGiftList.BAL.BuisinessLogic
             set { _itemId = value; }
         }
 
-        private int _itemStatudFK;
+        private int _itemStatusFK;
         public int ItemStatusFK
         {
-            get { return _itemStatudFK; }
+            get { return _itemStatusFK; }
             set
             {
-                _itemStatudFK = value;
+                _itemStatusFK = value;
                 try
                 {
                     _itemStatus = GroupBL.GetById(value);
@@ -41,7 +41,7 @@ namespace TheGiftList.BAL.BuisinessLogic
             get { return _itemStatus; }
             set
             {
-                _itemStatudFK = value != null ? value.GroupId : -1;
+                _itemStatusFK = value != null ? value.GroupId : -1;
                 _itemStatus = value;
             }
         }

@@ -296,7 +296,7 @@ namespace TheGiftList.DATA.Repositories
                                                       [linkName]=@linkName, 
                                                       [url]=@url, 
                                                       [isImage]=@isImage, 
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimestamp]=getdate(),
                                                       [updatePersonFK]=@updatePersonFK
                                                       WHERE linkId=@linkId";
 

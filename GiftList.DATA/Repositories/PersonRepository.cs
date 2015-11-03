@@ -346,7 +346,7 @@ namespace TheGiftList.DATA.Repositories
                                                       [firstName]=@firstName, 
                                                       [lastName]=@lastName, 
                                                       [passwordHash]=@passwordHash, 
-                                                      [updateTimeStamp]=getdate()
+                                                      [updateTimestamp]=getdate()
                                                       WHERE personId=@Id";
 
                 cmd.Parameters.Add("@Id", SqlDbType.Int);

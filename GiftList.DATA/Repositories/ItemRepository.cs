@@ -296,7 +296,7 @@ namespace TheGiftList.DATA.Repositories
                                                       [giftListFK]=@giftListFK, 
                                                       [itemName]=@itemName, 
                                                       [description]=@description,  
-                                                      [updateTimeStamp]=getdate(),
+                                                      [updateTimestamp]=getdate(),
                                                       [updatePersonFK]=@updatePersonFK,
                                                       WHERE personId=@Id";
 
