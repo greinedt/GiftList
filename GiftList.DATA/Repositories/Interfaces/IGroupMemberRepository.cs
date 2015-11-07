@@ -17,5 +17,17 @@ namespace TheGiftList.DATA.Repositories
         void Update(List<GroupMemberEntity> batch);
         void Delete(int id);
         void Delete(List<int> batch);
+        IList<GroupMemberEntity> GetAllGroupMembers(IConnection conn);
+        IList<GroupMemberEntity> GetAllGroupMembers(int group, IConnection conn);
+        long GetNumberOfGroupMembers(int group, IConnection conn);
+        bool GroupMemberExists(int group, int member, IConnection conn);
+        GroupMemberEntity GetGroupMemberById(int id, IConnection conn);
+        GroupMemberEntity GetGroupMember(int group, int member, IConnection conn);
+        long Insert(GroupMemberEntity groupMember, IConnection conn);
+        void Insert(List<GroupMemberEntity> batch, IConnection conn);
+        void Update(int id, GroupMemberEntity groupMember, IConnection conn);
+        void Update(List<GroupMemberEntity> batch, IConnection conn);
+        void Delete(int id, IConnection conn);
+        void Delete(List<int> batch, IConnection conn);
     }
 }

@@ -145,7 +145,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public GiftListEntity GetListById(int id, Connection conn)
+        public GiftListEntity GetListById(int id, IConnection conn)
         {
             List<GiftListEntity> giftListlist = new List<GiftListEntity>();
             
@@ -184,7 +184,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public GiftListEntity GetList(int person, string listName, Connection conn)
+        public GiftListEntity GetList(int person, string listName, IConnection conn)
         {
             List<GiftListEntity> giftListlist = new List<GiftListEntity>();
 
@@ -231,7 +231,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(GiftListEntity giftList, Connection conn)
+        public long Insert(GiftListEntity giftList, IConnection conn)
         {
             CheckGiftListForRequiredValues(giftList, RepositoryUtils.RepositoryAction.Insert);
 
@@ -292,7 +292,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<GiftListEntity> batch, Connection conn)
+        public void Insert(List<GiftListEntity> batch, IConnection conn)
         {
             batch.ForEach(x => Insert(x));
         }
@@ -305,7 +305,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, GiftListEntity giftList, Connection conn)
+        public void Update(int id, GiftListEntity giftList, IConnection conn)
         {
             CheckGiftListForRequiredValues(giftList, RepositoryUtils.RepositoryAction.Update);
 
