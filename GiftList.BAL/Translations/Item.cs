@@ -1,58 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemBL Item(ItemEntity data)
+        public static Item Item(ItemEntity data)
         {
-            ItemBL bl = new ItemBL();
+            Item ent = new Item();
 
-            bl.ItemId = data.itemId;
-            bl.ItemStatusFK = data.itemStatusFK;
-            bl.GiftListFK = data.giftListFK;
-            bl.ItemName = data.itemName;
-            bl.Description = data.description;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.itemId;
+            ent.ItemStatusFK = data.itemStatusFK;
+            ent.GiftListFK = data.giftListFK;
+            ent.ItemName = data.itemName;
+            ent.Description = data.description;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<ItemBL> Item(List<ItemEntity> dataList)
+        public static List<Item> Item(List<ItemEntity> dataList)
         {
-            List<ItemBL> blList = new List<ItemBL>();
+            List<Item> entList = new List<Item>();
             foreach (ItemEntity data in dataList)
             {
-                blList.Add(Item(data));
+                entList.Add(Item(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static ItemEntity Item(ItemBL bl)
+        public static ItemEntity Item(Item ent)
         {
             ItemEntity data = new ItemEntity();
 
-            data.itemId = bl.ItemId;
-            data.itemStatusFK = bl.ItemStatusFK;
-            data.giftListFK = bl.GiftListFK;
-            data.itemName = bl.ItemName;
-            data.description = bl.Description;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.itemId = ent.Id;
+            data.itemStatusFK = ent.ItemStatusFK;
+            data.giftListFK = ent.GiftListFK;
+            data.itemName = ent.ItemName;
+            data.description = ent.Description;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<ItemEntity> Item(List<ItemBL> blList)
+        public static List<ItemEntity> Item(List<Item> entList)
         {
             List<ItemEntity> dataList = new List<ItemEntity>();
-            foreach (ItemBL bl in blList)
+            foreach (Item ent in entList)
             {
-                dataList.Add(Item(bl));
+                dataList.Add(Item(ent));
             }
             return dataList;
         }

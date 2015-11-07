@@ -1,58 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemCommentBL ItemComment(ItemCommentEntity data)
+        public static ItemComment ItemComment(ItemCommentEntity data)
         {
-            ItemCommentBL bl = new ItemCommentBL();
+            ItemComment ent = new ItemComment();
 
-            bl.ItemCommentId = data.itemCommentId;
-            bl.ItemFK = data.itemFK;
-            bl.CommentorFK = data.commentorFK;
-            bl.CommentText = data.commentText;
-            bl.IsHiddenFromOwner = data.isHiddenFromOwner;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.itemCommentId;
+            ent.ItemFK = data.itemFK;
+            ent.CommentorFK = data.commentorFK;
+            ent.CommentText = data.commentText;
+            ent.IsHiddenFromOwner = data.isHiddenFromOwner;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<ItemCommentBL> ItemComment(List<ItemCommentEntity> dataList)
+        public static List<ItemComment> ItemComment(List<ItemCommentEntity> dataList)
         {
-            List<ItemCommentBL> blList = new List<ItemCommentBL>();
+            List<ItemComment> entList = new List<ItemComment>();
             foreach (ItemCommentEntity data in dataList)
             {
-                blList.Add(ItemComment(data));
+                entList.Add(ItemComment(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static ItemCommentEntity ItemComment(ItemCommentBL bl)
+        public static ItemCommentEntity ItemComment(ItemComment ent)
         {
             ItemCommentEntity data = new ItemCommentEntity();
 
-            data.itemCommentId = bl.ItemCommentId;
-            data.itemFK = bl.ItemFK;
-            data.commentorFK = bl.CommentorFK;
-            data.commentText = bl.CommentText;
-            data.isHiddenFromOwner = bl.IsHiddenFromOwner;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.itemCommentId = ent.Id;
+            data.itemFK = ent.ItemFK;
+            data.commentorFK = ent.CommentorFK;
+            data.commentText = ent.CommentText;
+            data.isHiddenFromOwner = ent.IsHiddenFromOwner;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<ItemCommentEntity> ItemComment(List<ItemCommentBL> blList)
+        public static List<ItemCommentEntity> ItemComment(List<ItemComment> entList)
         {
             List<ItemCommentEntity> dataList = new List<ItemCommentEntity>();
-            foreach (ItemCommentBL bl in blList)
+            foreach (ItemComment ent in entList)
             {
-                dataList.Add(ItemComment(bl));
+                dataList.Add(ItemComment(ent));
             }
             return dataList;
         }

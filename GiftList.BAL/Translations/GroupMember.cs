@@ -1,56 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static GroupMemberBL GroupMember(GroupMemberEntity data)
+        public static GroupMember GroupMember(GroupMemberEntity data)
         {
-            GroupMemberBL bl = new GroupMemberBL();
+            GroupMember ent = new GroupMember();
 
-            bl.GroupMemberId = data.groupMemberId;
-            bl.GroupFK = data.groupFK;
-            bl.MemberFK = data.memberFK;
-            bl.IsAdmin = data.isAdmin;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.groupMemberId;
+            ent.GroupFK = data.groupFK;
+            ent.MemberFK = data.memberFK;
+            ent.IsAdmin = data.isAdmin;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<GroupMemberBL> GroupMember(List<GroupMemberEntity> dataList)
+        public static List<GroupMember> GroupMember(List<GroupMemberEntity> dataList)
         {
-            List<GroupMemberBL> blList = new List<GroupMemberBL>();
+            List<GroupMember> entList = new List<GroupMember>();
             foreach (GroupMemberEntity data in dataList)
             {
-                blList.Add(GroupMember(data));
+                entList.Add(GroupMember(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static GroupMemberEntity GroupMember(GroupMemberBL bl)
+        public static GroupMemberEntity GroupMember(GroupMember ent)
         {
             GroupMemberEntity data = new GroupMemberEntity();
 
-            data.groupMemberId = bl.GroupMemberId;
-            data.groupFK = bl.GroupFK;
-            data.memberFK = bl.MemberFK;
-            data.isAdmin = bl.IsAdmin;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.groupMemberId = ent.Id;
+            data.groupFK = ent.GroupFK;
+            data.memberFK = ent.MemberFK;
+            data.isAdmin = ent.IsAdmin;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<GroupMemberEntity> GroupMember(List<GroupMemberBL> blList)
+        public static List<GroupMemberEntity> GroupMember(List<GroupMember> entList)
         {
             List<GroupMemberEntity> dataList = new List<GroupMemberEntity>();
-            foreach (GroupMemberBL bl in blList)
+            foreach (GroupMember ent in entList)
             {
-                dataList.Add(GroupMember(bl));
+                dataList.Add(GroupMember(ent));
             }
             return dataList;
         }

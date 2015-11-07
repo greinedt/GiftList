@@ -1,56 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static PurchaseBL Purchase(PurchaseEntity data)
+        public static Purchase Purchase(PurchaseEntity data)
         {
-            PurchaseBL bl = new PurchaseBL();
+            Purchase ent = new Purchase();
 
-            bl.PurchaseId = data.purchaseId;
-            bl.ItemFK = data.itemFK;
-            bl.PurchaserFK = data.purchaserFK;
-            bl.PurchaseDate = data.purchaseDate;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.purchaseId;
+            ent.ItemFK = data.itemFK;
+            ent.PurchaserFK = data.purchaserFK;
+            ent.PurchaseDate = data.purchaseDate;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<PurchaseBL> Purchase(List<PurchaseEntity> dataList)
+        public static List<Purchase> Purchase(List<PurchaseEntity> dataList)
         {
-            List<PurchaseBL> blList = new List<PurchaseBL>();
+            List<Purchase> entList = new List<Purchase>();
             foreach (PurchaseEntity data in dataList)
             {
-                blList.Add(Purchase(data));
+                entList.Add(Purchase(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static PurchaseEntity Purchase(PurchaseBL bl)
+        public static PurchaseEntity Purchase(Purchase ent)
         {
             PurchaseEntity data = new PurchaseEntity();
 
-            data.purchaseId = bl.PurchaseId;
-            data.itemFK = bl.ItemFK;
-            data.purchaserFK = bl.PurchaserFK;
-            data.purchaseDate = bl.PurchaseDate;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.purchaseId = ent.Id;
+            data.itemFK = ent.ItemFK;
+            data.purchaserFK = ent.PurchaserFK;
+            data.purchaseDate = ent.PurchaseDate;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<PurchaseEntity> Purchase(List<PurchaseBL> blList)
+        public static List<PurchaseEntity> Purchase(List<Purchase> entList)
         {
             List<PurchaseEntity> dataList = new List<PurchaseEntity>();
-            foreach (PurchaseBL bl in blList)
+            foreach (Purchase ent in entList)
             {
-                dataList.Add(Purchase(bl));
+                dataList.Add(Purchase(ent));
             }
             return dataList;
         }

@@ -1,58 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static LinkBL Link(LinkEntity data)
+        public static Link Link(LinkEntity data)
         {
-            LinkBL bl = new LinkBL();
+            Link ent = new Link();
 
-            bl.LinkId = data.linkId;
-            bl.ItemFK = data.itemFK;
-            bl.LinkName = data.linkName;
-            bl.Url = data.url;
-            bl.IsImage = data.isImage;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.linkId;
+            ent.ItemFK = data.itemFK;
+            ent.LinkName = data.linkName;
+            ent.Url = data.url;
+            ent.IsImage = data.isImage;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<LinkBL> Link(List<LinkEntity> dataList)
+        public static List<Link> Link(List<LinkEntity> dataList)
         {
-            List<LinkBL> blList = new List<LinkBL>();
+            List<Link> entList = new List<Link>();
             foreach (LinkEntity data in dataList)
             {
-                blList.Add(Link(data));
+                entList.Add(Link(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static LinkEntity Link(LinkBL bl)
+        public static LinkEntity Link(Link ent)
         {
             LinkEntity data = new LinkEntity();
 
-            data.linkId = bl.LinkId;
-            data.itemFK = bl.ItemFK;
-            data.linkName = bl.LinkName;
-            data.url = bl.Url;
-            data.isImage = bl.IsImage;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.linkId = ent.Id;
+            data.itemFK = ent.ItemFK;
+            data.linkName = ent.LinkName;
+            data.url = ent.Url;
+            data.isImage = ent.IsImage;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<LinkEntity> Link(List<LinkBL> blList)
+        public static List<LinkEntity> Link(List<Link> entList)
         {
             List<LinkEntity> dataList = new List<LinkEntity>();
-            foreach (LinkBL bl in blList)
+            foreach (Link ent in entList)
             {
-                dataList.Add(Link(bl));
+                dataList.Add(Link(ent));
             }
             return dataList;
         }

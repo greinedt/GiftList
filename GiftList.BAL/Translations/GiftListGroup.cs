@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 
 
@@ -9,48 +9,48 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static GiftListGroupBL GiftListGroup(GiftListGroupEntity data)
+        public static GiftListGroup GiftListGroup(GiftListGroupEntity data)
         {
-            GiftListGroupBL bl = new GiftListGroupBL();
+            GiftListGroup ent = new GiftListGroup();
 
-            bl.GiftListGroupId = data.giftListGroupId;
-            bl.GiftListFK = data.giftListFK;
-            bl.GroupFK = data.groupFK;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.giftListGroupId;
+            ent.GiftListFK = data.giftListFK;
+            ent.GroupFK = data.groupFK;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<GiftListGroupBL> GiftListGroup(List<GiftListGroupEntity> dataList)
+        public static List<GiftListGroup> GiftListGroup(List<GiftListGroupEntity> dataList)
         {
-            List<GiftListGroupBL> blList = new List<GiftListGroupBL>();
+            List<GiftListGroup> entList = new List<GiftListGroup>();
             foreach (GiftListGroupEntity data in dataList)
             {
-                blList.Add(GiftListGroup(data));
+                entList.Add(GiftListGroup(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static GiftListGroupEntity GiftListGroup(GiftListGroupBL bl)
+        public static GiftListGroupEntity GiftListGroup(GiftListGroup ent)
         {
             GiftListGroupEntity data = new GiftListGroupEntity();
 
-            data.giftListGroupId = bl.GiftListGroupId;
-            data.giftListFK = bl.GiftListFK;
-            data.groupFK = bl.GroupFK;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.giftListGroupId = ent.Id;
+            data.giftListFK = ent.GiftListFK;
+            data.groupFK = ent.GroupFK;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<GiftListGroupBL> GiftList(List<GiftListGroupEntity> blList)
+        public static List<GiftListGroupEntity> GiftListGroup(List<GiftListGroup> entList)
         {
-            List<GiftListGroupBL> dataList = new List<GiftListGroupBL>();
-            foreach (GiftListGroupEntity bl in blList)
+            List<GiftListGroupEntity> dataList = new List<GiftListGroupEntity>();
+            foreach (GiftListGroup ent in entList)
             {
-                dataList.Add(GiftListGroup(bl));
+                dataList.Add(GiftListGroup(ent));
             }
             return dataList;
         }

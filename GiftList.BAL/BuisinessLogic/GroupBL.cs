@@ -3,113 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 
 using TheGiftList.DATA.Repositories;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL.BuisinessLogic
 {
-    public class GroupBL
+    public class GroupBL : IGroupBL
     {
-        #region BLProperties
+        private IGroupRepository repo;
 
-        private int _groupId;
-        public int GroupId
+        public GroupBL()
         {
-            get { return _groupId; }
-            set { _groupId = value; }
+            repo = new GroupRepository();
         }
-
-        private int _creatorFK;
-        public int CreatorFK
+        public Group GetById(int id)
         {
-            get { return _creatorFK; }
-            set
-            {
-                _creatorFK = value;
-                try
-                {
-                    _creator = PersonBL.GetById(value);
-                }
-                catch (Exception)
-                {
-                    _creator = null;
-                }
-            }
-        }
-
-        private PersonBL _creator;
-        public PersonBL Creator
-        {
-            get { return _creator; }
-            set
-            {
-                _creatorFK = value != null ? value.PersonId : -1;
-                _creator = value;
-            }
-        }
-
-        private string _description;
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; }
-        }
-
-        private bool _isPrivate;
-        public bool IsPrivate
-        {
-            get { return _isPrivate; }
-            set { _isPrivate = value; }
-        }
-
-        private DateTime _updateTimestamp;
-        public DateTime UpdateTimestamp
-        {
-            get { return _updateTimestamp; }
-            set { _updateTimestamp = value; }
-        }
-
-        private int _updatePersonFK;
-        public int UpdatePersonFK
-        {
-            get { return _updatePersonFK; }
-            set
-            {
-                _updatePersonFK = value;
-                try
-                {
-                    _updatePerson = PersonBL.GetById(value);
-                }
-                catch (Exception)
-                {
-                    _updatePerson = null;
-                }
-            }
-        }
-
-        private PersonBL _updatePerson;
-        public PersonBL UpdatePerson
-        {
-            get { return _updatePerson; }
-            set
-            {
-                _updatePersonFK = value != null ? value.PersonId : -1;
-                _updatePerson = value;
-            }
-        }
-
-
-
-        #endregion BLProperties
-
-
-        #region BLMethods  
-
-        public static GroupBL GetById(int id)
-        {
-            GroupRepository repo = new GroupRepository();
             return Translate.Group(repo.GetGroupById(id));
         }
 
-        #endregion BLMethods
-
+        public List<Group> GetAll()
+        {
+            return Translate.Group(repo.GetAllGroups().ToList());
+        }
     }
 }

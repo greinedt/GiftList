@@ -1,57 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static GroupBL Group(GroupEntity data)
+        public static Group Group(GroupEntity data)
         {
-            GroupBL bl = new GroupBL();
+            Group ent = new Group();
 
-            bl.GroupId = data.groupId;
-            bl.CreatorFK = data.creatorFK;
-            bl.Description = data.description;
-            bl.IsPrivate = data.isPrivate;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.groupId;
+            ent.CreatorFK = data.creatorFK;
+            ent.Description = data.description;
+            ent.IsPrivate = data.isPrivate;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<GroupBL> Group(List<GroupEntity> dataList)
+        public static List<Group> Group(List<GroupEntity> dataList)
         {
-            List<GroupBL> blList = new List<GroupBL>();
+            List<Group> entList = new List<Group>();
             foreach (GroupEntity data in dataList)
             {
-                blList.Add(Group(data));
+                entList.Add(Group(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static GroupEntity Group(GroupBL bl)
+        public static GroupEntity Group(Group ent)
         {
             GroupEntity data = new GroupEntity();
 
-            data.groupId = bl.GroupId;
-            data.creatorFK = bl.CreatorFK;
-            data.description = bl.Description;
-            data.isPrivate = bl.IsPrivate;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.groupId = ent.Id;
+            data.creatorFK = ent.CreatorFK;
+            data.description = ent.Description;
+            data.isPrivate = ent.IsPrivate;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<GroupEntity> Group(List<GroupBL> blList)
+        public static List<GroupEntity> Group(List<Group> entList)
         {
             List<GroupEntity> dataList = new List<GroupEntity>();
-            foreach (GroupBL bl in blList)
+            foreach (Group ent in entList)
             {
-                dataList.Add(Group(bl));
+                dataList.Add(Group(ent));
             }
             return dataList;
         }

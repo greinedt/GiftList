@@ -2,7 +2,7 @@
 
 namespace TheGiftList.BAL.Entities
 {
-    public class Base
+    public abstract class Base
     {
         private int _id;
         public int Id

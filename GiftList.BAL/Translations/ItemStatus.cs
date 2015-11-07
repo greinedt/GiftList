@@ -1,52 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemStatusBL ItemStatus(ItemStatusEntity data)
+        public static ItemStatus ItemStatus(ItemStatusEntity data)
         {
-            ItemStatusBL bl = new ItemStatusBL();
+            ItemStatus ent = new ItemStatus();
 
-            bl.ItemStatusId = data.itemStatusId;
-            bl.Status = data.status;
-            bl.UpdateTimestamp = data.updateTimestamp;
-            bl.UpdatePersonFK = data.updatePersonFK;
+            ent.Id = data.itemStatusId;
+            ent.Status = data.status;
+            ent.UpdateTimestamp = data.updateTimestamp;
+            ent.UpdatePersonFK = data.updatePersonFK;
 
-            return bl;
+            return ent;
         }
 
-        public static List<ItemStatusBL> ItemStatus(List<ItemStatusEntity> dataList)
+        public static List<ItemStatus> ItemStatus(List<ItemStatusEntity> dataList)
         {
-            List<ItemStatusBL> blList = new List<ItemStatusBL>();
+            List<ItemStatus> entList = new List<ItemStatus>();
             foreach (ItemStatusEntity data in dataList)
             {
-                blList.Add(ItemStatus(data));
+                entList.Add(ItemStatus(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static ItemStatusEntity ItemStatus(ItemStatusBL bl)
+        public static ItemStatusEntity ItemStatus(ItemStatus ent)
         {
             ItemStatusEntity data = new ItemStatusEntity();
 
-            data.itemStatusId = bl.ItemStatusId;
-            data.status = bl.Status;
-            data.updateTimestamp = bl.UpdateTimestamp;
-            data.updatePersonFK = bl.UpdatePersonFK;
+            data.itemStatusId = ent.Id;
+            data.status = ent.Status;
+            data.updateTimestamp = ent.UpdateTimestamp;
+            data.updatePersonFK = ent.UpdatePersonFK;
 
             return data;
         }
 
-        public static List<ItemStatusEntity> GiftList(List<ItemStatusBL> blList)
+        public static List<ItemStatusEntity> ItemStatus(List<ItemStatus> entList)
         {
             List<ItemStatusEntity> dataList = new List<ItemStatusEntity>();
-            foreach (ItemStatusBL bl in blList)
+            foreach (ItemStatus ent in entList)
             {
-                dataList.Add(ItemStatus(bl));
+                dataList.Add(ItemStatus(ent));
             }
             return dataList;
         }

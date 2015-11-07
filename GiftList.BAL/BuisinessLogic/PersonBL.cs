@@ -3,91 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 
 using TheGiftList.DATA.Repositories;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL.BuisinessLogic
 {
-    public class PersonBL
+    public class PersonBL : IPersonBL
     {
+        private IPersonRepository repo;
 
-        #region BLProperties
-
-        private int _personId;
-        public int PersonId
+        public PersonBL()
         {
-            get { return _personId; }
-            set { _personId = value; }
+            repo = new PersonRepository();
         }
 
-        private string _userName;
-        public string UserName
+        public List<Person> GetAll()
         {
-            get { return _userName; }
-            set { _userName = value; }
+            return Translate.Person(repo.GetAllPersons().ToList());
         }
 
-        private string _emailAddress;
-        public string EmailAddress
+        public Person GetPersonByUserName(string username)
         {
-            get { return _emailAddress; }
-            set { _emailAddress = value; }
+            return Translate.Person(repo.GetPersonByUserName(username));
         }
 
-        private string _firstName;
-        public string FirstName
+        public Person GetById(int id)
         {
-            get { return _firstName; }
-            set { _firstName = value; }
+            return  Translate.Person(repo.GetPersonById(id));
         }
 
-        private string _lastName;
-        public string LastName
+        public bool Authenticate(string username, string password)
         {
-            get { return _lastName; }
-            set { _lastName = value; }
+            bool valid = false;
+            Person person = GetPersonByUserName(username);
+            if(person != null)
+                valid = PasswordHashUtil.ValidatePassword(password, person.PasswordHash);
+            return valid;
         }
-
-        private string _passwordHash;
-        public string PasswordHash
-        {
-            get { return _passwordHash; }
-            set { _passwordHash = value; }
-        }
-
-        private DateTime _updateTimestamp;
-        public DateTime UpdateTimestamp
-        {
-            get { return _updateTimestamp; }
-            set { _updateTimestamp = value; }
-        }
-
-        #endregion BLProperties
-
-        #region BLMethods
-
-        //public static List<PersonBL> GetAllPersons()
-        //{
-        //    PersonRepository repo = new PersonRepository();
-        //    return Translate.Person(repo.GetAllPersons().ToList());
-        //}
-
-        //public static PersonBL GetPersonByUserName(string username)
-        //{
-        //    PersonRepository repo = new PersonRepository();
-        //    return Translate.Person(repo.GetPersonByUserName(username));
-        //}
-
-        public static PersonBL GetById(int id)
-        {
-            PersonRepository repo = new PersonRepository();
-            return null;// Translate.Person(repo.GetPersonById(id));
-        }
-
-        //public static bool Authenticate(string username, string password)
-        //{
-        //    PersonBL person = GetPersonByUserName(username);
-        //    return PasswordHashUtil.ValidatePassword(password, person.PasswordHash);
-        //}
-
-        #endregion BLMethods
     }
 }

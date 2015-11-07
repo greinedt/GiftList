@@ -40,6 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuisinessLogic\Interfaces\IGiftListBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IGroupBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IGiftListGroupBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IGroupMemberBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IItemBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IItemCommentBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IItemStatusBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\ILinkBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IPersonBL.cs" />
+    <Compile Include="BuisinessLogic\Interfaces\IPurchaseBL.cs" />
     <Compile Include="Entities\Base.cs" />
     <Compile Include="BuisinessLogic\GiftListBL.cs" />
     <Compile Include="BuisinessLogic\GiftListGroupBL.cs" />
@@ -52,7 +62,17 @@
     <Compile Include="BuisinessLogic\PersonBL.cs" />
     <Compile Include="BuisinessLogic\PurchaseBL.cs" />
     <Compile Include="BuisinessLogic\Utils\PasswordHashUtil.cs" />
+    <Compile Include="Entities\Base2.cs" />
+    <Compile Include="Entities\GiftList.cs" />
+    <Compile Include="Entities\GiftListGroup.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\GroupMember.cs" />
+    <Compile Include="Entities\Item.cs" />
+    <Compile Include="Entities\ItemComment.cs" />
+    <Compile Include="Entities\ItemStatus.cs" />
+    <Compile Include="Entities\Link.cs" />
     <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\Purchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations\GiftList.cs" />
     <Compile Include="Translations\GiftListGroup.cs" />
