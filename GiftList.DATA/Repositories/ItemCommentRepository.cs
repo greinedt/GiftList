@@ -299,6 +299,7 @@ namespace TheGiftList.DATA.Repositories
             catch(Exception e)
             {
                 conn.RollbackTransaction();
+                throw e;
             }
             conn.CommitTransaction();
         }

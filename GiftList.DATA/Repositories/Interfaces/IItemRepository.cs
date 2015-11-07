@@ -17,5 +17,17 @@ namespace TheGiftList.DATA.Repositories
         void Insert(List<ItemEntity> batch);
         void Update(List<ItemEntity> batch);
         void Delete(List<int> batch);
+        IList<ItemEntity> GetAllItems(IConnection conn);
+        IList<ItemEntity> GetAllItems(int giftList, IConnection conn);
+        long GetNumberOfItems(int giftList, IConnection conn);
+        bool ItemExists(int giftList, string itemName, IConnection conn);
+        ItemEntity GetItemById(int id, IConnection conn);
+        ItemEntity GetItem(int giftList, string itemName, IConnection conn);
+        long Insert(ItemEntity ite, IConnection connm);
+        void Update(int id, ItemEntity item, IConnection conn);
+        void Delete(int id, IConnection conn);
+        void Insert(List<ItemEntity> batch, IConnection conn);
+        void Update(List<ItemEntity> batch, IConnection conn);
+        void Delete(List<int> batch, IConnection conn);
     }
 }
