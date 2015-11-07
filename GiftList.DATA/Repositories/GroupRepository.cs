@@ -9,276 +9,294 @@ namespace TheGiftList.DATA.Repositories
 {
     public class GroupRepository : IGroupRepository
     {
-
-        private SqlConnection _conn;
-        private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
-
         public IList<GroupEntity> GetAllGroups()
         {
-            List<GroupEntity> groupList = new List<GroupEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
+                return GetAllGroups(conn);
+            }
+        }
 
-                string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group];";
-                var cmd = new SqlCommand(sql, _conn);
-                
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var group = new GroupEntity()
-                    {
-                        groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
-                        creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
-                    };
-                    groupList.Add(group);
-                }
-            }
-            finally
+        public IList<GroupEntity> GetAllGroups(IConnection conn)
+        {
+            List<GroupEntity> groupList = new List<GroupEntity>();
+            string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group];";
+
+            var rdr = conn.ExecuteReader(sql);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var group = new GroupEntity()
+                {
+                    groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                    creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                    description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                };
+                groupList.Add(group);
             }
+
             return groupList;
         }
 
         public IList<GroupEntity> GetAllGroups(int creator)
         {
+            using (Connection conn = new Connection())
+            {
+                return GetAllGroups(creator, conn);
+            }
+        }
+
+        public IList<GroupEntity> GetAllGroups(int creator, IConnection conn)
+        {
             List<GroupEntity> groupList = new List<GroupEntity>();
-            try
+
+            string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE creatorFK = @creatorFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var paramQuery = new SqlParameter
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
+                ParameterName = "@creatorFK",
+                Value = creator
+            };
+            prms.Add(paramQuery);
 
-                string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE creatorFK = @creatorFK;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var group = new GroupEntity()
                 {
-                    ParameterName = "@creatorFK",
-                    Value = creator
+                    groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                    creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                    description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
                 };
-                cmd.Parameters.Add(paramQuery);
+                groupList.Add(group);
+            }
 
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var group = new GroupEntity()
-                    {
-                        groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
-                        creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
-                    };
-                    groupList.Add(group);
-                }
-            }
-            finally
-            {
-                _conn?.Close();
-            }
             return groupList;
         }
 
+
         public GroupEntity GetGroup(int creator, string groupName)
         {
+            using (Connection conn = new Connection())
+            {
+                return GetGroup(creator, groupName, conn);
+            }
+        }
+
+        public GroupEntity GetGroup(int creator, string groupName, IConnection conn)
+        {
             List<GroupEntity> grouplist = new List<GroupEntity>();
-            try
+
+            string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE creatorFK = @creatorFK and groupName = @groupName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var paramItem = new SqlParameter
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
+                ParameterName = "@creatorFK",
+                Value = creator
+            };
+            prms.Add(paramItem);
 
-                string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE creatorFK = @creatorFK and groupName = @groupName;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramItem = new SqlParameter
-                {
-                    ParameterName = "@creatorFK",
-                    Value = creator
-                };
-                cmd.Parameters.Add(paramItem);
-
-                var paramName = new SqlParameter
-                {
-                    ParameterName = "@groupName",
-                    Value = groupName
-                };
-                cmd.Parameters.Add(paramName);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var group = new GroupEntity()
-                    {
-                        groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
-                        creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
-                    };
-                    grouplist.Add(group);
-                }
-            }
-            finally
+            var paramName = new SqlParameter
             {
-                _conn?.Close();
+                ParameterName = "@groupName",
+                Value = groupName
+            };
+            prms.Add(paramName);
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var group = new GroupEntity()
+                {
+                    groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                    creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                    description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                };
+                grouplist.Add(group);
             }
+
             return grouplist.FirstOrDefault();
         }
 
         public GroupEntity GetGroupById(int id)
         {
+            using (Connection conn = new Connection())
+            {
+                return GetGroupById(id, conn);
+            }
+        }
+
+        public GroupEntity GetGroupById(int id, IConnection conn)
+        {
             List<GroupEntity> grouplist = new List<GroupEntity>();
-            try
-            {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE groupId = @id;";
-                var cmd = new SqlCommand(sql, _conn);
+      
+            string sql = "SELECT groupId, creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK FROM dbo.[group] WHERE groupId = @id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
                 
-                var paramName = new SqlParameter
-                {
-                    ParameterName = "@id",
-                    Value = id
-                };
-                cmd.Parameters.Add(paramName);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var group = new GroupEntity()
-                    {
-                        groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
-                        creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
-                        description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
-                    };
-                    grouplist.Add(group);
-                }
-            }
-            finally
+            var paramName = new SqlParameter
             {
-                _conn?.Close();
+                ParameterName = "@id",
+                Value = id
+            };
+            prms.Add(paramName);
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var group = new GroupEntity()
+                {
+                    groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
+                    creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    groupName = rdr.IsDBNull(rdr.GetOrdinal("linkName")) ? null : rdr.GetString(rdr.GetOrdinal("linkName")),
+                    description = rdr.IsDBNull(rdr.GetOrdinal("url")) ? null : rdr.GetString(rdr.GetOrdinal("url")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isImage")) ? false : (rdr.GetString(rdr.GetOrdinal("isImage")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonKey")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonKey"))
+                };
+                grouplist.Add(group);
             }
+
             return grouplist.FirstOrDefault();
         }
 
         public long GetNumberOfGroups(int creator)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT COUNT(groupId) FROM dbo.[group] WHERE creatorFK = @creatorFK;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@creatorFK",
-                    Value = creator
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                return Int32.Parse(cmd.ExecuteScalar().ToString());
+                return GetNumberOfGroups(creator, conn);
             }
-            finally
+        }
+
+        public long GetNumberOfGroups(int creator, IConnection conn)
+        {
+            string sql = "SELECT COUNT(groupId) FROM dbo.[group] WHERE creatorFK = @creatorFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            var paramQuery = new SqlParameter
             {
-                _conn?.Close();
-            }
+                ParameterName = "@creatorFK",
+                Value = creator
+            };
+            prms.Add(paramQuery);
+
+            return Int32.Parse(conn.ExecuteScalar(sql,prms).ToString());
         }
 
         public bool GroupExists(int creator, string groupName)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                const string sql = "SELECT COUNT([groupId]) FROM dbo.[group] WHERE creatorFK = @creatorFK AND groupName = @groupName;";
-
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                var cmd = new SqlCommand(sql, _conn);
-                cmd.Parameters.Add("@creatorFK", SqlDbType.Int);
-                cmd.Parameters["@creatorFK"].Value = creator;
-
-                cmd.Parameters.Add("@groupName", SqlDbType.VarChar);
-                cmd.Parameters["@groupName"].Value = groupName;
-
-                return ((int)cmd.ExecuteScalar() >= 1);
-            }
-            finally
-            {
-                _conn?.Close();
+                return GroupExists(creator, groupName, conn);
             }
         }
 
+        public bool GroupExists(int creator, string groupName, IConnection conn)
+        {
+            const string sql = "SELECT COUNT([groupId]) FROM dbo.[group] WHERE creatorFK = @creatorFK AND groupName = @groupName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@creatorFK",
+                Value = creator
+            };
+            prms.Add(param1);
+
+            var param2 = new SqlParameter
+            {
+                ParameterName = "@groupName",
+                Value = groupName
+            };
+            prms.Add(param2);
+
+            return ((int)conn.ExecuteScalar(sql,prms) >= 1);
+        }
+        
         public long Insert(GroupEntity group)
         {
-            CheckGroupForRequiredValues(group, RepositoryUtils.RepositoryAction.Insert);
+            using (Connection conn = new Connection())
+            {
+                return Insert(group, conn);
+            }
+        }
+
+        public long Insert(GroupEntity group, IConnection conn)
+        {
+            var groupExists = GetGroup(group.creatorFK, group.groupName);
+            if (groupExists != null)
+            {
+                throw new Exception($"Entity {group.creatorFK} {group.groupName} already exists in database!");
+            }
+            string sql =
+                @"INSERT INTO[dbo].[link] (creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK) 
+                VALUES(@creatorFK, @groupName, @description, @isPrivate, getdate(), @updatePersonFK );SELECT CAST(scope_identity() AS int)";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@creatorFK",
+                Value = group.creatorFK
+            };
+            prms.Add(param1);
+
+            var param2 = new SqlParameter
+            {
+                ParameterName = "@groupName",
+                Value = group.groupName
+            };
+            prms.Add(param2);
+
+            var param3 = new SqlParameter
+            {
+                ParameterName = "@description",
+                Value = group.description
+            };
+            prms.Add(param3);
+
+            var param4 = new SqlParameter
+            {
+                ParameterName = "@isPrivate",
+                Value = group.isPrivate ? 'Y' : 'N'
+            };
+            prms.Add(param4);
+
+            var param5 = new SqlParameter
+            {
+                ParameterName = "@updatePersonFK",
+                Value = group.updatePersonFK
+            };
+            prms.Add(param5);
+                
             try
             {
-                var groupExists = GetGroup(group.creatorFK, group.groupName);
-                if (groupExists != null)
-                {
-                    throw new Exception($"Entity {group.creatorFK} {group.groupName} already exists in database!");
-                }
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-
-                cmd.CommandText =
-                    @"INSERT INTO[dbo].[link] (creatorFK, groupName, description, isPrivate, updateTimestamp, updatePersonFK) 
-                    VALUES(@creatorFK, @groupName, @description, @isPrivate, getdate(), @updatePersonFK );SELECT CAST(scope_identity() AS int)";
-
-
-                cmd.Parameters.Add("@creatorFK", SqlDbType.Int);
-                cmd.Parameters["@creatorFK"].Value = group.creatorFK;
-
-                cmd.Parameters.Add("@groupName", SqlDbType.VarChar);
-                cmd.Parameters["@groupName"].Value = group.groupName;
-
-                cmd.Parameters.Add("@description", SqlDbType.VarChar);
-                cmd.Parameters["@description"].Value = group.description;
-
-                cmd.Parameters.Add("@isPrivate", SqlDbType.Char);
-                cmd.Parameters["@isPrivate"].Value = group.isPrivate ? 'Y' : 'N';
-
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = group.updatePersonFK;
-
-                _conn.Open();
-
-                try
-                {
-                    return int.Parse(cmd.ExecuteScalar().ToString()); ;
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"Entity {group.creatorFK} {group.groupName} not inserted in database!");
-                }
-
+                return int.Parse(conn.ExecuteScalar(sql,prms).ToString()); ;
             }
-            finally
+            catch (Exception)
             {
-                _conn?.Close();
+                throw new Exception($"Entity {group.creatorFK} {group.groupName} not inserted in database!");
             }
         }
 
         public void Update(int id, GroupEntity group)
+        {
+            using (Connection conn = new Connection())
+            {
+                Update(id, group, conn);
+            }
+        }
+        public void Update(int id, GroupEntity group, IConnection conn)
         {
             CheckGroupForRequiredValues(group, RepositoryUtils.RepositoryAction.Update);
 
@@ -287,68 +305,87 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception("Group does not exist in database");
             }
+            
+            string sql = @"UPDATE person SET [creatorFK]=@creatorFK, 
+                                                    [groupName]=@groupName, 
+                                                    [description]=@description, 
+                                                    [isPrivate]=@isPrivate, 
+                                                    [updateTimestamp]=getdate(),
+                                                    [updatePersonFK]=@updatePersonFK
+                                                    WHERE groupId=@groupId";
+            List<SqlParameter> prms = new List<SqlParameter>();
 
-            try
+            var param1 = new SqlParameter
             {
-                _conn = new SqlConnection(ConnString);
+                ParameterName = "@creatorFK",
+                Value = group.creatorFK
+            };
+            prms.Add(param1);
 
-                var cmd = _conn.CreateCommand();
-                cmd.CommandText = @"UPDATE person SET [creatorFK]=@creatorFK, 
-                                                      [groupName]=@groupName, 
-                                                      [description]=@description, 
-                                                      [isPrivate]=@isPrivate, 
-                                                      [updateTimestamp]=getdate(),
-                                                      [updatePersonFK]=@updatePersonFK
-                                                      WHERE groupId=@groupId";
-
-                cmd.Parameters.Add("@creatorFK", SqlDbType.Int);
-                cmd.Parameters["@creatorFK"].Value = group.creatorFK;
-
-                cmd.Parameters.Add("@groupName", SqlDbType.Int);
-                cmd.Parameters["@groupName"].Value = group.groupName;
-
-                cmd.Parameters.Add("@description", SqlDbType.VarChar);
-                cmd.Parameters["@description"].Value = group.description;
-
-                cmd.Parameters.Add("@groupId", SqlDbType.Int);
-                cmd.Parameters["@groupId"].Value = group.groupId;
-
-                cmd.Parameters.Add("@isPrivate", SqlDbType.Char);
-                cmd.Parameters["@isPrivate"].Value = group.isPrivate ? 'Y' : 'N';
-
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = group.updatePersonFK;
-
-                _conn.Open();
-
-                var number = cmd.ExecuteNonQuery();
-
-                if (number != 1)
-                {
-                    throw new Exception($"No Groups were updated with Id: {id}");
-                }
-            }
-            finally
+            var param2 = new SqlParameter
             {
-                _conn?.Close();
+                ParameterName = "@groupName",
+                Value = group.groupName
+            };
+            prms.Add(param2);
+
+            var param3 = new SqlParameter
+            {
+                ParameterName = "@description",
+                Value = group.description
+            };
+            prms.Add(param3);
+
+            var param4 = new SqlParameter
+            {
+                ParameterName = "@groupId",
+                Value = group.groupId
+            };
+            prms.Add(param4);
+
+            var param5 = new SqlParameter
+            {
+                ParameterName = "@isPrivate",
+                Value = group.isPrivate ? 'Y' : 'N'
+            };
+            prms.Add(param5);
+
+            var param6 = new SqlParameter
+            {
+                ParameterName = "@updatePersonFK",
+                Value = group.updatePersonFK
+            };
+            prms.Add(param6);
+                
+            var number = conn.ExecuteNonQuery(sql,prms);
+
+            if (number != 1)
+            {
+                throw new Exception($"No Groups were updated with Id: {id}");
             }
         }
 
         public void Delete(int id)
         {
-            _conn = new SqlConnection(ConnString);
+            using (Connection conn = new Connection())
+            {
+                Delete(id, conn);
+            }
+        }
 
-            var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM [group] WHERE [groupId] = @Id;";
-            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
-            sqlComm.Parameters["@Id"].Value = id;
-
-            _conn.Open();
-
-            var rowsAffected = sqlComm.ExecuteNonQuery();
-
-            _conn.Close();
-
+        public void Delete(int id, IConnection conn)
+        {
+            string sql = @"DELETE FROM [group] WHERE [groupId] = @Id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@Id",
+                Value = id
+            };
+            prms.Add(param1);
+            
+            var rowsAffected = conn.ExecuteNonQuery(sql,prms);
+            
             if (rowsAffected < 1)
             {
                 throw new Exception("Entity has not been deleted!");
@@ -370,20 +407,73 @@ namespace TheGiftList.DATA.Repositories
                 throw new Exception(String.Format("Cannot {0} Link: Missing Fields {1}", action.ToString(), String.Join(", ", missingFields.ToArray())));
             }
         }
-        
+
         public void Insert(List<GroupEntity> batch)
         {
-            batch.ForEach(x => Insert(x));
+            using (Connection conn = new Connection())
+            {
+                Insert(batch, conn);
+            }
+        }
+
+        public void Insert(List<GroupEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try {
+                batch.ForEach(x => Insert(x));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
 
         public void Update(List<GroupEntity> batch)
         {
-            batch.ForEach(x => Update(x.groupId, x));
+            using (Connection conn = new Connection())
+            {
+                Update(batch, conn);
+            }
+        }
+
+        public void Update(List<GroupEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Update(x.groupId, x));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
 
         public void Delete(List<int> batch)
         {
-            batch.ForEach(x => Delete(x));
+            using (Connection conn = new Connection())
+            {
+                Delete(batch, conn);
+            }
+        }
+
+        public void Delete(List<int> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Delete(x));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
     }
 }
