@@ -64,29 +64,29 @@ namespace TheGiftList.BAL.BuisinessLogic
 
         #region BLMethods
 
-        public static List<PersonBL> GetAllPersons()
-        {
-            PersonRepository repo = new PersonRepository();
-            return Translate.Person(repo.GetAllPersons().ToList());
-        }
+        //public static List<PersonBL> GetAllPersons()
+        //{
+        //    PersonRepository repo = new PersonRepository();
+        //    return Translate.Person(repo.GetAllPersons().ToList());
+        //}
 
-        public static PersonBL GetPersonByUserName(string username)
-        {
-            PersonRepository repo = new PersonRepository();
-            return Translate.Person(repo.GetPersonByUserName(username));
-        }
+        //public static PersonBL GetPersonByUserName(string username)
+        //{
+        //    PersonRepository repo = new PersonRepository();
+        //    return Translate.Person(repo.GetPersonByUserName(username));
+        //}
 
         public static PersonBL GetById(int id)
         {
             PersonRepository repo = new PersonRepository();
-            return Translate.Person(repo.GetPersonById(id));
+            return null;// Translate.Person(repo.GetPersonById(id));
         }
 
-        public static bool Authenticate(string username, string password)
-        {
-            PersonBL person = GetPersonByUserName(username);
-            return PasswordHashUtil.ValidatePassword(password, person.PasswordHash);
-        }
+        //public static bool Authenticate(string username, string password)
+        //{
+        //    PersonBL person = GetPersonByUserName(username);
+        //    return PasswordHashUtil.ValidatePassword(password, person.PasswordHash);
+        //}
 
         #endregion BLMethods
     }

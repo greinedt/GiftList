@@ -12,9 +12,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Person> GetAllPersons()
+        public IList<PersonEntity> GetAllPersons()
         {
-            List<Person> personList = new List<Person>();
+            List<PersonEntity> personList = new List<PersonEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -26,7 +26,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var person = new Person()
+                    var person = new PersonEntity()
                     {
                         personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
                         userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
@@ -45,9 +45,9 @@ namespace TheGiftList.DATA.Repositories
             return personList;
         }
 
-        public IList<Person> GetAllPersonsLike(string partialUserName)
+        public IList<PersonEntity> GetAllPersonsLike(string partialUserName)
         {
-            List<Person> personList = new List<Person>();
+            List<PersonEntity> personList = new List<PersonEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -66,7 +66,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var person = new Person()
+                    var person = new PersonEntity()
                     {
                         personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
                         userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
@@ -109,9 +109,9 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public Person GetPersonByEmail(string emailAddress)
+        public PersonEntity GetPersonByEmail(string emailAddress)
         {
-            List<Person> personList = new List<Person>();
+            List<PersonEntity> personList = new List<PersonEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -130,7 +130,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var person = new Person()
+                    var person = new PersonEntity()
                     {
                         personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
                         userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
@@ -150,9 +150,9 @@ namespace TheGiftList.DATA.Repositories
             return personList.FirstOrDefault();
         }
 
-        public Person GetPersonById(int id)
+        public PersonEntity GetPersonById(int id)
         {
-            List<Person> personList = new List<Person>();
+            List<PersonEntity> personList = new List<PersonEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -171,7 +171,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var person = new Person()
+                    var person = new PersonEntity()
                     {
                         personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
                         userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
@@ -191,9 +191,9 @@ namespace TheGiftList.DATA.Repositories
             return personList.FirstOrDefault();
         }
 
-        public Person GetPersonByUserName(string userName)
+        public PersonEntity GetPersonByUserName(string userName)
         {
-            List<Person> personList = new List<Person>();
+            List<PersonEntity> personList = new List<PersonEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -212,7 +212,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var person = new Person()
+                    var person = new PersonEntity()
                     {
                         personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
                         userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
@@ -232,7 +232,7 @@ namespace TheGiftList.DATA.Repositories
             return personList.FirstOrDefault();
         }
 
-        public int Insert(Person person)
+        public int Insert(PersonEntity person)
         {
             CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -326,7 +326,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, Person person)
+        public void Update(int id, PersonEntity person)
         {
             CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Update);
 
@@ -403,7 +403,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckPersonForRequiredValues(Person p, RepositoryUtils.RepositoryAction action)
+        private void CheckPersonForRequiredValues(PersonEntity p, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -419,12 +419,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<Person> batch)
+        public void Insert(List<PersonEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<Person> batch)
+        public void Update(List<PersonEntity> batch)
         {
             batch.ForEach(x => Update(x.personId, x));
         }

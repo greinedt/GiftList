@@ -4,58 +4,58 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using TheGiftList.DATA.Entities;
-using TheGiftList.BAL.BuisinessLogic;
+using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static PersonBL Person(Person data)
+        public static Person Person(PersonEntity data)
         {
-            PersonBL bl = new PersonBL();
+            Person ent = new Person();
 
-            bl.PersonId = data.personId;
-            bl.UserName = data.userName;
-            bl.EmailAddress = data.emailAddress;
-            bl.FirstName = data.firstName;
-            bl.LastName = data.lastName;
-            bl.PasswordHash = data.passwordHash;
-            bl.UpdateTimestamp = data.updateTimestamp;
+            ent.Id = data.personId;
+            ent.UserName = data.userName;
+            ent.EmailAddress = data.emailAddress;
+            ent.FirstName = data.firstName;
+            ent.LastName = data.lastName;
+            ent.PasswordHash = data.passwordHash;
+            ent.UpdateTimestamp = data.updateTimestamp;
 
-            return bl;
+            return ent;
         }
 
-        public static List<PersonBL> Person(List<Person> dataList)
+        public static List<Person> Person(List<PersonEntity> dataList)
         {
-            List<PersonBL> blList = new List<PersonBL>();
-            foreach(Person data in dataList)
+            List<Person> entList = new List<Person>();
+            foreach(PersonEntity data in dataList)
             {
-                blList.Add(Translate.Person(data));
+                entList.Add(Person(data));
             }
-            return blList;
+            return entList;
         }
 
-        public static Person Person(PersonBL bl)
+        public static PersonEntity Person(Person ent)
         {
-            Person data = new Person();
+            PersonEntity data = new PersonEntity();
 
-            data.personId = bl.PersonId;
-            data.userName = bl.UserName;
-            data.emailAddress = bl.EmailAddress;
-            data.firstName = bl.FirstName;
-            data.lastName = bl.LastName;
-            data.passwordHash = bl.PasswordHash;
-            data.updateTimestamp = bl.UpdateTimestamp;
+            data.personId = ent.Id;
+            data.userName = ent.UserName;
+            data.emailAddress = ent.EmailAddress;
+            data.firstName = ent.FirstName;
+            data.lastName = ent.LastName;
+            data.passwordHash = ent.PasswordHash;
+            data.updateTimestamp = ent.UpdateTimestamp;
 
             return data;
         }
 
-        public static List<Person> Person(List<PersonBL> blList)
+        public static List<PersonEntity> Person(List<Person> entList)
         {
-            List<Person> dataList = new List<Person>();
-            foreach (PersonBL bl in blList)
+            List<PersonEntity> dataList = new List<PersonEntity>();
+            foreach (Person ent in entList)
             {
-                dataList.Add(Translate.Person(bl));
+                dataList.Add(Person(ent));
             }
             return dataList;
         }

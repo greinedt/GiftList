@@ -5,16 +5,16 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemCommentRepository
     {
-        IList<ItemComment> GetAllItemComments();
-        IList<ItemComment> GetAllItemComments(int item);
+        IList<ItemCommentEntity> GetAllItemComments();
+        IList<ItemCommentEntity> GetAllItemComments(int item);
         long GetNumberOfItemComments(int item);
-        ItemComment GetItemCommentById(int id);
-        ItemComment GetItemCommentByItem(int itemId);
-        long Insert(ItemComment itemComment);
-        void Update(int id, ItemComment itemComment);
+        ItemCommentEntity GetItemCommentById(int id);
+        ItemCommentEntity GetItemCommentByItem(int itemId);
+        long Insert(ItemCommentEntity itemComment);
+        void Update(int id, ItemCommentEntity itemComment);
         void Delete(int id);
-        void Insert(List<ItemComment> batch);
-        void Update(List<ItemComment> batch);
+        void Insert(List<ItemCommentEntity> batch);
+        void Update(List<ItemCommentEntity> batch);
         void Delete(List<int> id);
     }
 }

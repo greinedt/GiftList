@@ -5,17 +5,17 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IGroupRepository
     {
-        IList<Group> GetAllGroups();
-        IList<Group> GetAllGroups(int creator);
+        IList<GroupEntity> GetAllGroups();
+        IList<GroupEntity> GetAllGroups(int creator);
         long GetNumberOfGroups(int creator);
         bool GroupExists(int creator, string groupName);
-        Group GetGroupById(int id);
-        Group GetGroup(int creator, string groupName);
-        long Insert(Group Group);
-        void Update(int id, Group group);
+        GroupEntity GetGroupById(int id);
+        GroupEntity GetGroup(int creator, string groupName);
+        long Insert(GroupEntity Group);
+        void Update(int id, GroupEntity group);
         void Delete(int id);
-        void Insert(List<Group> batch);
-        void Update(List<Group> batch);
+        void Insert(List<GroupEntity> batch);
+        void Update(List<GroupEntity> batch);
         void Delete(List<int> batch);
     }
 }

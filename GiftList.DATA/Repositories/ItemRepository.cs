@@ -12,9 +12,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Item> GetAllItems()
+        public IList<ItemEntity> GetAllItems()
         {
-            List<Item> itemList = new List<Item>();
+            List<ItemEntity> itemList = new List<ItemEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -26,7 +26,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var item = new Item()
+                    var item = new ItemEntity()
                     {
                         itemId = rdr.IsDBNull(rdr.GetOrdinal("itemId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemId")),
                         itemStatusFK = rdr.IsDBNull(rdr.GetOrdinal("itemStatusFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusFK")),
@@ -46,9 +46,9 @@ namespace TheGiftList.DATA.Repositories
             return itemList;
         }
 
-        public IList<Item> GetAllItems(int giftList)
+        public IList<ItemEntity> GetAllItems(int giftList)
         {
-            List<Item> itemList = new List<Item>();
+            List<ItemEntity> itemList = new List<ItemEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -67,7 +67,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var item = new Item()
+                    var item = new ItemEntity()
                     {
                         itemId = rdr.IsDBNull(rdr.GetOrdinal("itemId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemId")),
                         itemStatusFK = rdr.IsDBNull(rdr.GetOrdinal("itemStatusFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusFK")),
@@ -87,9 +87,9 @@ namespace TheGiftList.DATA.Repositories
             return itemList;
         }
 
-        public Item GetItem(int list, string itemName)
+        public ItemEntity GetItem(int list, string itemName)
         {
-            List<Item> itemList = new List<Item>();
+            List<ItemEntity> itemList = new List<ItemEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -115,7 +115,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var item = new Item()
+                    var item = new ItemEntity()
                     {
                         itemId = rdr.IsDBNull(rdr.GetOrdinal("itemId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemId")),
                         itemStatusFK = rdr.IsDBNull(rdr.GetOrdinal("itemStatusFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusFK")),
@@ -135,9 +135,9 @@ namespace TheGiftList.DATA.Repositories
             return itemList.FirstOrDefault();
         }
 
-        public Item GetItemById(int id)
+        public ItemEntity GetItemById(int id)
         {
-            List<Item> itemList = new List<Item>();
+            List<ItemEntity> itemList = new List<ItemEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -156,7 +156,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var item = new Item()
+                    var item = new ItemEntity()
                     {
                         itemId = rdr.IsDBNull(rdr.GetOrdinal("itemId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemId")),
                         itemStatusFK = rdr.IsDBNull(rdr.GetOrdinal("itemStatusFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusFK")),
@@ -225,7 +225,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(Item item)
+        public long Insert(ItemEntity item)
         {
             CheckItemForRequiredValues(item, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -277,7 +277,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, Item item)
+        public void Update(int id, ItemEntity item)
         {
             CheckItemForRequiredValues(item, RepositoryUtils.RepositoryAction.Update);
 
@@ -354,7 +354,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckItemForRequiredValues(Item i, RepositoryUtils.RepositoryAction action)
+        private void CheckItemForRequiredValues(ItemEntity i, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -370,12 +370,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<Item> batch)
+        public void Insert(List<ItemEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<Item> batch)
+        public void Update(List<ItemEntity> batch)
         {
             batch.ForEach(x => Update(x.itemId, x));
         }

@@ -12,9 +12,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Link> GetAllLinks()
+        public IList<LinkEntity> GetAllLinks()
         {
-            List<Link> linklist = new List<Link>();
+            List<LinkEntity> linklist = new List<LinkEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -26,7 +26,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var link = new Link()
+                    var link = new LinkEntity()
                     {
                         linkId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -46,9 +46,9 @@ namespace TheGiftList.DATA.Repositories
             return linklist;
         }
 
-        public IList<Link> GetAllLinks(int item)
+        public IList<LinkEntity> GetAllLinks(int item)
         {
-            List<Link> linklist = new List<Link>();
+            List<LinkEntity> linklist = new List<LinkEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -67,7 +67,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var link = new Link()
+                    var link = new LinkEntity()
                     {
                         linkId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -87,9 +87,9 @@ namespace TheGiftList.DATA.Repositories
             return linklist;
         }
 
-        public Link GetLink(int item, string linkName)
+        public LinkEntity GetLink(int item, string linkName)
         {
-            List<Link> linklist = new List<Link>();
+            List<LinkEntity> linklist = new List<LinkEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -115,7 +115,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var link = new Link()
+                    var link = new LinkEntity()
                     {
                         linkId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -135,9 +135,9 @@ namespace TheGiftList.DATA.Repositories
             return linklist.FirstOrDefault();
         }
 
-        public Link GetLinkById(int id)
+        public LinkEntity GetLinkById(int id)
         {
-            List<Link> linklist = new List<Link>();
+            List<LinkEntity> linklist = new List<LinkEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -156,7 +156,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var link = new Link()
+                    var link = new LinkEntity()
                     {
                         linkId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -201,7 +201,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(Link link)
+        public long Insert(LinkEntity link)
         {
             CheckLinkForRequiredValues(link, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -277,7 +277,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, Link link)
+        public void Update(int id, LinkEntity link)
         {
             CheckLinkForRequiredValues(link, RepositoryUtils.RepositoryAction.Update);
 
@@ -354,7 +354,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckLinkForRequiredValues(Link l, RepositoryUtils.RepositoryAction action)
+        private void CheckLinkForRequiredValues(LinkEntity l, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -370,12 +370,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<Link> batch)
+        public void Insert(List<LinkEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<Link> batch)
+        public void Update(List<LinkEntity> batch)
         {
             batch.ForEach(x => Update(x.linkId, x));
         }

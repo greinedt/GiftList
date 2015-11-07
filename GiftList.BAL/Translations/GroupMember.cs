@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static GroupMemberBL GroupMember(GroupMember data)
+        public static GroupMemberBL GroupMember(GroupMemberEntity data)
         {
             GroupMemberBL bl = new GroupMemberBL();
 
@@ -21,19 +21,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<GroupMemberBL> GroupMember(List<GroupMember> dataList)
+        public static List<GroupMemberBL> GroupMember(List<GroupMemberEntity> dataList)
         {
             List<GroupMemberBL> blList = new List<GroupMemberBL>();
-            foreach (GroupMember data in dataList)
+            foreach (GroupMemberEntity data in dataList)
             {
-                blList.Add(Translate.GroupMember(data));
+                blList.Add(GroupMember(data));
             }
             return blList;
         }
 
-        public static GroupMember GroupMember(GroupMemberBL bl)
+        public static GroupMemberEntity GroupMember(GroupMemberBL bl)
         {
-            GroupMember data = new GroupMember();
+            GroupMemberEntity data = new GroupMemberEntity();
 
             data.groupMemberId = bl.GroupMemberId;
             data.groupFK = bl.GroupFK;
@@ -45,12 +45,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<GroupMember> GroupMember(List<GroupMemberBL> blList)
+        public static List<GroupMemberEntity> GroupMember(List<GroupMemberBL> blList)
         {
-            List<GroupMember> dataList = new List<GroupMember>();
+            List<GroupMemberEntity> dataList = new List<GroupMemberEntity>();
             foreach (GroupMemberBL bl in blList)
             {
-                dataList.Add(Translate.GroupMember(bl));
+                dataList.Add(GroupMember(bl));
             }
             return dataList;
         }

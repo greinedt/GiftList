@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static PurchaseBL Purchase(Purchase data)
+        public static PurchaseBL Purchase(PurchaseEntity data)
         {
             PurchaseBL bl = new PurchaseBL();
 
@@ -21,19 +21,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<PurchaseBL> Purchase(List<Purchase> dataList)
+        public static List<PurchaseBL> Purchase(List<PurchaseEntity> dataList)
         {
             List<PurchaseBL> blList = new List<PurchaseBL>();
-            foreach (Purchase data in dataList)
+            foreach (PurchaseEntity data in dataList)
             {
-                blList.Add(Translate.Purchase(data));
+                blList.Add(Purchase(data));
             }
             return blList;
         }
 
-        public static Purchase Purchase(PurchaseBL bl)
+        public static PurchaseEntity Purchase(PurchaseBL bl)
         {
-            Purchase data = new Purchase();
+            PurchaseEntity data = new PurchaseEntity();
 
             data.purchaseId = bl.PurchaseId;
             data.itemFK = bl.ItemFK;
@@ -45,12 +45,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<Purchase> Purchase(List<PurchaseBL> blList)
+        public static List<PurchaseEntity> Purchase(List<PurchaseBL> blList)
         {
-            List<Purchase> dataList = new List<Purchase>();
+            List<PurchaseEntity> dataList = new List<PurchaseEntity>();
             foreach (PurchaseBL bl in blList)
             {
-                dataList.Add(Translate.Purchase(bl));
+                dataList.Add(Purchase(bl));
             }
             return dataList;
         }

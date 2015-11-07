@@ -13,9 +13,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Group> GetAllGroups()
+        public IList<GroupEntity> GetAllGroups()
         {
-            List<Group> groupList = new List<Group>();
+            List<GroupEntity> groupList = new List<GroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -27,7 +27,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var group = new Group()
+                    var group = new GroupEntity()
                     {
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -47,9 +47,9 @@ namespace TheGiftList.DATA.Repositories
             return groupList;
         }
 
-        public IList<Group> GetAllGroups(int creator)
+        public IList<GroupEntity> GetAllGroups(int creator)
         {
-            List<Group> groupList = new List<Group>();
+            List<GroupEntity> groupList = new List<GroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -68,7 +68,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var group = new Group()
+                    var group = new GroupEntity()
                     {
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -88,9 +88,9 @@ namespace TheGiftList.DATA.Repositories
             return groupList;
         }
 
-        public Group GetGroup(int creator, string groupName)
+        public GroupEntity GetGroup(int creator, string groupName)
         {
-            List<Group> grouplist = new List<Group>();
+            List<GroupEntity> grouplist = new List<GroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -116,7 +116,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var group = new Group()
+                    var group = new GroupEntity()
                     {
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -136,9 +136,9 @@ namespace TheGiftList.DATA.Repositories
             return grouplist.FirstOrDefault();
         }
 
-        public Group GetGroupById(int id)
+        public GroupEntity GetGroupById(int id)
         {
-            List<Group> grouplist = new List<Group>();
+            List<GroupEntity> grouplist = new List<GroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -157,7 +157,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var group = new Group()
+                    var group = new GroupEntity()
                     {
                         groupId = rdr.IsDBNull(rdr.GetOrdinal("linkId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("linkId")),
                         creatorFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -226,7 +226,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(Group group)
+        public long Insert(GroupEntity group)
         {
             CheckGroupForRequiredValues(group, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -278,7 +278,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, Group group)
+        public void Update(int id, GroupEntity group)
         {
             CheckGroupForRequiredValues(group, RepositoryUtils.RepositoryAction.Update);
 
@@ -355,7 +355,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckGroupForRequiredValues(Group g, RepositoryUtils.RepositoryAction action)
+        private void CheckGroupForRequiredValues(GroupEntity g, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -371,12 +371,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
         
-        public void Insert(List<Group> batch)
+        public void Insert(List<GroupEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<Group> batch)
+        public void Update(List<GroupEntity> batch)
         {
             batch.ForEach(x => Update(x.groupId, x));
         }

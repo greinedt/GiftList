@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static LinkBL Link(Link data)
+        public static LinkBL Link(LinkEntity data)
         {
             LinkBL bl = new LinkBL();
 
@@ -22,19 +22,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<LinkBL> Link(List<Link> dataList)
+        public static List<LinkBL> Link(List<LinkEntity> dataList)
         {
             List<LinkBL> blList = new List<LinkBL>();
-            foreach (Link data in dataList)
+            foreach (LinkEntity data in dataList)
             {
-                blList.Add(Translate.Link(data));
+                blList.Add(Link(data));
             }
             return blList;
         }
 
-        public static Link Link(LinkBL bl)
+        public static LinkEntity Link(LinkBL bl)
         {
-            Link data = new Link();
+            LinkEntity data = new LinkEntity();
 
             data.linkId = bl.LinkId;
             data.itemFK = bl.ItemFK;
@@ -47,12 +47,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<Link> Link(List<LinkBL> blList)
+        public static List<LinkEntity> Link(List<LinkBL> blList)
         {
-            List<Link> dataList = new List<Link>();
+            List<LinkEntity> dataList = new List<LinkEntity>();
             foreach (LinkBL bl in blList)
             {
-                dataList.Add(Translate.Link(bl));
+                dataList.Add(Link(bl));
             }
             return dataList;
         }

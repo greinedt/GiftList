@@ -5,16 +5,16 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IGroupMemberRepository
     {
-        IList<GroupMember> GetAllGroupMembers();
-        IList<GroupMember> GetAllGroupMembers(int group);
+        IList<GroupMemberEntity> GetAllGroupMembers();
+        IList<GroupMemberEntity> GetAllGroupMembers(int group);
         long GetNumberOfGroupMembers(int group);
         bool GroupMemberExists(int group, int member);
-        GroupMember GetGroupMemberById(int id);
-        GroupMember GetGroupMember(int group, int member);
-        long Insert(GroupMember groupMember);
-        void Insert(List<GroupMember> batch);
-        void Update(int id, GroupMember groupMember);
-        void Update(List<GroupMember> batch);
+        GroupMemberEntity GetGroupMemberById(int id);
+        GroupMemberEntity GetGroupMember(int group, int member);
+        long Insert(GroupMemberEntity groupMember);
+        void Insert(List<GroupMemberEntity> batch);
+        void Update(int id, GroupMemberEntity groupMember);
+        void Update(List<GroupMemberEntity> batch);
         void Delete(int id);
         void Delete(List<int> batch);
     }

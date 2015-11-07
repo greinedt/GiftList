@@ -9,7 +9,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static GiftListGroupBL GiftListGroup(GiftListGroup data)
+        public static GiftListGroupBL GiftListGroup(GiftListGroupEntity data)
         {
             GiftListGroupBL bl = new GiftListGroupBL();
 
@@ -22,19 +22,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<GiftListGroupBL> GiftListGroup(List<GiftListGroup> dataList)
+        public static List<GiftListGroupBL> GiftListGroup(List<GiftListGroupEntity> dataList)
         {
             List<GiftListGroupBL> blList = new List<GiftListGroupBL>();
-            foreach (GiftListGroup data in dataList)
+            foreach (GiftListGroupEntity data in dataList)
             {
-                blList.Add(Translate.GiftListGroup(data));
+                blList.Add(GiftListGroup(data));
             }
             return blList;
         }
 
-        public static GiftListGroup GiftListGroup(GiftListGroupBL bl)
+        public static GiftListGroupEntity GiftListGroup(GiftListGroupBL bl)
         {
-            GiftListGroup data = new GiftListGroup();
+            GiftListGroupEntity data = new GiftListGroupEntity();
 
             data.giftListGroupId = bl.GiftListGroupId;
             data.giftListFK = bl.GiftListFK;
@@ -45,12 +45,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<GiftListGroupBL> GiftList(List<GiftListGroup> blList)
+        public static List<GiftListGroupBL> GiftList(List<GiftListGroupEntity> blList)
         {
             List<GiftListGroupBL> dataList = new List<GiftListGroupBL>();
-            foreach (GiftListGroup bl in blList)
+            foreach (GiftListGroupEntity bl in blList)
             {
-                dataList.Add(Translate.GiftListGroup(bl));
+                dataList.Add(GiftListGroup(bl));
             }
             return dataList;
         }

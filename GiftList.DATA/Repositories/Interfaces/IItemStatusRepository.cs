@@ -5,16 +5,16 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IItemStatusRepository
     {
-        IList<ItemStatus> GetAllItemStatuss();
+        IList<ItemStatusEntity> GetAllItemStatuss();
         long GetNumberOfItemStatus();
         bool ItemStatusExists(string status);
-        ItemStatus GetItemStatusById(int id);
-        ItemStatus GetItemStatusByStatusName(string status);
-        long Insert(ItemStatus itemStatus);
-        void Update(int id, ItemStatus itemStatus);
+        ItemStatusEntity GetItemStatusById(int id);
+        ItemStatusEntity GetItemStatusByStatusName(string status);
+        long Insert(ItemStatusEntity itemStatus);
+        void Update(int id, ItemStatusEntity itemStatus);
         void Delete(int id);
-        void Insert(List<ItemStatus> batch);
-        void Update(List<ItemStatus> batch);
+        void Insert(List<ItemStatusEntity> batch);
+        void Update(List<ItemStatusEntity> batch);
         void Delete(List<int> batch);
     }
 }

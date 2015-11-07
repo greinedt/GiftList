@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TheGiftList.DATA.Entities
 {
-    public class ItemStatus
+    public class ItemStatusEntity
     {
         public int itemStatusId { get; set; }
         public string status { get; set; }

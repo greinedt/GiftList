@@ -5,17 +5,17 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface ILinkRepository
     {
-        IList<Link> GetAllLinks();
-        IList<Link> GetAllLinks(int item);
+        IList<LinkEntity> GetAllLinks();
+        IList<LinkEntity> GetAllLinks(int item);
         long GetNumberOfLinks(int item);
         bool LinkExists(int item, string linkName);
-        Link GetLinkById(int id);
-        Link GetLink(int itemId, string linkName);
-        long Insert(Link link);
-        void Update(int id, Link link);
+        LinkEntity GetLinkById(int id);
+        LinkEntity GetLink(int itemId, string linkName);
+        long Insert(LinkEntity link);
+        void Update(int id, LinkEntity link);
         void Delete(int id);
-        void Insert(List<Link> batch);
-        void Update(List<Link> batch);
+        void Insert(List<LinkEntity> batch);
+        void Update(List<LinkEntity> batch);
         void Delete(List<int> batch);
     }
 }

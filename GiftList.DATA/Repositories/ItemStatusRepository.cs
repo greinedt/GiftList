@@ -33,9 +33,9 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public IList<ItemStatus> GetAllItemStatuss()
+        public IList<ItemStatusEntity> GetAllItemStatuss()
         {
-            List<ItemStatus> itemStatusList = new List<ItemStatus>();
+            List<ItemStatusEntity> itemStatusList = new List<ItemStatusEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -47,7 +47,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemStatus = new ItemStatus()
+                    var itemStatus = new ItemStatusEntity()
                     {
                         itemStatusId = rdr.IsDBNull(rdr.GetOrdinal("itemStatusId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusId")),
                         status = rdr.IsDBNull(rdr.GetOrdinal("status")) ? null : rdr.GetString(rdr.GetOrdinal("status")),
@@ -64,9 +64,9 @@ namespace TheGiftList.DATA.Repositories
             return itemStatusList;
         }
 
-        public ItemStatus GetItemStatusByStatusName(string status)
+        public ItemStatusEntity GetItemStatusByStatusName(string status)
         {
-            List<ItemStatus> itemStatusList = new List<ItemStatus>();
+            List<ItemStatusEntity> itemStatusList = new List<ItemStatusEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -85,7 +85,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemStatus = new ItemStatus()
+                    var itemStatus = new ItemStatusEntity()
                     {
                         itemStatusId = rdr.IsDBNull(rdr.GetOrdinal("itemStatusId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusId")),
                         status = rdr.IsDBNull(rdr.GetOrdinal("status")) ? null : rdr.GetString(rdr.GetOrdinal("status")),
@@ -102,9 +102,9 @@ namespace TheGiftList.DATA.Repositories
             return itemStatusList.FirstOrDefault();
         }
 
-        public ItemStatus GetItemStatusById(int id)
+        public ItemStatusEntity GetItemStatusById(int id)
         {
-            List<ItemStatus> itemStatusList = new List<ItemStatus>();
+            List<ItemStatusEntity> itemStatusList = new List<ItemStatusEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -123,7 +123,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemStatus = new ItemStatus()
+                    var itemStatus = new ItemStatusEntity()
                     {
                         itemStatusId = rdr.IsDBNull(rdr.GetOrdinal("itemStatusId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemStatusId")),
                         status = rdr.IsDBNull(rdr.GetOrdinal("status")) ? null : rdr.GetString(rdr.GetOrdinal("status")),
@@ -158,7 +158,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(ItemStatus itemStatus)
+        public long Insert(ItemStatusEntity itemStatus)
         {
             CheckItemStatusForRequiredValues(itemStatus, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -222,7 +222,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, ItemStatus itemStatus)
+        public void Update(int id, ItemStatusEntity itemStatus)
         {
             CheckItemStatusForRequiredValues(itemStatus, RepositoryUtils.RepositoryAction.Update);
 
@@ -266,7 +266,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckItemStatusForRequiredValues(ItemStatus status, RepositoryUtils.RepositoryAction action)
+        private void CheckItemStatusForRequiredValues(ItemStatusEntity status, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -282,12 +282,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<ItemStatus> batch)
+        public void Insert(List<ItemStatusEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<ItemStatus> batch)
+        public void Update(List<ItemStatusEntity> batch)
         {
             batch.ForEach(x => Update(x.itemStatusId, x));
         }

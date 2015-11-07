@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemStatusBL ItemStatus(ItemStatus data)
+        public static ItemStatusBL ItemStatus(ItemStatusEntity data)
         {
             ItemStatusBL bl = new ItemStatusBL();
 
@@ -19,19 +19,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<ItemStatusBL> ItemStatus(List<ItemStatus> dataList)
+        public static List<ItemStatusBL> ItemStatus(List<ItemStatusEntity> dataList)
         {
             List<ItemStatusBL> blList = new List<ItemStatusBL>();
-            foreach (ItemStatus data in dataList)
+            foreach (ItemStatusEntity data in dataList)
             {
-                blList.Add(Translate.ItemStatus(data));
+                blList.Add(ItemStatus(data));
             }
             return blList;
         }
 
-        public static ItemStatus ItemStatus(ItemStatusBL bl)
+        public static ItemStatusEntity ItemStatus(ItemStatusBL bl)
         {
-            ItemStatus data = new ItemStatus();
+            ItemStatusEntity data = new ItemStatusEntity();
 
             data.itemStatusId = bl.ItemStatusId;
             data.status = bl.Status;
@@ -41,12 +41,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<ItemStatus> GiftList(List<ItemStatusBL> blList)
+        public static List<ItemStatusEntity> GiftList(List<ItemStatusBL> blList)
         {
-            List<ItemStatus> dataList = new List<ItemStatus>();
+            List<ItemStatusEntity> dataList = new List<ItemStatusEntity>();
             foreach (ItemStatusBL bl in blList)
             {
-                dataList.Add(Translate.ItemStatus(bl));
+                dataList.Add(ItemStatus(bl));
             }
             return dataList;
         }

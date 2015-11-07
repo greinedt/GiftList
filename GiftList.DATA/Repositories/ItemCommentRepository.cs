@@ -12,9 +12,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<ItemComment> GetAllItemComments()
+        public IList<ItemCommentEntity> GetAllItemComments()
         {
-            List<ItemComment> itemCommentList = new List<ItemComment>();
+            List<ItemCommentEntity> itemCommentList = new List<ItemCommentEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -26,7 +26,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemComment = new ItemComment()
+                    var itemComment = new ItemCommentEntity()
                     {
                         itemCommentId = rdr.IsDBNull(rdr.GetOrdinal("itemCommentId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemCommentId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -46,9 +46,9 @@ namespace TheGiftList.DATA.Repositories
             return itemCommentList;
         }
 
-        public IList<ItemComment> GetAllItemComments(int item)
+        public IList<ItemCommentEntity> GetAllItemComments(int item)
         {
-            List<ItemComment> itemCommentList = new List<ItemComment>();
+            List<ItemCommentEntity> itemCommentList = new List<ItemCommentEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -67,7 +67,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemComment = new ItemComment()
+                    var itemComment = new ItemCommentEntity()
                     {
                         itemCommentId = rdr.IsDBNull(rdr.GetOrdinal("itemCommentId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemCommentId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -87,9 +87,9 @@ namespace TheGiftList.DATA.Repositories
             return itemCommentList;
         }
 
-        public ItemComment GetItemCommentById(int id)
+        public ItemCommentEntity GetItemCommentById(int id)
         {
-            List<ItemComment> itemCommentList = new List<ItemComment>();
+            List<ItemCommentEntity> itemCommentList = new List<ItemCommentEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -108,7 +108,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemComment = new ItemComment()
+                    var itemComment = new ItemCommentEntity()
                     {
                         itemCommentId = rdr.IsDBNull(rdr.GetOrdinal("itemCommentId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemCommentId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -128,9 +128,9 @@ namespace TheGiftList.DATA.Repositories
             return itemCommentList.FirstOrDefault();
         }
 
-        public ItemComment GetItemCommentByItem(int itemId)
+        public ItemCommentEntity GetItemCommentByItem(int itemId)
         {
-            List<ItemComment> itemCommentList = new List<ItemComment>();
+            List<ItemCommentEntity> itemCommentList = new List<ItemCommentEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -149,7 +149,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var itemComment = new ItemComment()
+                    var itemComment = new ItemCommentEntity()
                     {
                         itemCommentId = rdr.IsDBNull(rdr.GetOrdinal("itemCommentId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemCommentId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -194,7 +194,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(ItemComment itemComment)
+        public long Insert(ItemCommentEntity itemComment)
         {
             CheckItemCommentForRequiredValues(itemComment, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -241,7 +241,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
         
-        public void Update(int id, ItemComment itemComment)
+        public void Update(int id, ItemCommentEntity itemComment)
         {
             CheckItemCommentForRequiredValues(itemComment, RepositoryUtils.RepositoryAction.Update);
 
@@ -317,7 +317,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckItemCommentForRequiredValues(ItemComment ic, RepositoryUtils.RepositoryAction action)
+        private void CheckItemCommentForRequiredValues(ItemCommentEntity ic, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -333,12 +333,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
         
-        public void Insert(List<ItemComment> batch)
+        public void Insert(List<ItemCommentEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<ItemComment> batch)
+        public void Update(List<ItemCommentEntity> batch)
         {
             batch.ForEach(x => Update(x.itemCommentId, x));
         }

@@ -13,9 +13,9 @@ namespace TheGiftList.DATA.Repositories
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
 
-        public IList<GiftListGroup> GetAllGiftListGroups()
+        public IList<GiftListGroupEntity> GetAllGiftListGroups()
         {
-            List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
+            List<GiftListGroupEntity> giftListGrouplist = new List<GiftListGroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -27,7 +27,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var giftListGroup = new GiftListGroup()
+                    var giftListGroup = new GiftListGroupEntity()
                     {
                         giftListGroupId = rdr.IsDBNull(rdr.GetOrdinal("giftListGroupId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListGroupId")),
                         giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
@@ -45,9 +45,9 @@ namespace TheGiftList.DATA.Repositories
             return giftListGrouplist;
         }
 
-        public IList<GiftListGroup> GetAllGiftListGroups(int group)
+        public IList<GiftListGroupEntity> GetAllGiftListGroups(int group)
         {
-            List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
+            List<GiftListGroupEntity> giftListGrouplist = new List<GiftListGroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -66,7 +66,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var giftListGroup = new GiftListGroup()
+                    var giftListGroup = new GiftListGroupEntity()
                     {
                         giftListGroupId = rdr.IsDBNull(rdr.GetOrdinal("giftListGroupId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListGroupId")),
                         giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
@@ -84,9 +84,9 @@ namespace TheGiftList.DATA.Repositories
             return giftListGrouplist;
         }
 
-        public GiftListGroup GetGiftListGroup(int giftList, int group)
+        public GiftListGroupEntity GetGiftListGroup(int giftList, int group)
         {
-            List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
+            List<GiftListGroupEntity> giftListGrouplist = new List<GiftListGroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -112,7 +112,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var giftListGroup = new GiftListGroup()
+                    var giftListGroup = new GiftListGroupEntity()
                     {
                         giftListGroupId = rdr.IsDBNull(rdr.GetOrdinal("giftListGroupId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListGroupId")),
                         giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
@@ -130,9 +130,9 @@ namespace TheGiftList.DATA.Repositories
             return giftListGrouplist.FirstOrDefault();
         }
 
-        public GiftListGroup GetGiftListGroupById(int id)
+        public GiftListGroupEntity GetGiftListGroupById(int id)
         {
-            List<GiftListGroup> giftListGrouplist = new List<GiftListGroup>();
+            List<GiftListGroupEntity> giftListGrouplist = new List<GiftListGroupEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -151,7 +151,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var giftListGroup = new GiftListGroup()
+                    var giftListGroup = new GiftListGroupEntity()
                     {
                         giftListGroupId = rdr.IsDBNull(rdr.GetOrdinal("giftListGroupId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListGroupId")),
                         giftListFK = rdr.IsDBNull(rdr.GetOrdinal("giftListFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListFK")),
@@ -218,7 +218,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(GiftListGroup giftListGroup)
+        public long Insert(GiftListGroupEntity giftListGroup)
         {
             CheckGiftListGroupForRequiredValues(giftListGroup, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -264,12 +264,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<GiftListGroup> batch)
+        public void Insert(List<GiftListGroupEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(int id, GiftListGroup giftListGroup)
+        public void Update(int id, GiftListGroupEntity giftListGroup)
         {
             CheckGiftListGroupForRequiredValues(giftListGroup, RepositoryUtils.RepositoryAction.Update);
 
@@ -317,7 +317,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(List<GiftListGroup> batch)
+        public void Update(List<GiftListGroupEntity> batch)
         {
             batch.ForEach(x => Update(x.giftListGroupId, x));
         }
@@ -348,7 +348,7 @@ namespace TheGiftList.DATA.Repositories
             batch.ForEach(x => Delete(x));
         }
 
-        private void CheckGiftListGroupForRequiredValues(GiftListGroup glg, RepositoryUtils.RepositoryAction action)
+        private void CheckGiftListGroupForRequiredValues(GiftListGroupEntity glg, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 

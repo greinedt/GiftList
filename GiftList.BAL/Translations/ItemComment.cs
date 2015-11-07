@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemCommentBL ItemComment(ItemComment data)
+        public static ItemCommentBL ItemComment(ItemCommentEntity data)
         {
             ItemCommentBL bl = new ItemCommentBL();
 
@@ -22,19 +22,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<ItemCommentBL> ItemComment(List<ItemComment> dataList)
+        public static List<ItemCommentBL> ItemComment(List<ItemCommentEntity> dataList)
         {
             List<ItemCommentBL> blList = new List<ItemCommentBL>();
-            foreach (ItemComment data in dataList)
+            foreach (ItemCommentEntity data in dataList)
             {
-                blList.Add(Translate.ItemComment(data));
+                blList.Add(ItemComment(data));
             }
             return blList;
         }
 
-        public static ItemComment ItemComment(ItemCommentBL bl)
+        public static ItemCommentEntity ItemComment(ItemCommentBL bl)
         {
-            ItemComment data = new ItemComment();
+            ItemCommentEntity data = new ItemCommentEntity();
 
             data.itemCommentId = bl.ItemCommentId;
             data.itemFK = bl.ItemFK;
@@ -47,12 +47,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<ItemComment> ItemComment(List<ItemCommentBL> blList)
+        public static List<ItemCommentEntity> ItemComment(List<ItemCommentBL> blList)
         {
-            List<ItemComment> dataList = new List<ItemComment>();
+            List<ItemCommentEntity> dataList = new List<ItemCommentEntity>();
             foreach (ItemCommentBL bl in blList)
             {
-                dataList.Add(Translate.ItemComment(bl));
+                dataList.Add(ItemComment(bl));
             }
             return dataList;
         }

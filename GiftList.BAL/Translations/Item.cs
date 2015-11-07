@@ -7,7 +7,7 @@ namespace TheGiftList.BAL
 {
     public static partial class Translate
     {
-        public static ItemBL Item(Item data)
+        public static ItemBL Item(ItemEntity data)
         {
             ItemBL bl = new ItemBL();
 
@@ -22,19 +22,19 @@ namespace TheGiftList.BAL
             return bl;
         }
 
-        public static List<ItemBL> Item(List<Item> dataList)
+        public static List<ItemBL> Item(List<ItemEntity> dataList)
         {
             List<ItemBL> blList = new List<ItemBL>();
-            foreach (Item data in dataList)
+            foreach (ItemEntity data in dataList)
             {
-                blList.Add(Translate.Item(data));
+                blList.Add(Item(data));
             }
             return blList;
         }
 
-        public static Item Item(ItemBL bl)
+        public static ItemEntity Item(ItemBL bl)
         {
-            Item data = new Item();
+            ItemEntity data = new ItemEntity();
 
             data.itemId = bl.ItemId;
             data.itemStatusFK = bl.ItemStatusFK;
@@ -47,12 +47,12 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<Item> Item(List<ItemBL> blList)
+        public static List<ItemEntity> Item(List<ItemBL> blList)
         {
-            List<Item> dataList = new List<Item>();
+            List<ItemEntity> dataList = new List<ItemEntity>();
             foreach (ItemBL bl in blList)
             {
-                dataList.Add(Translate.Item(bl));
+                dataList.Add(Item(bl));
             }
             return dataList;
         }

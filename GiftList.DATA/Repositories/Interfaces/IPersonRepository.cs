@@ -5,19 +5,19 @@ namespace TheGiftList.DATA.Repositories
 {
     public interface IPersonRepository
     {
-        IList<Person> GetAllPersons();
-        IList<Person> GetAllPersonsLike(string partialUserName);
+        IList<PersonEntity> GetAllPersons();
+        IList<PersonEntity> GetAllPersonsLike(string partialUserName);
         int GetNumberOfPersons(string partialUserName);
         bool PersonExistsByEmail(string email);
         bool PersonExistsByUserName(string userName);
-        Person GetPersonById(int id);
-        Person GetPersonByEmail(string email);
-        Person GetPersonByUserName(string userName);
-        int Insert(Person person);
-        void Update(int id, Person contact);
+        PersonEntity GetPersonById(int id);
+        PersonEntity GetPersonByEmail(string email);
+        PersonEntity GetPersonByUserName(string userName);
+        int Insert(PersonEntity person);
+        void Update(int id, PersonEntity contact);
         void Delete(int id);
-        void Insert(List<Person> batch);
-        void Update(List<Person> batch);
+        void Insert(List<PersonEntity> batch);
+        void Update(List<PersonEntity> batch);
         void Delete(List<int> batch);
     }
 }

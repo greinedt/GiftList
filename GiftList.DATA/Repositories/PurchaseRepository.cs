@@ -12,9 +12,9 @@ namespace TheGiftList.DATA.Repositories
         private SqlConnection _conn;
         private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
-        public IList<Purchase> GetAllPurchases()
+        public IList<PurchaseEntity> GetAllPurchases()
         {
-            List<Purchase> purchaseList = new List<Purchase>();
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -26,7 +26,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var purchase = new Purchase()
+                    var purchase = new PurchaseEntity()
                     {
                         purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -45,9 +45,9 @@ namespace TheGiftList.DATA.Repositories
             return purchaseList;
         }
 
-        public IList<Purchase> GetAllPurchases(int purchaser)
+        public IList<PurchaseEntity> GetAllPurchases(int purchaser)
         {
-            List<Purchase> purchaseList = new List<Purchase>();
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -66,7 +66,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var purchase = new Purchase()
+                    var purchase = new PurchaseEntity()
                     {
                         purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -110,9 +110,9 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public Purchase GetPurchase(int item, int purchaser)
+        public PurchaseEntity GetPurchase(int item, int purchaser)
         {
-            List<Purchase> purchaseList = new List<Purchase>();
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -138,7 +138,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var purchase = new Purchase()
+                    var purchase = new PurchaseEntity()
                     {
                         purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -157,9 +157,9 @@ namespace TheGiftList.DATA.Repositories
             return purchaseList.FirstOrDefault();
         }
 
-        public Purchase GetPurchaseById(int id)
+        public PurchaseEntity GetPurchaseById(int id)
         {
-            List<Purchase> purchaseList = new List<Purchase>();
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
             try
             {
                 _conn = new SqlConnection(ConnString);
@@ -178,7 +178,7 @@ namespace TheGiftList.DATA.Repositories
                 var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    var purchase = new Purchase()
+                    var purchase = new PurchaseEntity()
                     {
                         purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
                         itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
@@ -230,7 +230,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public long Insert(Purchase purchase)
+        public long Insert(PurchaseEntity purchase)
         {
             CheckPurchaseForRequiredValues(purchase, RepositoryUtils.RepositoryAction.Insert);
             try
@@ -279,7 +279,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Update(int id, Purchase purchase)
+        public void Update(int id, PurchaseEntity purchase)
         {
             CheckPurchaseForRequiredValues(purchase, RepositoryUtils.RepositoryAction.Update);
 
@@ -352,7 +352,7 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        private void CheckPurchaseForRequiredValues(Purchase p, RepositoryUtils.RepositoryAction action)
+        private void CheckPurchaseForRequiredValues(PurchaseEntity p, RepositoryUtils.RepositoryAction action)
         {
             List<string> missingFields = new List<string>();
 
@@ -368,12 +368,12 @@ namespace TheGiftList.DATA.Repositories
             }
         }
 
-        public void Insert(List<Purchase> batch)
+        public void Insert(List<PurchaseEntity> batch)
         {
             batch.ForEach(x => Insert(x));
         }
 
-        public void Update(List<Purchase> batch)
+        public void Update(List<PurchaseEntity> batch)
         {
             batch.ForEach(x => Update(x.purchaseId, x));
         }
