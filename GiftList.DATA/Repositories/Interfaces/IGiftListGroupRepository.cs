@@ -14,7 +14,7 @@ namespace TheGiftList.DATA.Repositories
         bool GiftListGroupExists(int giftList, int group);
         bool GiftListGroupExists(int giftList, int group, IConnection conn);
         GiftListGroupEntity GetGiftListGroupById(int id);
-        GiftListGroupEntity GetGiftListGroupById(int id, IConnection);
+        GiftListGroupEntity GetGiftListGroupById(int id, IConnection conn);
         GiftListGroupEntity GetGiftListGroup(int giftList, int group);
         GiftListGroupEntity GetGiftListGroup(int giftList, int group, IConnection conn);
         long Insert(GiftListGroupEntity giftListGroup);

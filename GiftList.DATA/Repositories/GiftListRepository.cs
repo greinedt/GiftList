@@ -9,273 +9,303 @@ namespace TheGiftList.DATA.Repositories
 {
     public class GiftListRepository : IGiftListRepository
     {
-        private SqlConnection _conn;
-        private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
 
         public IList<GiftListEntity> GetAllGiftLists()
         {
-            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
+                return GetAllGiftLists(conn);
+            }
+        }
 
-                string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST;";
-                var cmd = new SqlCommand(sql, _conn);
+        public IList<GiftListEntity> GetAllGiftLists(IConnection conn)
+        {
+            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
+            
+            string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST;";
+            List<SqlParameter> prms = new List<SqlParameter>();
                 
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var giftList = new GiftListEntity()
-                    {
-                        giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
-                        personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
-                        listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    giftListlist.Add(giftList);
-                }
-            }
-            finally
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var giftList = new GiftListEntity()
+                {
+                    giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
+                    personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
+                    listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                giftListlist.Add(giftList);
             }
+
             return giftListlist;
         }
 
         public IList<GiftListEntity> GetAllGiftLists(int person)
         {
+            using (Connection conn = new Connection())
+            {
+                return GetAllGiftLists(person, conn);
+            }
+        }
+
+        public IList<GiftListEntity> GetAllGiftLists(int person, IConnection conn)
+        {
             List<GiftListEntity> giftListlist = new List<GiftListEntity>();
-            try
+            
+            string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE personFK = @personFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var paramQuery = new SqlParameter
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
+                ParameterName = "@personFK",
+                Value = person
+            };
+            prms.Add(paramQuery);
 
-                string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE personFK = @personFK;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var giftList = new GiftListEntity()
                 {
-                    ParameterName = "@personFK",
-                    Value = person
+                    giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
+                    personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
+                    listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
                 };
-                cmd.Parameters.Add(paramQuery);
+                giftListlist.Add(giftList);
+            }
 
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var giftList = new GiftListEntity()
-                    {
-                        giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
-                        personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
-                        listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    giftListlist.Add(giftList);
-                }
-            }
-            finally
-            {
-                _conn?.Close();
-            }
             return giftListlist;
         }
 
         public long GetNumberOGiftfLists(int person)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT COUNT(giftListId) FROM DBO.GIFTLIST WHERE personFK = @personFK;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@personFK",
-                    Value = person
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                return Int32.Parse(cmd.ExecuteScalar().ToString());
+                return GetNumberOGiftfLists(person, conn);
             }
-            finally
+        }
+
+        public long GetNumberOGiftfLists(int person, IConnection conn)
+        {
+            string sql = "SELECT COUNT(giftListId) FROM DBO.GIFTLIST WHERE personFK = @personFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            
+            var paramQuery = new SqlParameter
             {
-                _conn?.Close();
-            }
+                ParameterName = "@personFK",
+                Value = person
+            };
+            prms.Add(paramQuery);
+
+            return Int32.Parse(conn.ExecuteScalar(sql,prms).ToString());
         }
 
         public bool GiftListExists(int person, string listName)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                const string sql = "SELECT COUNT([giftListId]) AS LinkId FROM dbo.giftList WHERE listName = @listName AND personFK = @personFK;";
-
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                var cmd = new SqlCommand(sql, _conn);
-                cmd.Parameters.Add("@personFK", SqlDbType.Int);
-                cmd.Parameters["@personFK"].Value = person;
-
-                cmd.Parameters.Add("@listName", SqlDbType.VarChar);
-                cmd.Parameters["@listName"].Value = listName;
-
-                return ((int)cmd.ExecuteScalar() >= 1);
+                return GiftListExists(person, listName, conn);
             }
-            finally
+        }
+
+
+        public bool GiftListExists(int person, string listName, IConnection conn)
+        {
+            const string sql = "SELECT COUNT([giftListId]) AS LinkId FROM dbo.giftList WHERE listName = @listName AND personFK = @personFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var param1 = new SqlParameter
             {
-                _conn?.Close();
-            }
+                ParameterName = "@personFK",
+                Value = person
+            };
+            prms.Add(param1);
+
+            var param2 = new SqlParameter
+            {
+                ParameterName = "@listName",
+                Value = listName
+            };
+            prms.Add(param2);
+            
+            return ((int)conn.ExecuteScalar(sql,prms) >= 1);
         }
 
         public GiftListEntity GetListById(int id)
         {
-            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE giftListId = @id;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramId = new SqlParameter
-                {
-                    ParameterName = "@id",
-                    Value = id
-                };
-                cmd.Parameters.Add(paramId);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var giftList = new GiftListEntity()
-                    {
-                        giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
-                        personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
-                        listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    giftListlist.Add(giftList);
-                }
+                return GetListById(id, conn);
             }
-            finally
+        }
+
+        public GiftListEntity GetListById(int id, Connection conn)
+        {
+            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
+            
+            string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE giftListId = @id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var paramId = new SqlParameter
             {
-                _conn?.Close();
+                ParameterName = "@id",
+                Value = id
+            };
+            prms.Add(paramId);
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var giftList = new GiftListEntity()
+                {
+                    giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
+                    personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
+                    listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                giftListlist.Add(giftList);
             }
             return giftListlist.FirstOrDefault();
         }
-
+        
         public GiftListEntity GetList(int person, string listName)
         {
-            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE personFK = @personFK and listName = @listName;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramPerson = new SqlParameter
-                {
-                    ParameterName = "@personFK",
-                    Value = person
-                };
-                cmd.Parameters.Add(paramPerson);
-
-                var paramName = new SqlParameter
-                {
-                    ParameterName = "@listName",
-                    Value = listName
-                };
-                cmd.Parameters.Add(paramName);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var giftList = new GiftListEntity()
-                    {
-                        giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
-                        personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
-                        listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
-                        isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    giftListlist.Add(giftList);
-                }
+                return GetList(person, listName, conn);
             }
-            finally
-            {
-                _conn?.Close();
-            }
-            return giftListlist.FirstOrDefault();
         }
 
+        public GiftListEntity GetList(int person, string listName, Connection conn)
+        {
+            List<GiftListEntity> giftListlist = new List<GiftListEntity>();
+
+            string sql = "SELECT giftListId, personFK, listName, isPrivate, updateTimestamp, updatePersonFK FROM DBO.GIFTLIST WHERE personFK = @personFK and listName = @listName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@personFK",
+                Value = person
+            };
+            prms.Add(param1);
+
+            var param2 = new SqlParameter
+            {
+                ParameterName = "@listName",
+                Value = listName
+            };
+            prms.Add(param2);
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
+            {
+                var giftList = new GiftListEntity()
+                {
+                    giftListId = rdr.IsDBNull(rdr.GetOrdinal("giftListId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("giftListId")),
+                    personFK = rdr.IsDBNull(rdr.GetOrdinal("personFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personFK")),
+                    listName = rdr.IsDBNull(rdr.GetOrdinal("listName")) ? null : rdr.GetString(rdr.GetOrdinal("listName")),
+                    isPrivate = rdr.IsDBNull(rdr.GetOrdinal("isPrivate")) ? false : (rdr.GetString(rdr.GetOrdinal("isPrivate")) == "Y"),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                giftListlist.Add(giftList);
+            }
+           
+            return giftListlist.FirstOrDefault();
+        }
+        
         public long Insert(GiftListEntity giftList)
         {
+            using (Connection conn = new Connection())
+            {
+                return Insert(giftList, conn);
+            }
+        }
+
+        public long Insert(GiftListEntity giftList, Connection conn)
+        {
             CheckGiftListForRequiredValues(giftList, RepositoryUtils.RepositoryAction.Insert);
+
+            var linkExists = GetList(giftList.personFK, giftList.listName);
+            if (linkExists != null)
+            {
+                throw new Exception($"Gift List {giftList.personFK} {giftList.listName} already exists in database!");
+            }
+
+            string sql =
+                @"INSERT INTO[dbo].[giftList] (personFK, listName, isPrivate, updateTimestamp, updatePersonFK) 
+                VALUES(@personFK, @listName, @isPrivate, getdate(), @updatePersonFK );SELECT CAST(scope_identity() AS int)";
+            List<SqlParameter> prms = new List<SqlParameter>();
+
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@personFK",
+                Value = giftList.personFK
+            };
+            prms.Add(param1);
+
+            var param2 = new SqlParameter
+            {
+                ParameterName = "@listName",
+                Value = giftList.listName
+            };
+            prms.Add(param2);
+
+            var param3 = new SqlParameter
+            {
+                ParameterName = "@isPrivate",
+                Value = giftList.isPrivate ? 'Y' : 'N'
+            };
+            prms.Add(param3);
+
+            var param4 = new SqlParameter
+            {
+                ParameterName = "@updatePersonFK",
+                Value = giftList.updatePersonFK
+            };
+            prms.Add(param4);
+            
             try
             {
-                var linkExists = GetList(giftList.personFK, giftList.listName);
-                if (linkExists != null)
-                {
-                    throw new Exception($"Gift List {giftList.personFK} {giftList.listName} already exists in database!");
-                }
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-
-                cmd.CommandText =
-                    @"INSERT INTO[dbo].[giftList] (personFK, listName, isPrivate, updateTimestamp, updatePersonFK) 
-                    VALUES(@personFK, @listName, @isPrivate, getdate(), @updatePersonFK );SELECT CAST(scope_identity() AS int)";
-
-
-                cmd.Parameters.Add("@personFK", SqlDbType.Int);
-                cmd.Parameters["@personFK"].Value = giftList.personFK;
-
-                cmd.Parameters.Add("@listName", SqlDbType.VarChar);
-                cmd.Parameters["@listName"].Value = giftList.listName;
-
-                cmd.Parameters.Add("@isPrivate", SqlDbType.Char);
-                cmd.Parameters["@isPrivate"].Value = giftList.isPrivate ? 'Y' : 'N';
-
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = giftList.updatePersonFK;
-
-                _conn.Open();
-
-                try
-                {
-                    return int.Parse(cmd.ExecuteScalar().ToString());
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"Entity {giftList.personFK} {giftList.listName} not inserted in database!");
-                }
-
+                return int.Parse(conn.ExecuteScalar(sql,prms).ToString());
             }
-            finally
+            catch (Exception)
             {
-                _conn?.Close();
+                throw new Exception($"Entity {giftList.personFK} {giftList.listName} not inserted in database!");
             }
         }
 
         public void Insert(List<GiftListEntity> batch)
         {
-            batch.ForEach(x => Insert(x));
+            using (Connection conn = new Connection())
+            {
+                Insert(batch, conn);
+            }
         }
 
+        public void Insert(List<GiftListEntity> batch, Connection conn)
+        {
+            batch.ForEach(x => Insert(x));
+        }
+        
         public void Update(int id, GiftListEntity giftList)
+        {
+            using (Connection conn = new Connection())
+            {
+                Update(id, giftList, conn);
+            }
+        }
+
+        public void Update(int id, GiftListEntity giftList, Connection conn)
         {
             CheckGiftListForRequiredValues(giftList, RepositoryUtils.RepositoryAction.Update);
 
@@ -284,66 +314,86 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception("Gift List does not exist in database");
             }
+            
+            string sql = @"UPDATE person SET [personFK]=@personFK, 
+                                                    [listName]=@listName, 
+                                                    [isPrivate]=@isPrivate, 
+                                                    [updateTimestamp]=getdate(),
+                                                    [updatePersonFK]=@updatePersonFK
+                                                    WHERE giftListId=@giftListId";
+            List<SqlParameter> prms = new List<SqlParameter>();
 
-            try
+            var param1 = new SqlParameter
             {
-                _conn = new SqlConnection(ConnString);
+                ParameterName = "@personFK",
+                Value = giftList.personFK
+            };
+            prms.Add(param1);
 
-                var cmd = _conn.CreateCommand();
-                cmd.CommandText = @"UPDATE person SET [personFK]=@personFK, 
-                                                      [listName]=@listName, 
-                                                      [isPrivate]=@isPrivate, 
-                                                      [updateTimestamp]=getdate(),
-                                                      [updatePersonFK]=@updatePersonFK
-                                                      WHERE giftListId=@giftListId";
-
-                cmd.Parameters.Add("@personFK", SqlDbType.Int);
-                cmd.Parameters["@personFK"].Value = giftList.personFK;
-
-                cmd.Parameters.Add("@listName", SqlDbType.VarChar);
-                cmd.Parameters["@listName"].Value = giftList.listName;
-                
-                cmd.Parameters.Add("@isPrivate", SqlDbType.Char);
-                cmd.Parameters["@isPrivate"].Value = giftList.isPrivate ? 'Y' : 'N';
-
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = giftList.updatePersonFK;
-
-                _conn.Open();
-
-                var number = cmd.ExecuteNonQuery();
-
-                if (number != 1)
-                {
-                    throw new Exception($"No Gift Lsits were updated with Id: {id}");
-                }
-            }
-            finally
+            var param2 = new SqlParameter
             {
-                _conn?.Close();
+                ParameterName = "@listName",
+                Value = giftList.listName
+            };
+            prms.Add(param2);
+
+            var param3 = new SqlParameter
+            {
+                ParameterName = "@isPrivate",
+                Value = giftList.isPrivate ? 'Y' : 'N'
+            };
+            prms.Add(param3);
+
+            var param4 = new SqlParameter
+            {
+                ParameterName = "@updatePersonFK",
+                Value = giftList.updatePersonFK
+            };
+            prms.Add(param4);
+            
+            var number = conn.ExecuteNonQuery(sql,prms);
+
+            if (number != 1)
+            {
+                throw new Exception($"No Gift Lsits were updated with Id: {id}");
             }
         }
 
         public void Update(List<GiftListEntity> batch)
         {
-            batch.ForEach(x => Update(x.giftListId, x));
+            using (Connection conn = new Connection())
+            {
+                Update(batch, conn);
+            }
         }
 
+        public void Update(List<GiftListEntity> batch, IConnection conn)
+        {
+            batch.ForEach(x => Update(x.giftListId, x));
+        }
+        
         public void Delete(int id)
         {
-            _conn = new SqlConnection(ConnString);
+            using (Connection conn = new Connection())
+            {
+                Delete(id, conn);
+            }
+        }
 
-            var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM giftlist WHERE [giftListId] = @Id;";
-            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
-            sqlComm.Parameters["@Id"].Value = id;
+        public void Delete(int id, IConnection conn)
+        {
+            string sql = @"DELETE FROM giftlist WHERE [giftListId] = @Id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
 
-            _conn.Open();
-
-            var rowsAffected = sqlComm.ExecuteNonQuery();
-
-            _conn.Close();
-
+            var param1 = new SqlParameter
+            {
+                ParameterName = "@Id",
+                Value = id
+            };
+            prms.Add(param1);
+            
+            var rowsAffected = conn.ExecuteNonQuery(sql,prms);
+            
             if (rowsAffected < 1)
             {
                 throw new Exception("Entity has not been deleted!");
@@ -352,7 +402,15 @@ namespace TheGiftList.DATA.Repositories
 
         public void Delete(List<int> batch)
         {
-            batch.ForEach(x => Delete(x));
+            using (Connection conn = new Connection())
+            {
+                Delete(batch, conn);
+            }
+        }
+
+        public void Delete(List<int> batch, IConnection conn)
+        {
+            batch.ForEach(x => Delete(x,conn));
         }
 
         private void CheckGiftListForRequiredValues(GiftListEntity gl, RepositoryUtils.RepositoryAction action)
