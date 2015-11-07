@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using TheGiftList.DATA.Entities;
 using TheGiftList.BAL.Entities;
 
-
-
 namespace TheGiftList.BAL
 {
-    public static partial class Translate
+    internal static partial class Translate
     {
-        public static GiftListGroup GiftListGroup(GiftListGroupEntity data)
+        internal static GiftListGroup GiftListGroup(GiftListGroupEntity data)
         {
             GiftListGroup ent = new GiftListGroup();
 
@@ -22,7 +20,7 @@ namespace TheGiftList.BAL
             return ent;
         }
 
-        public static List<GiftListGroup> GiftListGroup(List<GiftListGroupEntity> dataList)
+        internal static List<GiftListGroup> GiftListGroup(List<GiftListGroupEntity> dataList)
         {
             List<GiftListGroup> entList = new List<GiftListGroup>();
             foreach (GiftListGroupEntity data in dataList)
@@ -32,7 +30,7 @@ namespace TheGiftList.BAL
             return entList;
         }
 
-        public static GiftListGroupEntity GiftListGroup(GiftListGroup ent)
+        internal static GiftListGroupEntity GiftListGroup(GiftListGroup ent)
         {
             GiftListGroupEntity data = new GiftListGroupEntity();
 
@@ -45,7 +43,7 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<GiftListGroupEntity> GiftListGroup(List<GiftListGroup> entList)
+        internal static List<GiftListGroupEntity> GiftListGroup(List<GiftListGroup> entList)
         {
             List<GiftListGroupEntity> dataList = new List<GiftListGroupEntity>();
             foreach (GiftListGroup ent in entList)

@@ -5,9 +5,9 @@ using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
-    public static partial class Translate
+    internal static partial class Translate
     {
-        public static Purchase Purchase(PurchaseEntity data)
+        internal static Purchase Purchase(PurchaseEntity data)
         {
             Purchase ent = new Purchase();
 
@@ -21,7 +21,7 @@ namespace TheGiftList.BAL
             return ent;
         }
 
-        public static List<Purchase> Purchase(List<PurchaseEntity> dataList)
+        internal static List<Purchase> Purchase(List<PurchaseEntity> dataList)
         {
             List<Purchase> entList = new List<Purchase>();
             foreach (PurchaseEntity data in dataList)
@@ -31,7 +31,7 @@ namespace TheGiftList.BAL
             return entList;
         }
 
-        public static PurchaseEntity Purchase(Purchase ent)
+        internal static PurchaseEntity Purchase(Purchase ent)
         {
             PurchaseEntity data = new PurchaseEntity();
 
@@ -45,7 +45,7 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<PurchaseEntity> Purchase(List<Purchase> entList)
+        internal static List<PurchaseEntity> Purchase(List<Purchase> entList)
         {
             List<PurchaseEntity> dataList = new List<PurchaseEntity>();
             foreach (Purchase ent in entList)

@@ -8,9 +8,9 @@ using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
-    public static partial class Translate
+    internal static partial class Translate
     {
-        public static Person Person(PersonEntity data)
+        internal static Person Person(PersonEntity data)
         {
             Person ent = new Person();
 
@@ -25,7 +25,7 @@ namespace TheGiftList.BAL
             return ent;
         }
 
-        public static List<Person> Person(List<PersonEntity> dataList)
+        internal static List<Person> Person(List<PersonEntity> dataList)
         {
             List<Person> entList = new List<Person>();
             foreach(PersonEntity data in dataList)
@@ -35,7 +35,7 @@ namespace TheGiftList.BAL
             return entList;
         }
 
-        public static PersonEntity Person(Person ent)
+        internal static PersonEntity Person(Person ent)
         {
             PersonEntity data = new PersonEntity();
 
@@ -50,7 +50,7 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<PersonEntity> Person(List<Person> entList)
+        internal static List<PersonEntity> Person(List<Person> entList)
         {
             List<PersonEntity> dataList = new List<PersonEntity>();
             foreach (Person ent in entList)

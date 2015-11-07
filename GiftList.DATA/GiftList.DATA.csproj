@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connection\Connection.cs" />
+    <Compile Include="Connection\IConnection.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\GroupMember.cs" />
     <Compile Include="Entities\Item.cs" />

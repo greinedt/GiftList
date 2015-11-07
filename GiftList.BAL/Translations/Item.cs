@@ -5,9 +5,9 @@ using TheGiftList.BAL.Entities;
 
 namespace TheGiftList.BAL
 {
-    public static partial class Translate
+    internal static partial class Translate
     {
-        public static Item Item(ItemEntity data)
+        internal static Item Item(ItemEntity data)
         {
             Item ent = new Item();
 
@@ -22,7 +22,7 @@ namespace TheGiftList.BAL
             return ent;
         }
 
-        public static List<Item> Item(List<ItemEntity> dataList)
+        internal static List<Item> Item(List<ItemEntity> dataList)
         {
             List<Item> entList = new List<Item>();
             foreach (ItemEntity data in dataList)
@@ -32,7 +32,7 @@ namespace TheGiftList.BAL
             return entList;
         }
 
-        public static ItemEntity Item(Item ent)
+        internal static ItemEntity Item(Item ent)
         {
             ItemEntity data = new ItemEntity();
 
@@ -47,7 +47,7 @@ namespace TheGiftList.BAL
             return data;
         }
 
-        public static List<ItemEntity> Item(List<Item> entList)
+        internal static List<ItemEntity> Item(List<Item> entList)
         {
             List<ItemEntity> dataList = new List<ItemEntity>();
             foreach (Item ent in entList)
