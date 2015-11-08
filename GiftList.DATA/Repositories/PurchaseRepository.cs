@@ -9,277 +9,208 @@ namespace TheGiftList.DATA.Repositories
 {
     public class PurchaseRepository : IPurchaseRepository
     {
-        private SqlConnection _conn;
-        private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
-
         public IList<PurchaseEntity> GetAllPurchases()
         {
-            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonKey FROM DBO.PURCHASE;";
-                var cmd = new SqlCommand(sql, _conn);
-                
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var purchase = new PurchaseEntity()
-                    {
-                        purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
-                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
-                        purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    purchaseList.Add(purchase);
-                }
+                return GetAllPurchases(conn);
             }
-            finally
+        }
+
+        public IList<PurchaseEntity> GetAllPurchases(IConnection conn)
+        {
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
+            string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonKey FROM DBO.PURCHASE;";
+
+            var rdr = conn.ExecuteReader(sql);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var purchase = new PurchaseEntity()
+                {
+                    purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
+                    itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
+                    purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                purchaseList.Add(purchase);
             }
             return purchaseList;
         }
 
         public IList<PurchaseEntity> GetAllPurchases(int purchaser)
         {
-            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonKey FROM DBO.PURCHASE WHERE purchaserFK = @purchaserFK";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@purchaserFK",
-                    Value = purchaser
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var purchase = new PurchaseEntity()
-                    {
-                        purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
-                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
-                        purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    purchaseList.Add(purchase);
-                }
+                return GetAllPurchases(purchaser, conn);
             }
-            finally
+        }
+
+        public IList<PurchaseEntity> GetAllPurchases(int purchaser, IConnection conn)
+        {
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
+            string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonKey FROM DBO.PURCHASE WHERE purchaserFK = @purchaserFK";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add( new SqlParameter { ParameterName = "@purchaserFK", Value = purchaser });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var purchase = new PurchaseEntity()
+                {
+                    purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
+                    itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
+                    purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                purchaseList.Add(purchase);
             }
             return purchaseList;
         }
 
         public long GetNumberOfPurchases(int purchaser)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
+                return GetNumberOfPurchases(purchaser, conn);
+            }
+        }
+        public long GetNumberOfPurchases(int purchaser, IConnection conn)
+        {
                 string sql = "SELECT COUNT(purchaseId) FROM DBO.PURCHASE WHERE purchaserFK = @purchaser;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@purchaser",
-                    Value = purchaser
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                return Int32.Parse(cmd.ExecuteScalar().ToString());
-            }
-            finally
-            {
-                _conn?.Close();
-            }
+                List<SqlParameter> prms = new List<SqlParameter>();
+                prms.Add(new SqlParameter { ParameterName = "@purchaser", Value = purchaser });
+                return Int32.Parse(conn.ExecuteScalar(sql,prms).ToString());
         }
 
         public PurchaseEntity GetPurchase(int item, int purchaser)
         {
-            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK FROM DBO.PURCHASE WHERE itemFK = @itemFK AND purchaserFK = @purchaserFK;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramItem = new SqlParameter
-                {
-                    ParameterName = "@itemFK",
-                    Value = item
-                };
-                cmd.Parameters.Add(paramItem);
-
-                var paramPurchaser = new SqlParameter
-                {
-                    ParameterName = "@purchaserFK",
-                    Value = purchaser
-                };
-                cmd.Parameters.Add(paramPurchaser);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var purchase = new PurchaseEntity()
-                    {
-                        purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
-                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
-                        purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    purchaseList.Add(purchase);
-                }
+                return GetPurchase(item, purchaser, conn);
             }
-            finally
+        }
+        public PurchaseEntity GetPurchase(int item, int purchaser, IConnection conn)
+        {
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
+            string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK FROM DBO.PURCHASE WHERE itemFK = @itemFK AND purchaserFK = @purchaserFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@itemFK", Value = item });
+            prms.Add(new SqlParameter { ParameterName = "@purchaserFK", Value = purchaser });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var purchase = new PurchaseEntity()
+                {
+                    purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
+                    itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
+                    purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                purchaseList.Add(purchase);
             }
             return purchaseList.FirstOrDefault();
         }
 
         public PurchaseEntity GetPurchaseById(int id)
         {
-            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK FROM DBO.PURCHASE WHERE purchaseId = @purchaseId;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramId = new SqlParameter
-                {
-                    ParameterName = "@purchaseId",
-                    Value = id
-                };
-                cmd.Parameters.Add(paramId);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var purchase = new PurchaseEntity()
-                    {
-                        purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
-                        itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
-                        purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
-                        purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
-                        updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
-                    };
-                    purchaseList.Add(purchase);
-                }
+                return GetPurchaseById(id, conn);
             }
-            finally
+        }
+        public PurchaseEntity GetPurchaseById(int id, IConnection conn)
+        {
+            List<PurchaseEntity> purchaseList = new List<PurchaseEntity>();
+            string sql = "SELECT purchaseId, itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK FROM DBO.PURCHASE WHERE purchaseId = @purchaseId;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@purchaseId", Value = id });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var purchase = new PurchaseEntity()
+                {
+                    purchaseId = rdr.IsDBNull(rdr.GetOrdinal("purchaseId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaseId")),
+                    itemFK = rdr.IsDBNull(rdr.GetOrdinal("itemFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("itemFK")),
+                    purchaserFK = rdr.IsDBNull(rdr.GetOrdinal("purchaserFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("purchaserFK")),
+                    purchaseDate = rdr.IsDBNull(rdr.GetOrdinal("purchaseDate")) ? null : (DateTime?)rdr.GetDateTime(rdr.GetOrdinal("purchaseDate")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp")),
+                    updatePersonFK = rdr.IsDBNull(rdr.GetOrdinal("updatePersonFK")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("updatePersonFK"))
+                };
+                purchaseList.Add(purchase);
             }
             return purchaseList.FirstOrDefault();
         }
-        
+
         public bool PurchaseExists(int item, int purchaser)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                const string sql = "SELECT COUNT([purchaseId]) AS PurchaseId FROM dbo.purchase WHERE itemFK = @itemFK and purchaserFK = @purchaserFK;";
-
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramItem = new SqlParameter
-                {
-                    ParameterName = "@itemFK",
-                    Value = item
-                };
-                cmd.Parameters.Add(paramItem);
-
-                var paramPurchaser = new SqlParameter
-                {
-                    ParameterName = "@purchaserFK",
-                    Value = purchaser
-                };
-                cmd.Parameters.Add(paramPurchaser);
-
-                return ((int)cmd.ExecuteScalar() >= 1);
+                return PurchaseExists(item, purchaser, conn);
             }
-            finally
-            {
-                _conn?.Close();
-            }
+        }
+
+        public bool PurchaseExists(int item, int purchaser, IConnection conn)
+        {
+            const string sql = "SELECT COUNT([purchaseId]) AS PurchaseId FROM dbo.purchase WHERE itemFK = @itemFK and purchaserFK = @purchaserFK;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@itemFK", Value = item });
+            prms.Add(new SqlParameter { ParameterName = "@purchaserFK", Value = purchaser });
+
+            return ((int)conn.ExecuteScalar(sql,prms) >= 1);
         }
 
         public long Insert(PurchaseEntity purchase)
         {
+            using (Connection conn = new Connection())
+            {
+                return Insert(purchase, conn);
+            }
+        }
+
+        public long Insert(PurchaseEntity purchase, IConnection conn)
+        {
             CheckPurchaseForRequiredValues(purchase, RepositoryUtils.RepositoryAction.Insert);
+            var purchaseExists = GetPurchase(purchase.itemFK, purchase.purchaserFK);
+            if (purchaseExists != null)
+            {
+                throw new Exception($"Entity {purchase.itemFK}, {purchase.purchaserFK} already exists in database!");
+            }
+            string sql =
+                @"INSERT INTO[dbo].[purchase] (itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK) 
+                VALUES(@itemFk, @purchaserFK, @purchaseDate, getdate(), @updatePersonKey);SELECT CAST(scope_identity() AS int)";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@itemFK", Value = purchase.itemFK });
+            prms.Add(new SqlParameter { ParameterName = "@purchaserFK", Value = purchase.purchaserFK });
+            prms.Add(new SqlParameter { ParameterName = "@purchaseDate", Value = purchase.purchaseDate });
+            prms.Add(new SqlParameter { ParameterName = "@updatePersonFK", Value = purchase.updatePersonFK });
+            
             try
             {
-                var purchaseExists = GetPurchase(purchase.itemFK, purchase.purchaserFK);
-                if (purchaseExists != null)
-                {
-                    throw new Exception($"Entity {purchase.itemFK}, {purchase.purchaserFK} already exists in database!");
-                }
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-
-                cmd.CommandText =
-                    @"INSERT INTO[dbo].[purchase] (itemFK, purchaserFK, purchaseDate, updateTimestamp, updatePersonFK) 
-                    VALUES(@itemFk, @purchaserFK, @purchaseDate, getdate(), @updatePersonKey);SELECT CAST(scope_identity() AS int)";
-
-
-                cmd.Parameters.Add("@itemFk", SqlDbType.Int);
-                cmd.Parameters["@itemFk"].Value = purchase.itemFK;
-
-                cmd.Parameters.Add("@purchaserFK", SqlDbType.Int);
-                cmd.Parameters["@purchaserFK"].Value = purchase.purchaserFK;
-
-                cmd.Parameters.Add("@purchaseDate", SqlDbType.DateTime);
-                cmd.Parameters["@purchaseDate"].Value = purchase.purchaseDate;
-
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = purchase.updatePersonFK;
-
-                _conn.Open();
-
-                try
-                {
-                    return int.Parse(cmd.ExecuteScalar().ToString());
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"Entity {purchase.itemFK} {purchase.purchaserFK} not inserted in database!");
-                }
-
+                return int.Parse(conn.ExecuteScalar(sql,prms).ToString());
             }
-            finally
+            catch (Exception)
             {
-                _conn?.Close();
+                throw new Exception($"Entity {purchase.itemFK} {purchase.purchaserFK} not inserted in database!");
             }
         }
 
         public void Update(int id, PurchaseEntity purchase)
+        {
+            using (Connection conn = new Connection())
+            {
+                Update(id, purchase, conn);
+            }
+        }
+
+        public void Update(int id, PurchaseEntity purchase, IConnection conn)
         {
             CheckPurchaseForRequiredValues(purchase, RepositoryUtils.RepositoryAction.Update);
 
@@ -288,64 +219,41 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception("Contact does not exist in database");
             }
-
-            try
-            {
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-                cmd.CommandText = @"UPDATE person SET [itemFK]=@itemFK,
-                                                      [purchaserFK]=@purchaserFK, 
-                                                      [purchaseDate]=@purchaseDate, 
-                                                      [updateTimestamp]=@getdate(), 
-                                                      [updatePersonFK]=@updatePersonFK
-                                                      WHERE purchaseId=@Id";
-
-                cmd.Parameters.Add("@Id", SqlDbType.Int);
-                cmd.Parameters["@Id"].Value = id;
-
-                cmd.Parameters.Add("@itemFK", SqlDbType.Int);
-                cmd.Parameters["@itemFK"].Value = purchase.itemFK;
-
-                cmd.Parameters.Add("@purchaserFK", SqlDbType.Int);
-                cmd.Parameters["@purchaserFK"].Value = purchase.purchaserFK;
-
-                cmd.Parameters.Add("@purchaseDate", SqlDbType.DateTime);
-                cmd.Parameters["@purchaseDate"].Value = purchase.purchaseDate;
+            string sql = @"UPDATE person SET [itemFK]=@itemFK,
+                                                    [purchaserFK]=@purchaserFK, 
+                                                    [purchaseDate]=@purchaseDate, 
+                                                    [updateTimestamp]=@getdate(), 
+                                                    [updatePersonFK]=@updatePersonFK
+                                                    WHERE purchaseId=@Id";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@Id", Value = id });
+            prms.Add(new SqlParameter { ParameterName = "@itemFK", Value = purchase.itemFK });
+            prms.Add(new SqlParameter { ParameterName = "@purchaserFK", Value = purchase.purchaserFK });
+            prms.Add(new SqlParameter { ParameterName = "@purchaseDate", Value = purchase.purchaseDate });
+            prms.Add(new SqlParameter { ParameterName = "@updatePersonFK", Value = purchase.updatePersonFK });
                 
-                cmd.Parameters.Add("@updatePersonFK", SqlDbType.Int);
-                cmd.Parameters["@updatePersonFK"].Value = purchase.updatePersonFK;
+            var number = conn.ExecuteNonQuery(sql,prms);
 
-                _conn.Open();
-
-                var number = cmd.ExecuteNonQuery();
-
-                if (number != 1)
-                {
-                    throw new Exception($"No Purchases were updated with Id: {id}");
-                }
-            }
-            finally
+            if (number != 1)
             {
-                _conn?.Close();
+                throw new Exception($"No Purchases were updated with Id: {id}");
             }
         }
 
         public void Delete(int id)
         {
-            _conn = new SqlConnection(ConnString);
+            using(Connection conn = new Connection())
+            {
+                Delete(id, conn);
+            }
+        }
 
-            var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM purchase WHERE [purchaseId] = @Id;";
-            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
-            sqlComm.Parameters["@Id"].Value = id;
-
-            _conn.Open();
-
-            var rowsAffected = sqlComm.ExecuteNonQuery();
-
-            _conn.Close();
-
+        public void Delete(int id, IConnection conn)
+        {
+            string sql = @"DELETE FROM purchase WHERE [purchaseId] = @Id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@Id", Value = id });
+            var rowsAffected = conn.ExecuteNonQuery(sql,prms);
             if (rowsAffected < 1)
             {
                 throw new Exception("Entity has not been deleted!");
@@ -370,17 +278,69 @@ namespace TheGiftList.DATA.Repositories
 
         public void Insert(List<PurchaseEntity> batch)
         {
-            batch.ForEach(x => Insert(x));
+            using (Connection conn = new Connection())
+            {
+                Insert(batch,conn);
+            }
+        }
+        public void Insert(List<PurchaseEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Insert(x, conn));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
         }
 
         public void Update(List<PurchaseEntity> batch)
         {
-            batch.ForEach(x => Update(x.purchaseId, x));
+            using (Connection conn = new Connection())
+            {
+                Update(batch, conn);
+            }
+        }
+
+        public void Update(List<PurchaseEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Update(x.purchaseId, x, conn));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
 
         public void Delete(List<int> batch)
         {
-            batch.ForEach(x => Delete(x));
+            using (Connection conn = new Connection())
+            {
+                Delete(batch, conn);
+            }
+        }
+
+        public void Delete(List<int> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Delete(x));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
     }
 }

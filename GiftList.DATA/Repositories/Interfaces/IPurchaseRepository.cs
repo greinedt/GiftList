@@ -17,5 +17,17 @@ namespace TheGiftList.DATA.Repositories
         void Insert(List<PurchaseEntity> batch);
         void Update(List<PurchaseEntity> batch);
         void Delete(List<int> batch);
+        IList<PurchaseEntity> GetAllPurchases(IConnection conn);
+        IList<PurchaseEntity> GetAllPurchases(int purchaser, IConnection conn);
+        long GetNumberOfPurchases(int purchaser, IConnection conn);
+        bool PurchaseExists(int item, int purchaser, IConnection conn);
+        PurchaseEntity GetPurchaseById(int id, IConnection conn);
+        PurchaseEntity GetPurchase(int item, int purchaser, IConnection conn);
+        long Insert(PurchaseEntity purchase, IConnection conn);
+        void Update(int id, PurchaseEntity purchase, IConnection conn);
+        void Delete(int id, IConnection conn);
+        void Insert(List<PurchaseEntity> batch, IConnection conn);
+        void Update(List<PurchaseEntity> batch, IConnection conn);
+        void Delete(List<int> batch, IConnection conn);
     }
 }
