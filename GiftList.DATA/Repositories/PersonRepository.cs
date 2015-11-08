@@ -9,324 +9,270 @@ namespace TheGiftList.DATA.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
-        private SqlConnection _conn;
-        private const string ConnString = "Data Source=.;Initial Catalog=GiftList;Integrated Security=True";
-
         public IList<PersonEntity> GetAllPersons()
         {
-            List<PersonEntity> personList = new List<PersonEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash FROM DBO.PERSON;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var person = new PersonEntity()
-                    {
-                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
-                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
-                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
-                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
-                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
-                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash"))
-                    };
-                    personList.Add(person);
-                }
+                return GetAllPersons(conn);
             }
-            finally
+        }
+
+        public IList<PersonEntity> GetAllPersons(IConnection conn)
+        {
+            List<PersonEntity> personList = new List<PersonEntity>();
+            
+            string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash FROM DBO.PERSON;";
+            
+            var rdr = conn.ExecuteReader(sql);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var person = new PersonEntity()
+                {
+                    personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                    userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                    emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                    firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                    lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                    passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash"))
+                };
+                personList.Add(person);
             }
             return personList;
         }
 
         public IList<PersonEntity> GetAllPersonsLike(string partialUserName)
         {
-            List<PersonEntity> personList = new List<PersonEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-                
-                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash FROM DBO.PERSON WHERE userName like @partialUserName;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@partialUserName",
-                    Value = "%" + partialUserName + "%"
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var person = new PersonEntity()
-                    {
-                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
-                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
-                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
-                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
-                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
-                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash"))
-                    };
-                    personList.Add(person);
-                }
+                return GetAllPersonsLike(partialUserName, conn);
             }
-            finally
+        }
+
+        public IList<PersonEntity> GetAllPersonsLike(string partialUserName, IConnection conn)
+        {
+            List<PersonEntity> personList = new List<PersonEntity>();
+            
+            string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash FROM DBO.PERSON WHERE userName like @partialUserName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@partialUserName", Value = "%" + partialUserName + "%" });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var person = new PersonEntity()
+                {
+                    personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                    userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                    emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                    firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                    lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                    passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash"))
+                };
+                personList.Add(person);
             }
             return personList;
         }
 
         public int GetNumberOfPersons(string partialUserName)
         {
-            try { 
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT COUNT(personId) FROM DBO.PERSON WHERE userName LIKE @partialUserName;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@partialUserName",
-                    Value = "%" + partialUserName + "%"
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                return Int32.Parse(cmd.ExecuteScalar().ToString()) ;
-            }
-            finally
+            using (Connection conn = new Connection())
             {
-                _conn?.Close();
+                return GetNumberOfPersons(partialUserName, conn);
             }
+        }
+
+        public int GetNumberOfPersons(string partialUserName, IConnection conn)
+        {
+            string sql = "SELECT COUNT(personId) FROM DBO.PERSON WHERE userName LIKE @partialUserName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@partialUserName", Value = "%" + partialUserName + "%" });
+                
+            return Int32.Parse(conn.ExecuteScalar(sql,prms).ToString()) ;
         }
 
         public PersonEntity GetPersonByEmail(string emailAddress)
         {
-            List<PersonEntity> personList = new List<PersonEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE emailAddress = @emailAddress;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@emailAddress",
-                    Value = emailAddress
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var person = new PersonEntity()
-                    {
-                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
-                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
-                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
-                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
-                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
-                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
-                    };
-                    personList.Add(person);
-                }
+                return GetPersonByEmail(emailAddress, conn);
             }
-            finally
+        }
+
+        public PersonEntity GetPersonByEmail(string emailAddress, IConnection conn)
+        {
+            List<PersonEntity> personList = new List<PersonEntity>();
+            
+            string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE emailAddress = @emailAddress;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@emailAddress", Value = emailAddress });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var person = new PersonEntity()
+                {
+                    personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                    userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                    emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                    firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                    lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                    passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
+                };
+                personList.Add(person);
             }
             return personList.FirstOrDefault();
         }
 
         public PersonEntity GetPersonById(int id)
         {
-            List<PersonEntity> personList = new List<PersonEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE personId = @id;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@id",
-                    Value = id
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var person = new PersonEntity()
-                    {
-                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
-                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
-                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
-                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
-                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
-                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
-                    };
-                    personList.Add(person);
-                }
+                return GetPersonById(id, conn);
             }
-            finally
+        }
+
+        public PersonEntity GetPersonById(int id, IConnection conn)
+        {
+            List<PersonEntity> personList = new List<PersonEntity>();
+
+            string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE personId = @id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@id", Value = id });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var person = new PersonEntity()
+                {
+                    personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                    userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                    emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                    firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                    lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                    passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
+                };
+                personList.Add(person);
             }
             return personList.FirstOrDefault();
         }
 
         public PersonEntity GetPersonByUserName(string userName)
         {
-            List<PersonEntity> personList = new List<PersonEntity>();
-            try
+            using (Connection conn = new Connection())
             {
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE userName = @userName;";
-                var cmd = new SqlCommand(sql, _conn);
-
-                var paramQuery = new SqlParameter
-                {
-                    ParameterName = "@userName",
-                    Value = userName
-                };
-                cmd.Parameters.Add(paramQuery);
-
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var person = new PersonEntity()
-                    {
-                        personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
-                        userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
-                        emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
-                        firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
-                        lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
-                        passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
-                        updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
-                    };
-                    personList.Add(person);
-                }
+                return GetPersonByUserName(userName, conn);
             }
-            finally
+        }
+
+        public PersonEntity GetPersonByUserName(string userName, IConnection conn)
+        {
+            List<PersonEntity> personList = new List<PersonEntity>();
+
+            string sql = "SELECT personId, userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp FROM DBO.PERSON WHERE userName = @userName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@userName", Value = userName });
+
+            var rdr = conn.ExecuteReader(sql,prms);
+            while (rdr.Read())
             {
-                _conn?.Close();
+                var person = new PersonEntity()
+                {
+                    personId = rdr.IsDBNull(rdr.GetOrdinal("personId")) ? -1 : rdr.GetInt32(rdr.GetOrdinal("personId")),
+                    userName = rdr.IsDBNull(rdr.GetOrdinal("userName")) ? null : rdr.GetString(rdr.GetOrdinal("userName")),
+                    emailAddress = rdr.IsDBNull(rdr.GetOrdinal("emailAddress")) ? null : rdr.GetString(rdr.GetOrdinal("emailAddress")),
+                    firstName = rdr.IsDBNull(rdr.GetOrdinal("firstName")) ? null : rdr.GetString(rdr.GetOrdinal("firstName")),
+                    lastName = rdr.IsDBNull(rdr.GetOrdinal("lastName")) ? null : rdr.GetString(rdr.GetOrdinal("lastName")),
+                    passwordHash = rdr.IsDBNull(rdr.GetOrdinal("passwordHash")) ? null : rdr.GetString(rdr.GetOrdinal("passwordHash")),
+                    updateTimestamp = rdr.IsDBNull(rdr.GetOrdinal("updateTimestamp")) ? new DateTime() : rdr.GetDateTime(rdr.GetOrdinal("updateTimestamp"))
+                };
+                personList.Add(person);
             }
             return personList.FirstOrDefault();
         }
 
         public int Insert(PersonEntity person)
         {
+            using (Connection conn = new Connection())
+            {
+                return Insert(person, conn);
+            }
+        }
+
+        public int Insert(PersonEntity person, IConnection conn)
+        {
             CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Insert);
+            
+            var contactExists = GetPersonByEmail(person.emailAddress);
+            if (contactExists != null)
+            {
+                throw new Exception($"Entity {person.emailAddress} already exists in database!");
+            }
+
+            string sql =
+                @"INSERT INTO[dbo].[person] (userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp) 
+                VALUES(@userName, @emailAddress, @firstName, @lastName, @passwordHash, getdate());SELECT CAST(scope_identity() AS int)";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@userName", Value = person.userName });
+            prms.Add(new SqlParameter { ParameterName = "@emailAddress", Value = person.emailAddress });
+            prms.Add(new SqlParameter { ParameterName = "@firstName", Value = person.firstName });
+            prms.Add(new SqlParameter { ParameterName = "@lastName", Value = person.lastName });
+            prms.Add(new SqlParameter { ParameterName = "@passwordHash", Value = person.passwordHash });
+            
             try
             {
-                var contactExists = GetPersonByEmail(person.emailAddress);
-                if (contactExists != null)
-                {
-                    throw new Exception($"Entity {person.emailAddress} already exists in database!");
-                }
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-
-                cmd.CommandText =
-                    @"INSERT INTO[dbo].[person] (userName, emailAddress, firstName, lastName, passwordHash, updateTimestamp) 
-                    VALUES(@userName, @emailAddress, @firstName, @lastName, @passwordHash, getdate());SELECT CAST(scope_identity() AS int)";
-
-
-                cmd.Parameters.Add("@userName", SqlDbType.VarChar);
-                cmd.Parameters["@userName"].Value = person.userName;
-
-                cmd.Parameters.Add("@emailAddress", SqlDbType.VarChar);
-                cmd.Parameters["@emailAddress"].Value = person.emailAddress;
-
-                cmd.Parameters.Add("@firstName", SqlDbType.VarChar);
-                cmd.Parameters["@firstName"].Value = person.firstName;
-
-                cmd.Parameters.Add("@lastName", SqlDbType.VarChar);
-                cmd.Parameters["@lastName"].Value = person.lastName;
-
-                cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar);
-                cmd.Parameters["@passwordHash"].Value = person.passwordHash;
-
-                _conn.Open();
-
-                try
-                {
-                    return int.Parse(cmd.ExecuteScalar().ToString());
-                }
-                catch (Exception)
-                {
-                    throw new Exception($"Entity {person.firstName} {person.lastName} not inserted in database!");
-                }
-
+                return int.Parse(conn.ExecuteScalar(sql,prms).ToString());
             }
-            finally
+            catch (Exception)
             {
-                _conn?.Close();
+                throw new Exception($"Entity {person.firstName} {person.lastName} not inserted in database!");
             }
         }
 
         public bool PersonExistsByEmail(string email)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                const string sql = "SELECT COUNT([personId]) AS ContactsId FROM dbo.person WHERE emailAddress = @emailAddress;";
-
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                var cmd = new SqlCommand(sql, _conn);
-                cmd.Parameters.Add("@emailAddress", SqlDbType.VarChar);
-                cmd.Parameters["@emailAddress"].Value = email;
-
-                return ((int)cmd.ExecuteScalar() >= 1);
+                return PersonExistsByEmail(email, conn);
             }
-            finally
-            {
-                _conn?.Close();
-            }
+        }
+
+        public bool PersonExistsByEmail(string email, IConnection conn)
+        {
+            const string sql = "SELECT COUNT([personId]) AS ContactsId FROM dbo.person WHERE emailAddress = @emailAddress;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@emailAddress", Value = email });
+            
+            return ((int)conn.ExecuteScalar(sql,prms) >= 1);
         }
 
         public bool PersonExistsByUserName(string userName)
         {
-            try
+            using (Connection conn = new Connection())
             {
-                const string sql = "SELECT COUNT([personId]) AS ContactsId FROM dbo.person WHERE userName = @userName;";
-
-                _conn = new SqlConnection(ConnString);
-                _conn.Open();
-
-                var cmd = new SqlCommand(sql, _conn);
-                cmd.Parameters.Add("@userName", SqlDbType.VarChar);
-                cmd.Parameters["@userName"].Value = userName;
-
-                return ((int)cmd.ExecuteScalar() >= 1);
-            }
-            finally
-            {
-                _conn?.Close();
+                return PersonExistsByUserName(userName, conn);
             }
         }
 
+        public bool PersonExistsByUserName(string userName, IConnection conn)
+        {
+            const string sql = "SELECT COUNT([personId]) AS ContactsId FROM dbo.person WHERE userName = @userName;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@userName", Value = userName });
+
+            return ((int)conn.ExecuteScalar(sql,prms) >= 1);
+        }
+        
         public void Update(int id, PersonEntity person)
+        {
+            using (Connection conn = new Connection())
+            {
+                Update(id, person, conn);
+            }
+        }
+
+        public void Update(int id, PersonEntity person, IConnection conn)
         {
             CheckPersonForRequiredValues(person, RepositoryUtils.RepositoryAction.Update);
 
@@ -335,68 +281,43 @@ namespace TheGiftList.DATA.Repositories
             {
                 throw new Exception("Contact does not exist in database");
             }
+            string sql =        @"UPDATE person SET [userName]=@userName, 
+                                                    [emailAddress]=@emailAddress, 
+                                                    [firstName]=@firstName, 
+                                                    [lastName]=@lastName, 
+                                                    [passwordHash]=@passwordHash, 
+                                                    [updateTimestamp]=getdate()
+                                                    WHERE personId=@Id";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@Id", Value = id });
+            prms.Add(new SqlParameter { ParameterName = "@userName", Value = person.userName });
+            prms.Add(new SqlParameter { ParameterName = "@emailAddress", Value = person.emailAddress });
+            prms.Add(new SqlParameter { ParameterName = "@firstName", Value = person.firstName });
+            prms.Add(new SqlParameter { ParameterName = "@lastName", Value = person.lastName });
+            prms.Add(new SqlParameter { ParameterName = "@passwordHash", Value = person.passwordHash });
 
-            try
+            var number = conn.ExecuteNonQuery(sql,prms);
+
+            if (number != 1)
             {
-                _conn = new SqlConnection(ConnString);
-
-                var cmd = _conn.CreateCommand();
-                cmd.CommandText = @"UPDATE person SET [userName]=@userName, 
-                                                      [emailAddress]=@emailAddress, 
-                                                      [firstName]=@firstName, 
-                                                      [lastName]=@lastName, 
-                                                      [passwordHash]=@passwordHash, 
-                                                      [updateTimestamp]=getdate()
-                                                      WHERE personId=@Id";
-
-                cmd.Parameters.Add("@Id", SqlDbType.Int);
-                cmd.Parameters["@Id"].Value = id;
-
-                cmd.Parameters.Add("@userName", SqlDbType.VarChar);
-                cmd.Parameters["@userName"].Value = person.userName;
-
-                cmd.Parameters.Add("@emailAddress", SqlDbType.VarChar);
-                cmd.Parameters["@emailAddress"].Value = person.emailAddress;
-
-                cmd.Parameters.Add("@firstName", SqlDbType.VarChar);
-                cmd.Parameters["@firstName"].Value = person.firstName;
-
-                cmd.Parameters.Add("@lastName", SqlDbType.VarChar);
-                cmd.Parameters["@lastName"].Value = person.lastName;
-
-                cmd.Parameters.Add("@passwordHash", SqlDbType.VarChar);
-                cmd.Parameters["@passwordHash"].Value = person.passwordHash;
-
-                _conn.Open();
-
-                var number = cmd.ExecuteNonQuery();
-
-                if (number != 1)
-                {
-                    throw new Exception($"No Contacts were updated with Id: {id}");
-                }
-            }
-            finally
-            {
-                _conn?.Close();
+                throw new Exception($"No Contacts were updated with Id: {id}");
             }
         }
 
         public void Delete(int id)
         {
-            _conn = new SqlConnection(ConnString);
+            using (Connection conn = new Connection())
+            {
+                Delete(id, conn);
+            }
+        }
 
-            var sqlComm = _conn.CreateCommand();
-            sqlComm.CommandText = @"DELETE FROM person WHERE [personId] = @Id;";
-            sqlComm.Parameters.Add("@Id", SqlDbType.Int);
-            sqlComm.Parameters["@Id"].Value = id;
-
-            _conn.Open();
-
-            var rowsAffected = sqlComm.ExecuteNonQuery();
-
-            _conn.Close();
-
+        public void Delete(int id, IConnection conn)
+        {
+            string sql = @"DELETE FROM person WHERE [personId] = @Id;";
+            List<SqlParameter> prms = new List<SqlParameter>();
+            prms.Add(new SqlParameter { ParameterName = "@Id", Value = id });
+            var rowsAffected = conn.ExecuteNonQuery(sql,prms);
             if (rowsAffected < 1)
             {
                 throw new Exception("Entity has not been deleted!");
@@ -421,17 +342,70 @@ namespace TheGiftList.DATA.Repositories
 
         public void Insert(List<PersonEntity> batch)
         {
-            batch.ForEach(x => Insert(x));
+            using (Connection conn = new Connection())
+            {
+                Insert(batch, conn);
+            }
+        }
+
+        public void Insert(List<PersonEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Insert(x, conn));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
 
         public void Update(List<PersonEntity> batch)
         {
-            batch.ForEach(x => Update(x.personId, x));
+            using (Connection conn = new Connection())
+            {
+                Update(batch, conn);
+            }
+        }
+
+        public void Update(List<PersonEntity> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Update(x.personId, x, conn));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+            }
+            conn.CommitTransaction();
         }
 
         public void Delete(List<int> batch)
         {
-            batch.ForEach(x => Delete(x));
+            using (Connection conn = new Connection())
+            {
+                Delete(batch, conn);
+            }
+        }
+
+        public void Delete(List<int> batch, IConnection conn)
+        {
+            conn.BeginTransaction();
+            try
+            {
+                batch.ForEach(x => Delete(x));
+            }
+            catch(Exception e)
+            {
+                conn.RollbackTransaction();
+                throw e;
+            }
+            conn.CommitTransaction();
         }
     }
 }
