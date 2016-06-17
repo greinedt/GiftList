@@ -1,0 +1,7 @@
+C:\MyProjects\GiftList\GiftList.BAL\obj\Debug\GiftList.BAL.csprojResolveAssemblyReference.cache
+C:\MyProjects\GiftList\GiftList.BAL\bin\Debug\GiftList.BAL.dll
+C:\MyProjects\GiftList\GiftList.BAL\bin\Debug\GiftList.BAL.pdb
+C:\MyProjects\GiftList\GiftList.BAL\bin\Debug\GiftList.DATA.dll
+C:\MyProjects\GiftList\GiftList.BAL\bin\Debug\GiftList.DATA.pdb
+C:\MyProjects\GiftList\GiftList.BAL\obj\Debug\GiftList.BAL.dll
+C:\MyProjects\GiftList\GiftList.BAL\obj\Debug\GiftList.BAL.pdb
